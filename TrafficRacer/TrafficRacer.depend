@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1474549756 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/main/main.cpp
+	<stdio.h>
+	<SDL2/SDL.h>
+	<string>
+
