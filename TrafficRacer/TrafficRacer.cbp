@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="include" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -22,6 +23,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -35,7 +37,19 @@
 			<Add option="-lSDL2" />
 		</Linker>
 		<Unit filename="autres/const" />
-		<Unit filename="main/main.cpp" />
+		<Unit filename="autres/images/down.bmp" />
+		<Unit filename="autres/images/hello_world.bmp" />
+		<Unit filename="autres/images/left.bmp" />
+		<Unit filename="autres/images/press.bmp" />
+		<Unit filename="autres/images/right.bmp" />
+		<Unit filename="autres/images/stretch.bmp" />
+		<Unit filename="autres/images/up.bmp" />
+		<Unit filename="autres/images/x.bmp" />
+		<Unit filename="include/Joueur.h" />
+		<Unit filename="include/Voiture.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="src/Joueur.cpp" />
+		<Unit filename="src/Voiture.cpp" />
 		<Extensions>
 			<envvars />
 			<code_completion />
