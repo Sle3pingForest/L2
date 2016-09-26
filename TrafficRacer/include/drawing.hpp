@@ -13,4 +13,5 @@
 
 void drawTriangle();
 void drawEchiquier();
+void drawGame();
 #endif /* drawing_hpp */
