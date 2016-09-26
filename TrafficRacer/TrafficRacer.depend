@@ -1,6 +1,41 @@
 # depslib dependency file v1.0
-1474549756 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/main/main.cpp
+1474549785 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/main/main.cpp
 	<stdio.h>
 	<SDL2/SDL.h>
 	<string>
+
+1474870118 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/main.cpp
+	"Header.h"
+	"SDL_Init.hpp"
+	"drawing.hpp"
+
+1474552214 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Joueur.cpp
+	"Joueur.h"
+
+1474552214 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Joueur.h
+
+1474552214 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Voiture.cpp
+	"Voiture.h"
+
+1474552214 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Voiture.h
+
+1474870118 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Header.h
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<string>
+	<SDL2/SDL.h>
+
+1474870118 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/SDL_Init.hpp
+	"Header.h"
+
+1474870118 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/drawing.hpp
+	"Header.h"
+
+1474870118 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/drawing.cpp
+	"drawing.hpp"
+	<math.h>
+
+1474870853 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/SDL_Init.cpp
+	"SDL_Init.hpp"
 
