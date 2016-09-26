@@ -4,7 +4,7 @@
 	<SDL2/SDL.h>
 	<string>
 
-1474872517 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/main.cpp
+1474876422 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/main.cpp
 	"Header.h"
 	"SDL_Init.hpp"
 	"drawing.hpp"
@@ -32,10 +32,17 @@
 1474872535 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/drawing.hpp
 	"Header.h"
 
-1474872725 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/drawing.cpp
+1474876577 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/drawing.cpp
 	"drawing.hpp"
 	<math.h>
+	"Decor.h"
 
 1474870853 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/SDL_Init.cpp
 	"SDL_Init.hpp"
+
+1474876478 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Decor.cpp
+	"Decor.h"
+
+1474876605 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Decor.h
+	<SDL2/SDL.h>
 

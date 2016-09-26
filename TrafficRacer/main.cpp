@@ -2,7 +2,7 @@
 //  main.cpp
 //  SDL2
 //
-//  Created by Arnaud on 24/09/2016.
+//  Created by Arnaud on 24/09/Ķ2016.
 //  Copyright © 2016 Arnaud. All rights reserved.
 //
 

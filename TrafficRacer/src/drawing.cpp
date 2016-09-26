@@ -8,6 +8,7 @@
 
 #include "drawing.hpp"
 #include <math.h>
+#include "Decor.h"
 
 void drawTriangle()
 {
@@ -53,6 +54,9 @@ void drawGame()
     SDL_Rect road; //Création d'un rectangle
     SDL_Rect car;
 
+    Decor arbre;
+    arbre.placer(20,200);
+
     road.w = SCREEN_WIDTH*0.7;
     road.h = SCREEN_HEIGHT;
     road.x = (SCREEN_WIDTH - road.w)/2;
@@ -65,4 +69,6 @@ void drawGame()
     SDL_RenderFillRect(pRenderer, &road);
     SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 255);
     SDL_RenderFillRect(pRenderer, &car);
+    SDL_SetRenderDrawColor(pRenderer, 0, 255, 0, 255);
+    SDL_RenderFillRect(pRenderer, &arbre.rectDecor);
 }
