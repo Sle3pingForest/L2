@@ -8,7 +8,6 @@
 
 #include "Header.h"
 #include "SDL_Init.hpp"
-#include "drawing.hpp"
 
 SDL_Window *pWindow =NULL;
 SDL_Renderer *pRenderer = NULL;
