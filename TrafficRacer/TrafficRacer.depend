@@ -4,45 +4,53 @@
 	<SDL2/SDL.h>
 	<string>
 
-1474876422 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/main.cpp
+1475156611 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/main.cpp
 	"Header.h"
 	"SDL_Init.hpp"
-	"drawing.hpp"
+	"Partie.h"
 
-1474552214 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Joueur.cpp
+1475153865 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Joueur.cpp
 	"Joueur.h"
 
-1474552214 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Joueur.h
+1475153864 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Joueur.h
 
-1474552214 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Voiture.cpp
+1475153865 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Voiture.cpp
 	"Voiture.h"
 
-1474552214 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Voiture.h
+1475153864 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Voiture.h
 
-1474872794 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Header.h
+1475153864 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Header.h
 	<iostream>
 	<stdio.h>
 	<stdlib.h>
 	<string>
 	<SDL2/SDL.h>
+	"drawing.hpp"
 
-1474870118 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/SDL_Init.hpp
+1475154243 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/SDL_Init.hpp
 	"Header.h"
 
-1474872535 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/drawing.hpp
+1475153865 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/drawing.hpp
 	"Header.h"
 
-1474876577 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/drawing.cpp
+1475153865 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/drawing.cpp
 	"drawing.hpp"
 	<math.h>
 	"Decor.h"
 
-1474870853 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/SDL_Init.cpp
+1475154230 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/SDL_Init.cpp
 	"SDL_Init.hpp"
 
-1474876478 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Decor.cpp
+1475153865 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Decor.cpp
 	"Decor.h"
 
-1474876605 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Decor.h
+1475153864 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Decor.h
 	<SDL2/SDL.h>
+
+1475156842 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Partie.h
+
+1475156813 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Partie.cpp
+	<SDL2/SDL.h>
+	"Partie.h"
+	"Header.h"
 

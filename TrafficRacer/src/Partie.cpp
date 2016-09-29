@@ -51,7 +51,7 @@ void Partie::gestion_evenements()
 
 void Partie::afficher()
 {
-    SDL_SetRenderDrawColor(pRenderer, 00, 255, 00, 255);
+    SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 255);
     SDL_RenderClear(pRenderer);
     SDL_RenderPresent(pRenderer);
 }
