@@ -14,14 +14,14 @@
 extern SDL_Window *pWindow;
 extern SDL_Renderer *pRenderer;
 
-bool InitEverything()
+bool InitSDLEverything()
 {
     if( !InitSDL() )
         return false;
-    
+
     if( !CreateWindowAndRenderer() )
         return false;
-    
+
     return true;
 }
 
@@ -38,13 +38,13 @@ bool InitSDL()
 bool CreateWindow()
 {
     pWindow = SDL_CreateWindow("Hello World", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    
+
     if( !pWindow )
     {
-        
+
         fprintf(stderr,"Erreur de création de la fenêtre: %s\n",SDL_GetError());
         return false;
-        
+
     }
     return true;
 }

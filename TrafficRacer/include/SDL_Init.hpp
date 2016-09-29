@@ -11,7 +11,7 @@
 
 #include "Header.h"
 
-bool InitEverything();
+bool InitSDLEverything();
 bool InitSDL();
 
 bool CreateWindow();
