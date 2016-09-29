@@ -1,11 +1,14 @@
 #include <SDL2/SDL.h>
 #include "Partie.h"
 #include "Header.h"
+#include "drawing.hpp"
+#include "Voiture.h"
 
 
 Partie::Partie()
 {
     jouer = true;
+    voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-80);
 }
 
 Partie::~Partie()
@@ -36,9 +39,11 @@ void Partie::gestion_evenements()
                 break;
 
             case SDLK_LEFT:
+                voiture_joueur.deplacer(-25);
                 break;
 
             case SDLK_RIGHT:
+                voiture_joueur.deplacer(+25);
                 break;
 
             default:
@@ -51,8 +56,9 @@ void Partie::gestion_evenements()
 
 void Partie::afficher()
 {
-    SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
     SDL_RenderClear(pRenderer);
+    voiture_joueur.AfficherVoiture();
     SDL_RenderPresent(pRenderer);
 }
 

@@ -5,17 +5,12 @@ Voiture::Voiture()
 {
     rectCar.w = 20;
     rectCar.h = 40;
-    rectCar.x = SCREEN_WIDTH/2;
-    rectCar.y = SCREEN_HEIGHT;
 }
 
 Voiture::Voiture(int w, int h)
 {
     rectCar.w = w;
     rectCar.h = h;
-    rectCar.x = SCREEN_WIDTH/2;
-    rectCar.y = SCREEN_HEIGHT;
-
 }
 
 void Voiture::placer(int x, int y)
@@ -24,13 +19,15 @@ void Voiture::placer(int x, int y)
     rectCar.y = y;
 }
 
-void Voiture::CreateCar()
+void Voiture::deplacer( int mouvement)
 {
-    Voiture car;
-    car.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT -80);
-    SDL_RenderFillRect(pRenderer, car.getRectCar());
-    SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 0);
+    rectCar.x += mouvement;
+}
 
+void Voiture::AfficherVoiture()
+{
+    SDL_SetRenderDrawColor(pRenderer, 255, 255, 0, 0);
+    SDL_RenderFillRect(pRenderer, getRectCar());
 }
 
 SDL_Rect* Voiture::getRectCar()

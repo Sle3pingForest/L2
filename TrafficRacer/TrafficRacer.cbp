@@ -46,11 +46,7 @@
 		<Unit filename="autres/images/stretch.bmp" />
 		<Unit filename="autres/images/up.bmp" />
 		<Unit filename="autres/images/x.bmp" />
-<<<<<<< HEAD
 		<Unit filename="include/Decor.hpp" />
-=======
-		<Unit filename="include/Decor.h" />
->>>>>>> 58876a23f5377693377596cc6e3bc6136b54d905
 		<Unit filename="include/Header.h" />
 		<Unit filename="include/Joueur.h" />
 		<Unit filename="include/Partie.h" />

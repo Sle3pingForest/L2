@@ -18,21 +18,6 @@ void CreateRoad()
     road.h = SCREEN_HEIGHT;
     road.x = (SCREEN_WIDTH - road.w)/2;
     road.y = 0;
-    SDL_RenderFillRect(pRenderer, &road);
     SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 255);
-}
-
-
-void drawGame()
-{
-
-    CreateRoad();
-
-    Decor decor;
-
-    decor.CreateDecor();
-
-    Voiture voiture;
-    voiture.CreateCar();
-
+    SDL_RenderFillRect(pRenderer, &road);
 }

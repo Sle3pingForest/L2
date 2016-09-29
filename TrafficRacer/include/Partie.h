@@ -1,6 +1,7 @@
 #ifndef PARTIE_H
 #define PARTIE_H
 
+#include "Voiture.h"
 
 class Partie
 {
@@ -13,6 +14,7 @@ class Partie
     protected:
     private:
          bool jouer;
+         Voiture voiture_joueur;
 };
 
 #endif // PARTIE_H

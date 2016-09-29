@@ -9,11 +9,12 @@ class Voiture
         Voiture();
         Voiture(int w, int h);
         void placer( int x, int y);
-        void CreateCar();
+        void AfficherVoiture();
         SDL_Rect* getRectCar();
         void setRectCar(SDL_Rect* car);
         int getCouleur();
         void setCouleur( int codeCouleur);
+        void deplacer( int mouvement);
         virtual ~Voiture();
     protected:
     private:
