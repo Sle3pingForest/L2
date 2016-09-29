@@ -32,6 +32,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add directory="include" />
 		</Compiler>
 		<Linker>
 			<Add option="-lSDL2" />
@@ -45,12 +46,14 @@
 		<Unit filename="autres/images/stretch.bmp" />
 		<Unit filename="autres/images/up.bmp" />
 		<Unit filename="autres/images/x.bmp" />
+		<Unit filename="include/Decor.hpp" />
 		<Unit filename="include/Header.h" />
 		<Unit filename="include/Joueur.h" />
 		<Unit filename="include/SDL_Init.hpp" />
 		<Unit filename="include/Voiture.h" />
 		<Unit filename="include/drawing.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Decor.cpp" />
 		<Unit filename="src/Joueur.cpp" />
 		<Unit filename="src/SDL_Init.cpp" />
 		<Unit filename="src/Voiture.cpp" />
