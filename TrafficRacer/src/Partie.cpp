@@ -56,10 +56,18 @@ void Partie::gestion_evenements()
 
 void Partie::afficher()
 {
+    const int FPS = 60;
+    Uint32 start;
+    start = SDL_GetTicks();
     SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
     SDL_RenderClear(pRenderer);
     voiture_joueur.AfficherVoiture();
     SDL_RenderPresent(pRenderer);
+    //Calcul du temps à attendre les FPS
+    if(1000/FPS > SDL_GetTicks()-start)
+    {
+        SDL_Delay(1000/FPS-(SDL_GetTicks()-start));
+    }
 }
 
 bool Partie::continuer_partie()
