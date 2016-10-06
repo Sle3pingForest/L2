@@ -3,14 +3,22 @@
 #include "Header.hpp"
 
 
-class Road
+class Route
 {
     public:
-        Road();
-        void CreateRoad();
-        virtual ~Road();
+        Route();
+        Route(int weight, int height);
+        int getWeightRoad();
+        int getHeightRoad();
+        int getColorRoad();
+        SDL_Rect* getRectRoute();
+        void AfficherRoute();
+        virtual ~Route();
     protected:
     private:
+        int weight;
+        int height;
+        SDL_Rect road;
 };
 
 #endif

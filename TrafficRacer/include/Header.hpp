@@ -15,7 +15,6 @@
 #include <string>
 #include <SDL2/SDL.h>
 
-#include "drawing.hpp"
 
 //Variables globales pour rendu SDL
 extern SDL_Window *pWindow;

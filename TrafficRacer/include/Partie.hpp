@@ -2,6 +2,7 @@
 #define PARTIE_H
 
 #include "Voiture.hpp"
+#include "Route.hpp"
 
 class Partie
 {
@@ -15,6 +16,7 @@ class Partie
     private:
         bool jouer;
         Voiture voiture_joueur;
+        Route route;
         Voiture tabVoiture[10];
 };
 
