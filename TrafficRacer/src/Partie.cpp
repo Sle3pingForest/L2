@@ -66,8 +66,8 @@ void Partie::afficher()
     SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
     SDL_RenderClear(pRenderer);
 
-
     route.AfficherRoute();
+    arbre.ChargerImage();
 
     if(tabVoiture[0].getPosY() > SCREEN_HEIGHT)
         tabVoiture[0].placer(rand() %SCREEN_WIDTH,0);

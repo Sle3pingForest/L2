@@ -3,6 +3,7 @@
 
 #include "Voiture.hpp"
 #include "Route.hpp"
+#include "Decor.hpp"
 
 class Partie
 {
@@ -18,6 +19,7 @@ class Partie
         Voiture voiture_joueur;
         Route route;
         Voiture tabVoiture[10];
+        Decor arbre;
 };
 
 #endif // PARTIE_H
