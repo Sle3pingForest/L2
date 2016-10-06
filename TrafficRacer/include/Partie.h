@@ -13,8 +13,9 @@ class Partie
         bool continuer_partie();
     protected:
     private:
-         bool jouer;
-         Voiture voiture_joueur;
+        bool jouer;
+        Voiture voiture_joueur;
+        Voiture tabVoiture[10];
 };
 
 #endif // PARTIE_H

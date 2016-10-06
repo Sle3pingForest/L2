@@ -14,7 +14,7 @@ class Voiture
         void setRectCar(SDL_Rect* car);
         int getCouleur();
         void setCouleur( int codeCouleur);
-        void deplacer( int mouvement);
+        void deplacer(int x, int y);
         virtual ~Voiture();
     protected:
     private:

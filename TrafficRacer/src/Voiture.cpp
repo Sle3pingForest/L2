@@ -5,12 +5,14 @@ Voiture::Voiture()
 {
     rectCar.w = 20;
     rectCar.h = 40;
+    couleur = 0;
 }
 
 Voiture::Voiture(int w, int h)
 {
     rectCar.w = w;
     rectCar.h = h;
+    couleur = 0;
 }
 
 void Voiture::placer(int x, int y)
@@ -19,9 +21,10 @@ void Voiture::placer(int x, int y)
     rectCar.y = y;
 }
 
-void Voiture::deplacer( int mouvement)
+void Voiture::deplacer( int x, int y)
 {
-    rectCar.x += mouvement;
+    rectCar.x += x;
+    rectCar.y += y;
 }
 
 void Voiture::AfficherVoiture()

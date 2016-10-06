@@ -9,6 +9,9 @@ Partie::Partie()
 {
     jouer = true;
     voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-80);
+    tabVoiture[0].placer(100, 100);
+    tabVoiture[1].placer(200, 100);
+    tabVoiture[2].placer(400, 100);
 }
 
 Partie::~Partie()
@@ -39,11 +42,11 @@ void Partie::gestion_evenements()
                 break;
 
             case SDLK_LEFT:
-                voiture_joueur.deplacer(-25);
+                voiture_joueur.deplacer(-25, 0);
                 break;
 
             case SDLK_RIGHT:
-                voiture_joueur.deplacer(+25);
+                voiture_joueur.deplacer(+25, 0);
                 break;
 
             default:
@@ -59,10 +62,20 @@ void Partie::afficher()
     const int FPS = 60;
     Uint32 start;
     start = SDL_GetTicks();
+    
     SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
     SDL_RenderClear(pRenderer);
+    
+    tabVoiture[0].deplacer(0, 1);
+    tabVoiture[0].AfficherVoiture();
+    tabVoiture[1].deplacer(0, 2);
+    tabVoiture[1].AfficherVoiture();
+    tabVoiture[2].deplacer(0, 3);
+    tabVoiture[2].AfficherVoiture();
+    
     voiture_joueur.AfficherVoiture();
     SDL_RenderPresent(pRenderer);
+    
     //Calcul du temps à attendre les FPS
     if(1000/FPS > SDL_GetTicks()-start)
     {
