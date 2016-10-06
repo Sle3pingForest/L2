@@ -48,6 +48,16 @@ void Voiture::setCouleur( int code)
     this->couleur = code;
 }
 
+void Voiture::setWeight(int tailleW)
+{
+    rectCar.w = tailleW;
+}
+
+void Voiture::setHeight( int tailleH)
+{
+    rectCar.h = tailleH;
+}
+
 int Voiture::getPosX()
 {
     return rectCar.x;

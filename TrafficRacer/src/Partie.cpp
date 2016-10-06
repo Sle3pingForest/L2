@@ -9,6 +9,9 @@ Partie::Partie()
 {
     jouer = true;
     voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getCarHeight()-20); //Fixer le 20
+    tabVoiture[0].setWeight(100);
+    tabVoiture[1].setWeight(100);
+    tabVoiture[2].setWeight(100);
     tabVoiture[0].placer(100, 100);
     tabVoiture[1].placer(200, 100);
     tabVoiture[2].placer(400, 100);

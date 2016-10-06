@@ -18,6 +18,8 @@ class Voiture
         int getCarHeight();
         int getCouleur();
         void setCouleur( int codeCouleur);
+        void setWeight(int tailleW);
+        void setHeight(int tailleH);
         void deplacer(int x, int y);
         virtual ~Voiture();
     protected:
