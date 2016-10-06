@@ -11,7 +11,5 @@
 
 #include "Header.h"
 
-void drawTriangle();
-void drawEchiquier();
-void drawGame();
+void CreateRoad();
 #endif /* drawing_hpp */

@@ -14,7 +14,7 @@
 void CreateRoad()
 {
     SDL_Rect road;
-    road.w = SCREEN_WIDTH*0.7;
+    road.w = SCREEN_WIDTH*0.6;
     road.h = SCREEN_HEIGHT;
     road.x = (SCREEN_WIDTH - road.w)/2;
     road.y = 0;

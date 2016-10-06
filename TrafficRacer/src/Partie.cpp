@@ -8,7 +8,7 @@
 Partie::Partie()
 {
     jouer = true;
-    voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-80);
+    voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getCarHeight()-20); //Fixer le 20
     tabVoiture[0].placer(100, 100);
     tabVoiture[1].placer(200, 100);
     tabVoiture[2].placer(400, 100);
@@ -65,6 +65,8 @@ void Partie::afficher()
 
     SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
     SDL_RenderClear(pRenderer);
+
+    CreateRoad();
 
     if(tabVoiture[0].getPosY() > SCREEN_HEIGHT)
         tabVoiture[0].placer(rand() %SCREEN_WIDTH,0);

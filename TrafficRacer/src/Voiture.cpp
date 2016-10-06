@@ -3,8 +3,8 @@
 
 Voiture::Voiture()
 {
-    rectCar.w = 20;
-    rectCar.h = 40;
+    rectCar.w = 40;
+    rectCar.h = 80;
     couleur = 0;
 }
 
@@ -56,6 +56,16 @@ int Voiture::getPosX()
 int Voiture::getPosY()
 {
     return rectCar.y;
+}
+
+int Voiture::getCarWidth()
+{
+    return rectCar.w;
+}
+
+int Voiture::getCarHeight()
+{
+    return rectCar.h;
 }
 
 Voiture::~Voiture()
