@@ -48,6 +48,16 @@ void Voiture::setCouleur( int code)
     this->couleur = code;
 }
 
+int Voiture::getPosX()
+{
+    return rectCar.x;
+}
+
+int Voiture::getPosY()
+{
+    return rectCar.y;
+}
+
 Voiture::~Voiture()
 {
     //dtor

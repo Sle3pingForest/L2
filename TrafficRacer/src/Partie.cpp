@@ -62,20 +62,28 @@ void Partie::afficher()
     const int FPS = 60;
     Uint32 start;
     start = SDL_GetTicks();
-    
+
     SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
     SDL_RenderClear(pRenderer);
-    
-    tabVoiture[0].deplacer(0, 1);
+
+    if(tabVoiture[0].getPosY() > SCREEN_HEIGHT)
+        tabVoiture[0].placer(rand() %SCREEN_WIDTH,0);
+    tabVoiture[0].deplacer(0, 4);
     tabVoiture[0].AfficherVoiture();
-    tabVoiture[1].deplacer(0, 2);
+
+    if(tabVoiture[1].getPosY() > SCREEN_HEIGHT)
+        tabVoiture[1].placer(rand() %SCREEN_WIDTH,0);
+    tabVoiture[1].deplacer(0, 8);
     tabVoiture[1].AfficherVoiture();
-    tabVoiture[2].deplacer(0, 3);
+
+    if(tabVoiture[2].getPosY() > SCREEN_HEIGHT)
+        tabVoiture[2].placer(rand() %SCREEN_WIDTH,0);
+    tabVoiture[2].deplacer(0, 9);
     tabVoiture[2].AfficherVoiture();
-    
+
     voiture_joueur.AfficherVoiture();
     SDL_RenderPresent(pRenderer);
-    
+
     //Calcul du temps à attendre les FPS
     if(1000/FPS > SDL_GetTicks()-start)
     {

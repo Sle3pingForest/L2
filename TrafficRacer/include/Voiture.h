@@ -12,6 +12,8 @@ class Voiture
         void AfficherVoiture();
         SDL_Rect* getRectCar();
         void setRectCar(SDL_Rect* car);
+        int getPosX();
+        int getPosY();
         int getCouleur();
         void setCouleur( int codeCouleur);
         void deplacer(int x, int y);
