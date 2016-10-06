@@ -6,9 +6,9 @@
 //  Copyright © 2016 Arnaud. All rights reserved.
 //
 
-#include "Header.h"
+#include "Header.hpp"
 #include "SDL_Init.hpp"
-#include "Partie.h"
+#include "Partie.hpp"
 
 SDL_Window *pWindow =NULL;
 SDL_Renderer *pRenderer = NULL;

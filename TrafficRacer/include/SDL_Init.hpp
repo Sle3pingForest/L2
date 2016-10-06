@@ -9,7 +9,7 @@
 #ifndef SDL_Init_hpp
 #define SDL_Init_hpp
 
-#include "Header.h"
+#include "Header.hpp"
 
 bool InitSDLEverything();
 bool InitSDL();
