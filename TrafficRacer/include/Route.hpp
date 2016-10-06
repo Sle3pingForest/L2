@@ -7,18 +7,20 @@ class Route
 {
     public:
         Route();
-        Route(int weight, int height);
         int getWeightRoad();
         int getHeightRoad();
         int getColorRoad();
+        int getLargeurVoie();
+        void tracerVoies(int nombre);
         SDL_Rect* getRectRoute();
         void AfficherRoute();
         virtual ~Route();
     protected:
     private:
-        int weight;
-        int height;
         SDL_Rect road;
+        SDL_Rect ligne;
+        SDL_Rect ligne2;
+        SDL_Rect ligne3;
 };
 
 #endif
