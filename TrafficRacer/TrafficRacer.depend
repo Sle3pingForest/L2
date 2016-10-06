@@ -61,10 +61,10 @@
 	"drawing.hpp"
 	"Voiture.h"
 
-1474871262 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/SDL_Init.cpp
+1475755277 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/SDL_Init.cpp
 	"SDL_Init.hpp"
 
-1474871262 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/SDL_Init.hpp
+1475158669 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/SDL_Init.hpp
 	"Header.h"
 
 1475151037 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Header.h
@@ -75,15 +75,15 @@
 	<SDL2/SDL.h>
 	"drawing.hpp"
 
-1474873581 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/drawing.hpp
-	"Header.h"
+1475757605 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/drawing.hpp
+	"Header.hpp"
 
-1475154491 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/main.cpp
+1475158937 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/main.cpp
 	"Header.h"
 	"SDL_Init.hpp"
-	"Decor.hpp"
+	"Partie.h"
 
-1475157332 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/drawing.cpp
+1475757038 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/drawing.cpp
 	"drawing.hpp"
 	<math.h>
 	"Decor.hpp"
@@ -97,14 +97,14 @@
 
 1474871262 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Joueur.h
 
-1475157122 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Voiture.cpp
-	"Voiture.h"
-	"drawing.hpp"
+1475757631 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Voiture.cpp
+	"Voiture.hpp"
+	"Route.hpp"
 
-1475156772 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Voiture.h
+1475757038 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Voiture.h
 	<SDL2/SDL.h>
 
-1475157317 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Decor.cpp
+1475157706 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Decor.cpp
 	"Decor.hpp"
 	"drawing.hpp"
 
@@ -113,4 +113,38 @@
 
 1475159296 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Decor.hpp
 	<SDL2/SDL.h>
+
+1475755277 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Partie.h
+	"Voiture.h"
+
+1475757578 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Partie.cpp
+	<SDL2/SDL.h>
+	"Partie.hpp"
+	"Header.hpp"
+	"Route.hpp"
+	"Voiture.hpp"
+
+1475151037 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Header.hpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<string>
+	<SDL2/SDL.h>
+	"drawing.hpp"
+
+1475757581 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Partie.hpp
+	"Voiture.hpp"
+
+1475757038 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Voiture.hpp
+	<SDL2/SDL.h>
+
+1475757486 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Route.hpp
+	"Header.hpp"
+
+1475757619 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Route.cpp
+	"Route.hpp"
+	"drawing.hpp"
+	<math.h>
+	"Decor.hpp"
+	"Voiture.hpp"
 

@@ -1,8 +1,8 @@
 #include <SDL2/SDL.h>
-#include "Partie.h"
-#include "Header.h"
-#include "drawing.hpp"
-#include "Voiture.h"
+#include "Partie.hpp"
+#include "Header.hpp"
+#include "Route.hpp"
+#include "Voiture.hpp"
 
 
 Partie::Partie()

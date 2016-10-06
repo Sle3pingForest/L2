@@ -1,15 +1,14 @@
-//
-//  drawing.cpp
-//  SDL2
-//
-//  Created by Arnaud on 24/09/2016.
-//  Copyright © 2016 Arnaud. All rights reserved.
-//
+#include "Route.hpp"
+
+Road::Road()
+{
+    //ctor
+}
 
 #include "drawing.hpp"
 #include <math.h>
 #include "Decor.hpp"
-#include "Voiture.h"
+#include "Voiture.hpp"
 
 void CreateRoad()
 {
@@ -20,4 +19,9 @@ void CreateRoad()
     road.y = 0;
     SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 255);
     SDL_RenderFillRect(pRenderer, &road);
+}
+
+Road::~Road()
+{
+    //dtor
 }

@@ -1,7 +1,7 @@
 #ifndef PARTIE_H
 #define PARTIE_H
 
-#include "Voiture.h"
+#include "Voiture.hpp"
 
 class Partie
 {
