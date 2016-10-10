@@ -13,6 +13,7 @@
 #include "SDL_Init.hpp"
 extern SDL_Window *pWindow;
 extern SDL_Renderer *pRenderer;
+using namespace std;
 
 bool InitSDLEverything()
 {
@@ -21,7 +22,7 @@ bool InitSDLEverything()
 
     if( !CreateWindowAndRenderer() )
         return false;
-    
+
     SDL_SetWindowTitle(pWindow,"TrafficRacer");
 
     return true;
@@ -70,4 +71,25 @@ bool CreateWindowAndRenderer()
         return false;
     }
     return true;
+}
+
+SDL_Texture* LoadBmpWithTransparency(char* emplacement, Uint8 redTransparency, Uint8 greenTransparency, Uint8 blueTransparency)
+{
+    SDL_Surface *loadedImage = NULL;
+    SDL_Texture *texture = NULL;
+
+    loadedImage = SDL_LoadBMP(emplacement);
+
+    if(loadedImage != NULL)
+    {
+        Uint32 colorkey = SDL_MapRGB( loadedImage->format, redTransparency, greenTransparency, blueTransparency);
+        SDL_SetColorKey(loadedImage, SDL_TRUE, colorkey);
+        texture = SDL_CreateTextureFromSurface(pRenderer, loadedImage);
+        SDL_FreeSurface(loadedImage);
+        return texture;
+    }
+    else{
+        cout<<SDL_GetError()<<endl;
+        return NULL;
+    }
 }

@@ -18,4 +18,6 @@ bool CreateWindow();
 bool CreateRenderer();
 bool CreateWindowAndRenderer();
 
+SDL_Texture* LoadBmpWithTransparency(char* emplacement, Uint8 redTransparency, Uint8 greenTransparency, Uint8 blueTransparency);
+
 #endif /* SDL_Init_hpp */
