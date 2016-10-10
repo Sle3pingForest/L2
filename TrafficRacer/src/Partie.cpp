@@ -9,12 +9,10 @@ Partie::Partie()
 {
     jouer = true;
     voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getCarHeight()-20); //Fixer le 20
-    tabVoiture[0].setWeight(100);
-    tabVoiture[1].setWeight(100);
-    tabVoiture[2].setWeight(100);
-    tabVoiture[0].placer(100, 100);
-    tabVoiture[1].placer(200, 100);
-    tabVoiture[2].placer(400, 100);
+    for ( int i = 0 ; i < 3 ; ++i)
+    {
+        tabVoiture[i].setWeight(100);
+    }
 }
 
 Partie::~Partie()
@@ -71,21 +69,28 @@ void Partie::afficher()
 
     route.AfficherRoute();
     arbre.ChargerImage();
+    for(int i = 0 ; i < 3; i++)
+    {
+        if(tabVoiture[i].getPosY() > SCREEN_HEIGHT)
+            tabVoiture[i].placer(rand() %route.getWeightRoad() + route.getPositionXRoad(),0);
+        tabVoiture[i].deplacer(0,9);
+        tabVoiture[i].AfficherVoiture();
+    }
 
-    if(tabVoiture[0].getPosY() > SCREEN_HEIGHT)
-        tabVoiture[0].placer(rand() %SCREEN_WIDTH,0);
-    tabVoiture[0].deplacer(0, 4);
-    tabVoiture[0].AfficherVoiture();
-
-    if(tabVoiture[1].getPosY() > SCREEN_HEIGHT)
-        tabVoiture[1].placer(rand() %SCREEN_WIDTH,0);
-    tabVoiture[1].deplacer(0, 8);
-    tabVoiture[1].AfficherVoiture();
-
-    if(tabVoiture[2].getPosY() > SCREEN_HEIGHT)
-        tabVoiture[2].placer(rand() %SCREEN_WIDTH,0);
-    tabVoiture[2].deplacer(0, 9);
-    tabVoiture[2].AfficherVoiture();
+//    if(tabVoiture[0].getPosY() > SCREEN_HEIGHT)
+//        tabVoiture[0].placer(rand() %SCREEN_WIDTH,0);
+//    tabVoiture[0].deplacer(0, 4);
+//    tabVoiture[0].AfficherVoiture();
+//
+//    if(tabVoiture[1].getPosY() > SCREEN_HEIGHT)
+//        tabVoiture[1].placer(rand() %SCREEN_WIDTH,0);
+//    tabVoiture[1].deplacer(0, 8);
+//    tabVoiture[1].AfficherVoiture();
+//
+//    if(tabVoiture[2].getPosY() > SCREEN_HEIGHT)
+//        tabVoiture[2].placer(rand() %SCREEN_WIDTH,0);
+//    tabVoiture[2].deplacer(0, 9);
+//    tabVoiture[2].AfficherVoiture();
 
     voiture_joueur.AfficherVoiture();
     SDL_RenderPresent(pRenderer);

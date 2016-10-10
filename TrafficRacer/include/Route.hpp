@@ -11,6 +11,7 @@ class Route
         int getHeightRoad();
         int getColorRoad();
         int getLargeurVoie();
+        int getPositionXRoad();
         void InitVoie();
         void setVoie(int x);
         void tracerVoies(int nombre);

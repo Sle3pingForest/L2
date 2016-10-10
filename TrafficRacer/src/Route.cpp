@@ -44,6 +44,10 @@ int Route::getWeightRoad()
 {
     return road.w;
 }
+int Route::getPositionXRoad()
+{
+    return road.x;
+}
 
 int Route::getLargeurVoie()
 {
