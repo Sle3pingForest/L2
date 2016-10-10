@@ -15,29 +15,23 @@ Route::Route()
 
 void Route::AfficherRoute()
 {
-
-    ligne.h = road.h;
-    ligne.w = 2;
-    ligne.x = SCREEN_WIDTH/2 + getWeightRoad()/4;
-    ligne.y = 0;
-
-    ligne2.h = road.h;
-    ligne2.w = 2;
-    ligne2.x = SCREEN_WIDTH/2 - getWeightRoad()/4;
-    ligne2.y = 0;
-
-    ligne3.h = road.h;
-    ligne3.w = 2;
-    ligne3.x = SCREEN_WIDTH/2 ;
-    ligne3.y = 0;
-
     SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 255);
     SDL_RenderFillRect(pRenderer, getRectRoute());
 
+    int positionVoie = SCREEN_WIDTH/2 - 2* getLargeurVoie();
     SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 0);
-    SDL_RenderFillRect(pRenderer, &ligne);
-    SDL_RenderFillRect(pRenderer, &ligne2);
-    SDL_RenderFillRect(pRenderer, &ligne3);
+    for ( int i = 0 ; i < 4 ; ++i)
+    {
+        SDL_Rect ligne;
+        tabVoie[i] = ligne;
+        tabVoie[i].x = positionVoie;
+        tabVoie[i].h = road.h;
+        tabVoie[i].y = 0 ;
+        tabVoie[i].w = 2 ;
+        SDL_RenderFillRect(pRenderer, &tabVoie[i]);
+        positionVoie += getLargeurVoie();
+
+    }
 
 }
 
