@@ -19,32 +19,17 @@ Decor::Decor(int w, int h, int x, int y)
     rectDecor.y = y;
 }
 
-void Decor::placer(int x, int y)
+void Decor::afficher(int w, int h, SDL_Texture* texture)
 {
-    rectDecor.x = x;
-    rectDecor.y = y;
+    rectDecor.w = w;
+    rectDecor.h = h;
+    SDL_RenderCopy(pRenderer,texture,NULL,&rectDecor);
 }
 
-void Decor::CreateDecor()
+void Decor::deplacer(int x, int y)
 {
-    int x = rand()%50;
-    int y = rand()%SCREEN_HEIGHT;
-    placer(x,y);
-    SDL_RenderFillRect(pRenderer, getRectDecor());
-    SDL_SetRenderDrawColor(pRenderer, 0, 255, 0, 255);
-
-}
-
-void Decor::ChargerImage()
-{
-    SDL_Texture* texture = LoadBmpWithTransparency("/home/profil/scheffle5u/Téléchargements/arbre.bmp", 00, 255, 255);
-    SDL_Rect dest = {rectDecor.x, rectDecor.y, rectDecor.w, rectDecor.h};
-    SDL_RenderCopy(pRenderer,texture,NULL,&dest);
-}
-
-SDL_Rect* Decor::getRectDecor()
-{
-    return &rectDecor;
+    rectDecor.x += x;
+    rectDecor.y += y;
 }
 
 Decor::~Decor()

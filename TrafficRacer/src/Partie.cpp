@@ -1,13 +1,10 @@
-#include <SDL2/SDL.h>
 #include "Partie.hpp"
-#include "Header.hpp"
-#include "Route.hpp"
-#include "Voiture.hpp"
-
 
 Partie::Partie()
 {
     jouer = true;
+    decorText = LoadBmpWithTransparency("/home/profil/scheffle5u/Téléchargements/decor.bmp", 00, 255, 255);
+
     voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getCarHeight()-20); //Fixer le 20
     for ( int i = 0 ; i < 3 ; ++i)
     {
@@ -68,7 +65,10 @@ void Partie::afficher()
     SDL_RenderClear(pRenderer);
 
     route.AfficherRoute();
-    arbre.ChargerImage();
+    arbre.afficher(80,80,decorText);
+    arbre.deplacer(0, 2);
+
+
     for(int i = 0 ; i < 3; i++)
     {
         if(tabVoiture[i].getPosY() > SCREEN_HEIGHT)

@@ -4,6 +4,7 @@
 #include "Voiture.hpp"
 #include "Route.hpp"
 #include "Decor.hpp"
+#include "SDL_Init.hpp"
 
 class Partie
 {
@@ -16,6 +17,7 @@ class Partie
     protected:
     private:
         bool jouer;
+        SDL_Texture* decorText;
         Voiture voiture_joueur;
         Route route;
         Voiture tabVoiture[10];
