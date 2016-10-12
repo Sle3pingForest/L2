@@ -17,11 +17,11 @@ class Partie
     protected:
     private:
         bool jouer;
-        SDL_Texture* decorText;
+        SDL_Texture* decorTexture;
         Voiture voiture_joueur;
         Route route;
         Voiture tabVoiture[10];
-        Decor arbre;
+        Decor tabDecor[10];
 };
 
 #endif // PARTIE_H

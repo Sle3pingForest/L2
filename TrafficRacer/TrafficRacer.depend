@@ -14,7 +14,7 @@
 
 1475153864 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Joueur.h
 
-1475765078 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Voiture.cpp
+1476285187 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Voiture.cpp
 	"Voiture.hpp"
 	"Route.hpp"
 
@@ -44,10 +44,8 @@
 1476083340 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/SDL_Init.cpp
 	"SDL_Init.hpp"
 
-1476085759 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Decor.cpp
+1476283879 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Decor.cpp
 	"Decor.hpp"
-	"Route.hpp"
-	"SDL_Init.hpp"
 
 1475153864 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Decor.h
 	<SDL2/SDL.h>
@@ -55,12 +53,8 @@
 1475755197 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Partie.h
 	"Voiture.h"
 
-1475765287 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Partie.cpp
-	<SDL2/SDL.h>
+1476285264 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Partie.cpp
 	"Partie.hpp"
-	"Header.hpp"
-	"Route.hpp"
-	"Voiture.hpp"
 
 1475755277 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/SDL_Init.cpp
 	"SDL_Init.hpp"
@@ -112,8 +106,10 @@
 1475155085 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Decor.hpp
 	<SDL2/SDL.h>
 
-1476085807 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Decor.hpp
+1476283919 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Decor.hpp
 	<SDL2/SDL.h>
+	"Route.hpp"
+	"SDL_Init.hpp"
 
 1475755277 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Partie.h
 	"Voiture.h"
@@ -162,7 +158,7 @@
 
 1475757824 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Joueur.hpp
 
-1476085011 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Partie.hpp
+1476282666 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Partie.hpp
 	"Voiture.hpp"
 	"Route.hpp"
 	"Decor.hpp"

@@ -1,12 +1,10 @@
 #include "Decor.hpp"
-#include "Route.hpp"
-#include "SDL_Init.hpp"
 using namespace std;
 
 Decor::Decor()
 {
-    rectDecor.w = 50;
-    rectDecor.h = 50;
+    rectDecor.w = 150;
+    rectDecor.h = 150;
     rectDecor.x = 0;
     rectDecor.y = 0;
 }
@@ -19,17 +17,41 @@ Decor::Decor(int w, int h, int x, int y)
     rectDecor.y = y;
 }
 
-void Decor::afficher(int w, int h, SDL_Texture* texture)
+void Decor::afficher(SDL_Texture* texture)
 {
-    rectDecor.w = w;
-    rectDecor.h = h;
     SDL_RenderCopy(pRenderer,texture,NULL,&rectDecor);
+}
+
+void Decor::placer(int x, int y)
+{
+    rectDecor.x = x;
+    rectDecor.y = y;
 }
 
 void Decor::deplacer(int x, int y)
 {
     rectDecor.x += x;
     rectDecor.y += y;
+}
+
+int Decor::getPosX()
+{
+    return rectDecor.x;
+}
+
+int Decor::getPosY()
+{
+    return rectDecor.y;
+}
+
+int Decor::getDecorWidth()
+{
+    return rectDecor.w;
+}
+
+int Decor::getDecorHeight()
+{
+    return rectDecor.h;
 }
 
 Decor::~Decor()

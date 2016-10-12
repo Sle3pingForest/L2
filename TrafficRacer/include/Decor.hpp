@@ -2,6 +2,8 @@
 #define DECOR_H
 
 #include <SDL2/SDL.h>
+#include "Route.hpp"
+#include "SDL_Init.hpp"
 
 class Decor
 {
@@ -9,8 +11,13 @@ class Decor
         Decor();
         Decor(int w ,int h, int x , int y);
         virtual ~Decor();
-        void afficher(int w, int h, SDL_Texture*);
+        void afficher(SDL_Texture*);
+        void placer(int x, int y);
         void deplacer(int x, int y);
+        int getPosX();
+        int getPosY();
+        int getDecorWidth();
+        int getDecorHeight();
     protected:
     private:
         SDL_Rect rectDecor;

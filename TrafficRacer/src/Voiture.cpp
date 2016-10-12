@@ -29,7 +29,6 @@ void Voiture::deplacer( int x, int y)
 
 void Voiture::AfficherVoiture()
 {
-    SDL_SetRenderDrawColor(pRenderer, 255, 255, 0, 0);
     SDL_RenderFillRect(pRenderer, getRectCar());
 }
 
