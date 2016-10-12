@@ -91,6 +91,27 @@ void Partie::afficher()
 
     SDL_SetRenderDrawColor(pRenderer, 100, 180, 70, 0);
     voiture_joueur.AfficherVoiture();
+
+    //Gestion des collisions
+    for(int i = 0 ; i < 3; i++)
+    {
+        if(tabVoiture[i].getPosY()+tabVoiture[i].getCarHeight() == voiture_joueur.getPosY()) // Si la voiture est à la même hauteur que celle du joueur
+        {
+            if(voiture_joueur.getPosX()>= tabVoiture[i].getPosX() and voiture_joueur.getPosX()<= tabVoiture[i].getPosX()+tabVoiture[i].getCarWidth()) // Si la voiture est en face de celle du joueur
+            {
+                SDL_Rect Test;
+                Test.h = 50;
+                Test.w = 50;
+                SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 0);
+                SDL_RenderFillRect(pRenderer, &Test);
+                SDL_RenderPresent(pRenderer);
+                SDL_Delay(200);
+            }
+        }
+    }
+
+
+
     SDL_RenderPresent(pRenderer);
 
     //Calcul du temps à attendre les FPS
