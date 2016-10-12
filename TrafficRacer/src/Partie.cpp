@@ -97,7 +97,7 @@ void Partie::afficher()
     {
         if(tabVoiture[i].getPosY()+tabVoiture[i].getCarHeight() == voiture_joueur.getPosY()) // Si la voiture est à la même hauteur que celle du joueur
         {
-            if(voiture_joueur.getPosX()>= tabVoiture[i].getPosX() and voiture_joueur.getPosX()<= tabVoiture[i].getPosX()+tabVoiture[i].getCarWidth()) // Si la voiture est en face de celle du joueur
+            if(voiture_joueur.getPosX()>= tabVoiture[i].getPosX() and voiture_joueur.getPosX()<= tabVoiture[i].getPosX()+tabVoiture[i].getCarWidth()) // Si la voiture est en face de celle du joueur PAS FINI
             {
                 SDL_Rect Test;
                 Test.h = 50;
