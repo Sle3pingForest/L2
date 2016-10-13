@@ -12,6 +12,7 @@ class Partie
         Partie();
         virtual ~Partie();
         void gestion_evenements();
+        void gestion_decor(bool init);
         void afficher();
         bool continuer_partie();
     protected:

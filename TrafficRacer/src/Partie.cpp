@@ -11,9 +11,11 @@ Partie::Partie()
     decorTexture = LoadBmpWithTransparency("autres/images/decor.bmp", 00, 255, 255);
 
     voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getCarHeight()-20); //Fixer le 20
-    tabDecor[0].placer(-70, 0);
-    tabDecor[1].placer(SCREEN_WIDTH-130, 250);
-    tabDecor[2].placer(-10, 400);
+//    tabDecor[0].placer(-70, 0);
+//    tabDecor[1].placer(SCREEN_WIDTH-130, 250);
+//    tabDecor[2].placer(0, 200);
+//    tabDecor[3].placer(SCREEN_WIDTH- 150, 500);
+    gestion_decor(true);
 }
 
 Partie::~Partie()
@@ -59,6 +61,30 @@ void Partie::gestion_evenements()
     }
 }
 
+void Partie::gestion_decor(bool init)
+{
+    int posY = 0;
+    for(int i = 0 ; i < 9; i++)
+    {
+        if(init)
+        {
+            tabDecor[i].selectDecor(1, i);
+            tabDecor[i].placer((i%2)*70, posY);
+            if (i%2) {
+                posY += 120;
+            }
+        }
+        else
+        {
+            if(tabDecor[i].getPosY() > SCREEN_HEIGHT)
+                tabDecor[i].placer(tabDecor[i].getPosX(), 0 - tabDecor[i].getDecorHeight() ) ;
+            
+            tabDecor[i].deplacer(0,10);
+            tabDecor[i].afficher(decorTexture);
+        }
+    }
+}
+
 void Partie::afficher()
 {
     const int FPS = 60;
@@ -71,7 +97,8 @@ void Partie::afficher()
     SDL_RenderClear(pRenderer);
 
     route.AfficherRoute();
-
+    
+    gestion_decor(false);
 
     // Gestion des déplacement, faire des fonctions
 
@@ -98,20 +125,15 @@ void Partie::afficher()
 
     }
 
-
+    //Affichage des voitures
     for(int i = 0 ; i < 4; i++)
     {
 
-        if(tabDecor[i].getPosY() > SCREEN_HEIGHT)
-            tabDecor[i].placer(tabDecor[i].getPosX(), 0 - tabDecor[i].getDecorHeight() ) ;
-
-        tabDecor[i].afficher(decorTexture);
-        tabDecor[i].deplacer(0,10);
-
         SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 0);
         tabVoiture[i].AfficherVoiture();
-        tabVoiture[i].deplacer(0,1);
+        tabVoiture[i].deplacer(0,9);
     }
+    
     //Gestion des collisions
     for(int i = 0 ; i < 10; i++)
     {
