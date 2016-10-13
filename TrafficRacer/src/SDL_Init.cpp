@@ -11,8 +11,6 @@
 //La gestion d'érreur est en pratique peu utilisée...
 
 #include "SDL_Init.hpp"
-extern SDL_Window *pWindow;
-extern SDL_Renderer *pRenderer;
 using namespace std;
 
 bool InitSDLEverything()
