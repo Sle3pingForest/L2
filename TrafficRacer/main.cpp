@@ -6,8 +6,7 @@
 //  Copyright © 2016 Arnaud. All rights reserved.
 //
 
-#include "Header.hpp"
-#include "SDL_Init.hpp"
+#include "SDL_Tools.hpp"
 #include "Partie.hpp"
 
 SDL_Window *pWindow =NULL;

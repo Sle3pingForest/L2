@@ -104,14 +104,12 @@ void Partie::afficher()
             int posVoitureDroit = tabVoiture[i].getPosX() + tabVoiture[i].getCarWidth();
             if( (posJoueurGauche >= posVoitureGauche and posJoueurGauche <= posVoitureDroit) or (posJoueurDroit >= posVoitureGauche and posJoueurDroit <= posVoitureDroit) ) // Si la voiture est en face de celle du joueur PAS FINI
             {
-                cout<<"Collision"<<endl;
+                fprintf(stderr,"Collision voiture %d\n", i);
                 SDL_RenderPresent(pRenderer);
                 SDL_Delay(200);
             }
         }
     }
-
-
 
     SDL_RenderPresent(pRenderer);
 

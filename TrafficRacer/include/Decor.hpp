@@ -1,9 +1,7 @@
 #ifndef DECOR_H
 #define DECOR_H
 
-#include <SDL2/SDL.h>
-#include "Route.hpp"
-#include "SDL_Init.hpp"
+#include "SDL_Tools.hpp"
 
 class Decor
 {

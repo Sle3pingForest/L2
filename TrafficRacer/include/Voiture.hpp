@@ -1,7 +1,7 @@
 #ifndef VOITURE_H
 #define VOITURE_H
-#include <SDL2/SDL.h>
 
+#include "SDL_Tools.hpp"
 
 class Voiture
 {

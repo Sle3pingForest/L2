@@ -4,7 +4,6 @@
 #include "Voiture.hpp"
 #include "Route.hpp"
 #include "Decor.hpp"
-#include "SDL_Init.hpp"
 
 class Partie
 {

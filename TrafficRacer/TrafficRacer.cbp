@@ -47,18 +47,17 @@
 		<Unit filename="autres/images/up.bmp" />
 		<Unit filename="autres/images/x.bmp" />
 		<Unit filename="include/Decor.hpp" />
-		<Unit filename="include/Header.hpp" />
 		<Unit filename="include/Joueur.hpp" />
 		<Unit filename="include/Partie.hpp" />
 		<Unit filename="include/Route.hpp" />
-		<Unit filename="include/SDL_Init.hpp" />
+		<Unit filename="include/SDL_Tools.hpp" />
 		<Unit filename="include/Voiture.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Decor.cpp" />
 		<Unit filename="src/Joueur.cpp" />
 		<Unit filename="src/Partie.cpp" />
 		<Unit filename="src/Route.cpp" />
-		<Unit filename="src/SDL_Init.cpp" />
+		<Unit filename="src/SDL_Tools.cpp" />
 		<Unit filename="src/Voiture.cpp" />
 		<Extensions>
 			<envvars />

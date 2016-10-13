@@ -3,7 +3,7 @@
 
 Voiture::Voiture()
 {
-    rectCar.w = 40;
+    rectCar.w = 48;
     rectCar.h = 80;
     couleur = 0;
 }

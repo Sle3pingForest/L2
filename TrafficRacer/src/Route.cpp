@@ -6,7 +6,7 @@ using namespace std;
 
 Route::Route()
 {
-    road.w = SCREEN_WIDTH*0.6;
+    road.w = SCREEN_WIDTH*0.5;
     road.h = SCREEN_HEIGHT;
     road.x = (SCREEN_WIDTH - road.w)/2;
     road.y = 0;
