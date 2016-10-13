@@ -5,6 +5,8 @@ Voiture::Voiture()
 {
     rectCar.w = 48;
     rectCar.h = 80;
+    rectCar.x = 0;
+    rectCar.y = 0;
     couleur = 0;
 }
 

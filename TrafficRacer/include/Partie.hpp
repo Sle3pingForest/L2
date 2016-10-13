@@ -4,6 +4,7 @@
 #include "Voiture.hpp"
 #include "Route.hpp"
 #include "Decor.hpp"
+#include <fstream>
 
 class Partie
 {

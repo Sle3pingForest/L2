@@ -37,7 +37,6 @@
 		<Linker>
 			<Add option="-lSDL2" />
 		</Linker>
-		<Unit filename="autres/const" />
 		<Unit filename="autres/images/down.bmp" />
 		<Unit filename="autres/images/hello_world.bmp" />
 		<Unit filename="autres/images/left.bmp" />
@@ -46,6 +45,7 @@
 		<Unit filename="autres/images/stretch.bmp" />
 		<Unit filename="autres/images/up.bmp" />
 		<Unit filename="autres/images/x.bmp" />
+		<Unit filename="autres/niveau1" />
 		<Unit filename="include/Decor.hpp" />
 		<Unit filename="include/Joueur.hpp" />
 		<Unit filename="include/Partie.hpp" />

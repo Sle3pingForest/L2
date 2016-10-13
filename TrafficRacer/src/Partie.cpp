@@ -1,5 +1,9 @@
 #include "Partie.hpp"
+
+
 using namespace std;
+
+std::ifstream infile("autres/niveau1");
 
 Partie::Partie()
 {
@@ -7,11 +11,6 @@ Partie::Partie()
     decorTexture = LoadBmpWithTransparency("autres/images/decor.bmp", 00, 255, 255);
 
     voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getCarHeight()-20); //Fixer le 20
-    for ( int i = 0 ; i < 3 ; ++i)
-    {
-        tabVoiture[i].setWeight(100);
-    }
-
     tabDecor[0].placer(-70, 0);
     tabDecor[1].placer(SCREEN_WIDTH-130, 250);
     tabDecor[2].placer(-10, 400);
@@ -65,6 +64,7 @@ void Partie::afficher()
     const int FPS = 60;
     Uint32 start;
     start = SDL_GetTicks();
+    string line;
 
     //Création de la couleur de fond
     SDL_SetRenderDrawColor(pRenderer, 88, 41, 0, 255);
@@ -74,27 +74,46 @@ void Partie::afficher()
 
 
     // Gestion des déplacement, faire des fonctions
-    for(int i = 0 ; i < 3; i++)
-    {
-        if(tabVoiture[i].getPosY() > SCREEN_HEIGHT)
-            tabVoiture[i].placer(rand() %route.getWeightRoad() + route.getPositionXRoad(),-200);
 
-        tabVoiture[i].deplacer(0,9);
-        SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 0);
-        tabVoiture[i].AfficherVoiture();
+    if(tabVoiture[0].getPosY() > SCREEN_HEIGHT)
+    {
+        int cpt = 0;
+        for(int i = 0 ; i < 4; ++i)
+        {
+            getline(infile, line);
+            cout<< line<< endl;
+
+            for( int j = 0 ;j < 4 ; ++j)
+            {
+                if(line[j] == '1')
+               {
+                    tabVoiture[cpt].setWeight(90);
+                    int position = route.getPositionXRoad() + j *route.getLargeurVoie();
+                    tabVoiture[cpt].placer(position, -200 + i*50);
+                    cout<<cpt+1<< endl;
+                    cpt++;
+               }
+            }
+        }
+
+    }
+
+
+    for(int i = 0 ; i < 4; i++)
+    {
 
         if(tabDecor[i].getPosY() > SCREEN_HEIGHT)
             tabDecor[i].placer(tabDecor[i].getPosX(), 0 - tabDecor[i].getDecorHeight() ) ;
 
         tabDecor[i].afficher(decorTexture);
         tabDecor[i].deplacer(0,10);
+
+        SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 0);
+        tabVoiture[i].AfficherVoiture();
+        tabVoiture[i].deplacer(0,1);
     }
-
-    SDL_SetRenderDrawColor(pRenderer, 100, 180, 70, 0);
-    voiture_joueur.AfficherVoiture();
-
     //Gestion des collisions
-    for(int i = 0 ; i < 3; i++)
+    for(int i = 0 ; i < 10; i++)
     {
         if(tabVoiture[i].getPosY()+tabVoiture[i].getCarHeight() == voiture_joueur.getPosY()) // Si la voiture est à la même hauteur que celle du joueur
         {
@@ -111,6 +130,8 @@ void Partie::afficher()
         }
     }
 
+    SDL_SetRenderDrawColor(pRenderer, 100, 180, 70, 0);
+    voiture_joueur.AfficherVoiture();
     SDL_RenderPresent(pRenderer);
 
     //Calcul du temps à attendre les FPS
