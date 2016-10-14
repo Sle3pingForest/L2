@@ -1,22 +1,32 @@
-SYSCONF_LINK = g++
-CPPFLAGS     =
-LDFLAGS      =
-LIBS         = -lSDL2 -lm
+#Test si linux ou mac
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	CXXFLAGS = -lSDL2
+endif
+ifeq ($(UNAME_S),Darwin)
+	CXXFLAGS = -I/Library/Frameworks/SDL2.framework/Headers -F/Library/Frameworks -framework SDL2
+endif
 
-DESTDIR = ./
-TARGET  = main
+CXX = g++
+LDFLAGS = -I $(INCLDIR)
+SRC = src/
+INCLDIR = include/
+OUTPUT = TrafficRacer
 
-OBJECTS := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+#Génère les .o à partir de tout les .cpp dans $(SRC)
+OBJECTS := $(patsubst %.cpp,%.o,$(wildcard $(SRC)*.cpp))
 
-all: $(DESTDIR)$(TARGET)
+all : $(OBJECTS)
+	$(CXX) main.cpp $(OBJECTS) -o $(OUTPUT) $(LDFLAGS) $(CXXFLAGS)
 
-$(DESTDIR)$(TARGET): $(OBJECTS)
-	$(SYSCONF_LINK) -Wall $(LDFLAGS) -o $(DESTDIR)$(TARGET) $(OBJECTS) $(LIBS)
+$(SRC)%.o: $(SRC)%.cpp
+	$(CXX) -c $< -o $@ $(LDFLAGS) $(CXXFLAGS)
 
-$(OBJECTS): %.o: %.cpp
-	$(SYSCONF_LINK) -Wall $(CPPFLAGS) -c $(CFLAGS) $< -o $@
+clean :
+	rm -f $(SRC)*.o
 
-clean:
-	-rm -f $(OBJECTS)
-	-rm -f $(TARGET)
+mrproper : clean
+	rm -f $(OUTPUT)
 
+#Affichage des varriables
+print-%  : ; @echo $* = $($*)
