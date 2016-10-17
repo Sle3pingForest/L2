@@ -14,6 +14,7 @@ class Partie
         void gestion_evenements();
         void gestion_decor(bool init);
         void afficher();
+        bool colission(Voiture v, Voiture v2);
         bool continuer_partie();
     protected:
     private:

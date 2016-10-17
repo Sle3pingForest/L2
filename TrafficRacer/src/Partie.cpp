@@ -11,10 +11,6 @@ Partie::Partie()
     decorTexture = LoadBmpWithTransparency("autres/images/decor.bmp", 00, 255, 255);
 
     voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getCarHeight()-20); //Fixer le 20
-//    tabDecor[0].placer(-70, 0);
-//    tabDecor[1].placer(SCREEN_WIDTH-130, 250);
-//    tabDecor[2].placer(0, 200);
-//    tabDecor[3].placer(SCREEN_WIDTH- 150, 500);
     gestion_decor(true);
 }
 
@@ -46,11 +42,11 @@ void Partie::gestion_evenements()
                 break;
 
             case SDLK_LEFT:
-                voiture_joueur.deplacer(-25, 0);
+                voiture_joueur.deplacer(-50, 0);
                 break;
 
             case SDLK_RIGHT:
-                voiture_joueur.deplacer(+25, 0);
+                voiture_joueur.deplacer(+50, 0);
                 break;
 
             default:
@@ -78,11 +74,53 @@ void Partie::gestion_decor(bool init)
         {
             if(tabDecor[i].getPosY() > SCREEN_HEIGHT)
                 tabDecor[i].placer(tabDecor[i].getPosX(), 0 - tabDecor[i].getDecorHeight() ) ;
-            
+
             tabDecor[i].deplacer(0,10);
             tabDecor[i].afficher(decorTexture);
         }
     }
+}
+
+bool Partie::colission(Voiture R1, Voiture R2)
+{
+     int leftR1 = R1.getPosX();
+     int leftR2 = R2.getPosX();
+     int rightR1 = R1.getPosX() + R1.getCarWidth();
+     int rightR2 = R2.getPosX() + R2.getCarWidth();
+     int topR1 = R1.getPosY();
+     int topR2 = R2.getPosY();
+     int bottomR1 = R1.getPosY() + R1.getCarHeight();
+     int bottomR2 = R2.getPosY() + R2.getCarHeight();
+     bool toucher = false;
+     if(rightR1 >= leftR2 && rightR1 <= rightR2 && topR1 >= topR2 && topR1 <= bottomR2)
+     {
+         cout<< "Collision cote a gauche: "<<endl;
+         cout<< "X joueur: "<<rightR1 <<" Y joueur: "<< topR1 <<endl;
+         toucher = true;
+     }
+     else if(leftR1 >= leftR2 && leftR1 <= rightR2 && topR1 >= topR2 && topR1 <= bottomR2)
+     {
+         cout<< "Collision cote a gauche: "<<endl;
+         cout<< "X joueur: "<<leftR1 <<" Y joueur: "<< topR1 <<endl;
+         toucher = true;
+     }
+     else if(leftR1 >= leftR2 && leftR1 <= rightR2 && bottomR1 >= topR2 && bottomR1 <= bottomR2)
+     {
+         cout<< "Collision cote a gauche: "<<endl;
+         cout<< "X joueur: "<<leftR1 <<" Y joueur: "<< bottomR1 <<endl;
+         toucher = true;
+     }
+     else if(rightR1 >= leftR2 && rightR1 <= rightR2 && bottomR1 >= topR2 && bottomR1 <= bottomR2)
+     {
+         cout<< "Collision cote a gauche: "<<endl;
+         cout<< "X joueur: "<<rightR1 <<" Y joueur: "<< bottomR1 <<endl;
+         toucher = true;
+     }
+     else
+     {
+         toucher = false;
+     }
+     return toucher;
 }
 
 void Partie::afficher()
@@ -97,7 +135,7 @@ void Partie::afficher()
     SDL_RenderClear(pRenderer);
 
     route.AfficherRoute();
-    
+
     gestion_decor(false);
 
     // Gestion des déplacement, faire des fonctions
@@ -131,24 +169,16 @@ void Partie::afficher()
 
         SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 0);
         tabVoiture[i].AfficherVoiture();
-        tabVoiture[i].deplacer(0,9);
+        tabVoiture[i].deplacer(0,5);
     }
-    
+
     //Gestion des collisions
     for(int i = 0 ; i < 10; i++)
     {
-        if(tabVoiture[i].getPosY()+tabVoiture[i].getCarHeight() == voiture_joueur.getPosY()) // Si la voiture est à la même hauteur que celle du joueur
+        if(colission(voiture_joueur, tabVoiture[i]))
         {
-            int posJoueurGauche = voiture_joueur.getPosX();
-            int posJoueurDroit = voiture_joueur.getPosX() + voiture_joueur.getCarWidth();
-            int posVoitureGauche = tabVoiture[i].getPosX();
-            int posVoitureDroit = tabVoiture[i].getPosX() + tabVoiture[i].getCarWidth();
-            if( (posJoueurGauche >= posVoitureGauche and posJoueurGauche <= posVoitureDroit) or (posJoueurDroit >= posVoitureGauche and posJoueurDroit <= posVoitureDroit) ) // Si la voiture est en face de celle du joueur PAS FINI
-            {
-                fprintf(stderr,"Collision voiture %d\n", i);
-                SDL_RenderPresent(pRenderer);
-                SDL_Delay(200);
-            }
+            SDL_RenderPresent(pRenderer);
+            SDL_Delay(2000);
         }
     }
 
