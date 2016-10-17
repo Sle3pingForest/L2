@@ -20,7 +20,7 @@ int main(int argc, const char * argv[])
 
     while (partie.continuer_partie())
     {
-        partie.gestion_evenements();
+        partie.gestion_touches();
         partie.afficher();
     }
 

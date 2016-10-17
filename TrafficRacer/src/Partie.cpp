@@ -19,7 +19,7 @@ Partie::~Partie()
     //dtor
 }
 
-void Partie::gestion_evenements()
+void Partie::gestion_touches()
 {
     SDL_Event event;
     while( SDL_PollEvent( &event ) != 0 )
@@ -36,17 +36,27 @@ void Partie::gestion_evenements()
             switch( event.key.keysym.sym )
             {
             case SDLK_UP:
-                    break;
+                break;
 
             case SDLK_DOWN:
                 break;
 
             case SDLK_LEFT:
-                voiture_joueur.deplacer(-50, 0);
+
+                voiture_joueur.deplacer(-25, 0);
+                if(voiture_joueur.getPosX() <= route.getPositionXRoad())
+                {
+                    voiture_joueur.placer(route.getPositionXRoad(), voiture_joueur.getPosY());
+                }
                 break;
 
             case SDLK_RIGHT:
-                voiture_joueur.deplacer(+50, 0);
+
+                voiture_joueur.deplacer(+25, 0);
+                if(voiture_joueur.getPosX() + voiture_joueur.getCarWidth() >= route.getPositionXRoad() + route.getWeightRoad())
+                {
+                    voiture_joueur.placer(route.getPositionXRoad() + route.getWeightRoad() - voiture_joueur.getCarWidth() , voiture_joueur.getPosY());
+                }
                 break;
 
             default:
@@ -178,7 +188,7 @@ void Partie::afficher()
         if(colission(voiture_joueur, tabVoiture[i]))
         {
             SDL_RenderPresent(pRenderer);
-            SDL_Delay(2000);
+            SDL_Delay(10);
         }
     }
 
