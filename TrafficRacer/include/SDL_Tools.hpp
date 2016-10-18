@@ -17,6 +17,7 @@
 //Variables globlales taille de la fenêtre
 const int SCREEN_WIDTH = 700;
 const int SCREEN_HEIGHT = 700;
+const int SCREEN_FPS = 60;
 
 //Variables globales pour rendu SDL
 extern SDL_Window *pWindow;
@@ -29,6 +30,6 @@ bool CreateWindow();
 bool CreateRenderer();
 bool CreateWindowAndRenderer();
 
-SDL_Texture* LoadBmpWithTransparency(char* emplacement, Uint8 redTransparency, Uint8 greenTransparency, Uint8 blueTransparency);
+SDL_Texture* LoadBmpWithTransparency(const char* emplacement, Uint8 redTransparency, Uint8 greenTransparency, Uint8 blueTransparency);
 
 #endif /* SDL_Init_hpp */

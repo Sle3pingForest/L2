@@ -67,7 +67,7 @@ bool CreateWindowAndRenderer()
     return true;
 }
 
-SDL_Texture* LoadBmpWithTransparency(char* emplacement, Uint8 redTransparency, Uint8 greenTransparency, Uint8 blueTransparency)
+SDL_Texture* LoadBmpWithTransparency(const char* emplacement, Uint8 redTransparency, Uint8 greenTransparency, Uint8 blueTransparency)
 {
     SDL_Surface *loadedImage = NULL;
     SDL_Texture *texture = NULL;

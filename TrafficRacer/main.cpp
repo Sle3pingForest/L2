@@ -17,7 +17,7 @@ int main(int argc, const char * argv[])
 
     InitSDLEverything();
     Partie partie;
-
+    
     while (partie.continuer_partie())
     {
         partie.gestion_touches();

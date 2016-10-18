@@ -4,6 +4,7 @@
 #include "Voiture.hpp"
 #include "Route.hpp"
 #include "Decor.hpp"
+#include "Timer.hpp"
 #include <fstream>
 
 class Partie
@@ -20,10 +21,12 @@ class Partie
     private:
         bool jouer;
         SDL_Texture* decorTexture;
+        SDL_Texture* carsTexture;
         Voiture voiture_joueur;
         Route route;
         Voiture tabVoiture[10];
         Decor tabDecor[10];
+        Timer timerFPS;
 };
 
 #endif // PARTIE_H

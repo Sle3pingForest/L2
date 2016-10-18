@@ -34,6 +34,16 @@ void Voiture::AfficherVoiture()
     SDL_RenderFillRect(pRenderer, getRectCar());
 }
 
+void Voiture::afficher(SDL_Texture* texture)
+{
+    SDL_Rect rectImage;
+    rectImage.x = 0;
+    rectImage.y = 0;
+    rectImage.w = 98;
+    rectImage.h = 214;
+    SDL_RenderCopy(pRenderer, texture, &rectImage, &rectCar);
+}
+
 SDL_Rect* Voiture::getRectCar()
 {
     return &rectCar;

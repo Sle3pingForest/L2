@@ -8,10 +8,14 @@ std::ifstream infile("autres/niveau1");
 Partie::Partie()
 {
     jouer = true;
-    decorTexture = LoadBmpWithTransparency("autres/images/decor.bmp", 00, 255, 255);
-
+    decorTexture = LoadBmpWithTransparency("autres/images/decor.bmp", 0, 255, 255);
+    carsTexture = LoadBmpWithTransparency("autres/images/cars.bmp", 0, 55, 255);
+    
+    voiture_joueur.setWeight(route.getLargeurVoie() - 15);
+    voiture_joueur.setHeight(150);
     voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getCarHeight()-20); //Fixer le 20
     gestion_decor(true);
+    timerFPS.start();
 }
 
 Partie::~Partie()
@@ -42,7 +46,6 @@ void Partie::gestion_touches()
                 break;
 
             case SDLK_LEFT:
-
                 voiture_joueur.deplacer(-25, 0);
                 if(voiture_joueur.getPosX() <= route.getPositionXRoad())
                 {
@@ -135,71 +138,69 @@ bool Partie::colission(Voiture R1, Voiture R2)
 
 void Partie::afficher()
 {
-    const int FPS = 60;
-    Uint32 start;
-    start = SDL_GetTicks();
-    string line;
-
-    //Création de la couleur de fond
-    SDL_SetRenderDrawColor(pRenderer, 88, 41, 0, 255);
-    SDL_RenderClear(pRenderer);
-
-    route.AfficherRoute();
-
-    gestion_decor(false);
-
-    // Gestion des déplacement, faire des fonctions
-
-    if(tabVoiture[0].getPosY() > SCREEN_HEIGHT)
+    
+    if (timerFPS.getTicks() > 1000/SCREEN_FPS)
     {
-        int cpt = 0;
-        for(int i = 0 ; i < 4; ++i)
+        
+        string line;
+        
+        //Création de la couleur de fond
+        SDL_SetRenderDrawColor(pRenderer, 88, 41, 0, 255);
+        SDL_RenderClear(pRenderer);
+        
+        route.AfficherRoute();
+        
+        gestion_decor(false);
+        
+        // Gestion des déplacement, faire des fonctions
+        
+        if(tabVoiture[0].getPosY() > SCREEN_HEIGHT)
         {
-            getline(infile, line);
-            cout<< line<< endl;
-
-            for( int j = 0 ;j < 4 ; ++j)
+            int cpt = 0;
+            for(int i = 0 ; i < 4; ++i)
             {
-                if(line[j] == '1')
-               {
-                    tabVoiture[cpt].setWeight(90);
-                    int position = route.getPositionXRoad() + j *route.getLargeurVoie();
-                    tabVoiture[cpt].placer(position, -200 + i*50);
-                    cout<<cpt+1<< endl;
-                    cpt++;
-               }
+                getline(infile, line);
+                cout<< line<< endl;
+                
+                for( int j = 0 ;j < 4 ; ++j)
+                {
+                    if(line[j] == '1')
+                    {
+                        tabVoiture[cpt].setWeight(90);
+                        int position = route.getPositionXRoad() + j *route.getLargeurVoie();
+                        tabVoiture[cpt].placer(position, -200 + i*50);
+                        cout<<cpt+1<< endl;
+                        cpt++;
+                    }
+                }
+            }
+            
+        }
+        
+        //Affichage des voitures
+        for(int i = 0 ; i < 4; i++)
+        {
+            
+            SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 0);
+            tabVoiture[i].AfficherVoiture();
+            tabVoiture[i].deplacer(0,5);
+        }
+        
+        //Gestion des collisions
+        for(int i = 0 ; i < 10; i++)
+        {
+            if(colission(voiture_joueur, tabVoiture[i]))
+            {
+                SDL_Delay(10);
             }
         }
-
-    }
-
-    //Affichage des voitures
-    for(int i = 0 ; i < 4; i++)
-    {
-
-        SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 0);
-        tabVoiture[i].AfficherVoiture();
-        tabVoiture[i].deplacer(0,5);
-    }
-
-    //Gestion des collisions
-    for(int i = 0 ; i < 10; i++)
-    {
-        if(colission(voiture_joueur, tabVoiture[i]))
-        {
-            SDL_RenderPresent(pRenderer);
-            SDL_Delay(10);
-        }
-    }
-
-    SDL_SetRenderDrawColor(pRenderer, 100, 180, 70, 0);
-    voiture_joueur.AfficherVoiture();
-    SDL_RenderPresent(pRenderer);
-
-    //Calcul du temps à attendre les FPS
-    if(1000/FPS > SDL_GetTicks()-start)
-    {
-        SDL_Delay(1000/FPS-(SDL_GetTicks()-start));
+        
+        SDL_SetRenderDrawColor(pRenderer, 100, 180, 70, 0);
+        //voiture_joueur.AfficherVoiture();
+        voiture_joueur.afficher(carsTexture);
+        SDL_RenderPresent(pRenderer);
+        
+        timerFPS.start();
     }
 }
 
