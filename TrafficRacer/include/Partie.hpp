@@ -13,9 +13,12 @@ class Partie
         Partie();
         virtual ~Partie();
         void gestion_touches();
-        void gestion_decor(bool init);
+        void placer_Decors();
         void afficher();
-        bool colission(Voiture v, Voiture v2);
+        bool collision(Voiture v, Voiture v2);
+        void chargement_voitures_fichier();
+        void deplacements();
+        void gestion_collisions();
         bool continuer_partie();
     protected:
     private:
@@ -28,6 +31,7 @@ class Partie
         Voiture tabVoiture[10];
         Decor tabDecor[10];
         Timer timerFPS;
+        Timer timerDeplacement;
         int vitesse;
 };
 

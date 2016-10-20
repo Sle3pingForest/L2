@@ -17,10 +17,13 @@ int main(int argc, const char * argv[])
 
     InitSDLEverything();
     Partie partie;
-    
+
     while (partie.continuer_partie())
     {
         partie.gestion_touches();
+        partie.gestion_collisions();
+        partie.chargement_voitures_fichier();
+        partie.deplacements();
         partie.afficher();
     }
 

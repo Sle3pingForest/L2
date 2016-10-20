@@ -1,6 +1,5 @@
 #include "Partie.hpp"
 
-
 using namespace std;
 
 std::ifstream infile("autres/niveau1");
@@ -15,15 +14,31 @@ Partie::Partie()
     voiture_joueur.setWeight(route.getLargeurVoie() - 15);
     voiture_joueur.setHeight(150);
     voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getCarHeight()-20); //Fixer le 20
-    gestion_decor(true);
-    timerFPS.start();
 
-    vitesse = 0;
+    placer_Decors();
+
+    timerFPS.start();
+    timerDeplacement.start();
+    vitesse = 10;
 }
 
 Partie::~Partie()
 {
     //dtor
+}
+
+void Partie::placer_Decors() //Place les décors une première fois
+{
+    int posY = 0;
+    for(int i = 0 ; i < 9; i++)
+    {
+        tabDecor[i].selectDecor(1, i);
+        tabDecor[i].placer((i%2)*70, posY);
+        if (i%2)
+        {
+            posY += 120;
+        }
+    }
 }
 
 void Partie::gestion_touches()
@@ -59,15 +74,20 @@ void Partie::gestion_touches()
                 if(voiture_joueur.getPosX() <= route.getPositionXRoad())
                 {
                     voiture_joueur.placer(route.getPositionXRoad(), voiture_joueur.getPosY());
+                    vitesse -= 5;
+                    if(vitesse < 0)
+                        vitesse = 0;
                 }
                 break;
 
             case SDLK_RIGHT:
-
                 voiture_joueur.deplacer(+25, 0);
                 if(voiture_joueur.getPosX() + voiture_joueur.getCarWidth() >= route.getPositionXRoad() + route.getWeightRoad())
                 {
                     voiture_joueur.placer(route.getPositionXRoad() + route.getWeightRoad() - voiture_joueur.getCarWidth() , voiture_joueur.getPosY());
+                    vitesse -= 5;
+                    if(vitesse < 0)
+                        vitesse = 0;
                 }
                 break;
 
@@ -79,137 +99,142 @@ void Partie::gestion_touches()
     }
 }
 
-void Partie::gestion_decor(bool init)
+void Partie::gestion_collisions()
 {
-    int posY = 0;
-    for(int i = 0 ; i < 9; i++)
+    for(int i = 0 ; i < 10; i++)
     {
-        if(init)
+        if(collision(voiture_joueur, tabVoiture[i]))
         {
-            tabDecor[i].selectDecor(1, i);
-            tabDecor[i].placer((i%2)*70, posY);
-            if (i%2) {
-                posY += 120;
-            }
-        }
-        else
-        {
-            if(tabDecor[i].getPosY() > SCREEN_HEIGHT)
-                tabDecor[i].placer(tabDecor[i].getPosX(), 0 - tabDecor[i].getDecorHeight() ) ;
-
-            tabDecor[i].deplacer(0, vitesse);
-            tabDecor[i].afficher(decorTexture);
+            vitesse = 3;
         }
     }
 }
 
-bool Partie::colission(Voiture R1, Voiture R2)
+bool Partie::collision(Voiture R1, Voiture R2)
 {
-     int leftR1 = R1.getPosX();
-     int leftR2 = R2.getPosX();
-     int rightR1 = R1.getPosX() + R1.getCarWidth();
-     int rightR2 = R2.getPosX() + R2.getCarWidth();
-     int topR1 = R1.getPosY();
-     int topR2 = R2.getPosY();
-     int bottomR1 = R1.getPosY() + R1.getCarHeight();
-     int bottomR2 = R2.getPosY() + R2.getCarHeight();
-     bool toucher = false;
-     if(rightR1 >= leftR2 && rightR1 <= rightR2 && topR1 >= topR2 && topR1 <= bottomR2)
-     {
-         cout<< "Collision cote a gauche: "<<endl;
-         cout<< "X joueur: "<<rightR1 <<" Y joueur: "<< topR1 <<endl;
-         toucher = true;
-     }
-     else if(leftR1 >= leftR2 && leftR1 <= rightR2 && topR1 >= topR2 && topR1 <= bottomR2)
-     {
-         cout<< "Collision cote a gauche: "<<endl;
-         cout<< "X joueur: "<<leftR1 <<" Y joueur: "<< topR1 <<endl;
-         toucher = true;
-     }
-     else if(leftR1 >= leftR2 && leftR1 <= rightR2 && bottomR1 >= topR2 && bottomR1 <= bottomR2)
-     {
-         cout<< "Collision cote a gauche: "<<endl;
-         cout<< "X joueur: "<<leftR1 <<" Y joueur: "<< bottomR1 <<endl;
-         toucher = true;
-     }
-     else if(rightR1 >= leftR2 && rightR1 <= rightR2 && bottomR1 >= topR2 && bottomR1 <= bottomR2)
-     {
-         cout<< "Collision cote a gauche: "<<endl;
-         cout<< "X joueur: "<<rightR1 <<" Y joueur: "<< bottomR1 <<endl;
-         toucher = true;
-     }
-     else
-     {
-         toucher = false;
-     }
-     return toucher;
+    int leftR1 = R1.getPosX();
+    int leftR2 = R2.getPosX();
+    int rightR1 = R1.getPosX() + R1.getCarWidth();
+    int rightR2 = R2.getPosX() + R2.getCarWidth();
+    int topR1 = R1.getPosY();
+    int topR2 = R2.getPosY();
+    int bottomR1 = R1.getPosY() + R1.getCarHeight();
+    int bottomR2 = R2.getPosY() + R2.getCarHeight();
+    bool toucher = false;
+    if(rightR1 >= leftR2 && rightR1 <= rightR2 && topR1 >= topR2 && topR1 <= bottomR2)
+    {
+        cout<< "Collision cote a gauche: "<<endl;
+        cout<< "X joueur: "<<rightR1 <<" Y joueur: "<< topR1 <<endl;
+        toucher = true;
+    }
+    else if(leftR1 >= leftR2 && leftR1 <= rightR2 && topR1 >= topR2 && topR1 <= bottomR2)
+    {
+        cout<< "Collision cote a gauche: "<<endl;
+        cout<< "X joueur: "<<leftR1 <<" Y joueur: "<< topR1 <<endl;
+        toucher = true;
+    }
+    else if(leftR1 >= leftR2 && leftR1 <= rightR2 && bottomR1 >= topR2 && bottomR1 <= bottomR2)
+    {
+        cout<< "Collision cote a gauche: "<<endl;
+        cout<< "X joueur: "<<leftR1 <<" Y joueur: "<< bottomR1 <<endl;
+        toucher = true;
+    }
+    else if(rightR1 >= leftR2 && rightR1 <= rightR2 && bottomR1 >= topR2 && bottomR1 <= bottomR2)
+    {
+        cout<< "Collision cote a gauche: "<<endl;
+        cout<< "X joueur: "<<rightR1 <<" Y joueur: "<< bottomR1 <<endl;
+        toucher = true;
+    }
+    else
+    {
+        toucher = false;
+    }
+    return toucher;
+}
+
+void Partie::chargement_voitures_fichier()
+{
+    string line;
+    if(tabVoiture[0].getPosY() > SCREEN_HEIGHT)
+    {
+        int cpt = 0;
+        for(int i = 0 ; i < 4; ++i)
+        {
+            getline(infile, line);
+            cout<< line<< endl;
+
+            for( int j = 0 ; j < 4 ; ++j)
+            {
+                if(line[j] == '1')
+                {
+                    tabVoiture[cpt].setWeight(route.getLargeurVoie() - 15);
+                    tabVoiture[cpt].setHeight(150);
+                    int position = route.getPositionXRoad() + j *route.getLargeurVoie() +7;
+                    tabVoiture[cpt].placer(position, -200 + i*50); // Fixer les tailles
+                    cout<<cpt+1<< endl;
+                    cpt++;
+                }
+            }
+        }
+    }
+}
+
+void Partie::deplacements()
+{
+    if (timerDeplacement.getTicks() > 10) // changer ce compteur
+    {
+        int vitesseAutresVoitures = 8;
+
+        //Déplacement de la route
+        route.deplacer(vitesse);
+
+        //Déplacement des voitures
+        for(int i = 0 ; i < 4; i++)
+        {
+            tabVoiture[i].deplacer(0, vitesse - vitesseAutresVoitures );
+        }
+
+        //Déplacement des décors
+        for(int i = 0 ; i < 9; i++)
+        {
+            if(tabDecor[i].getPosY() > SCREEN_HEIGHT)
+            {
+                tabDecor[i].placer(tabDecor[i].getPosX(), 0 - tabDecor[i].getDecorHeight() ) ;
+            }
+            tabDecor[i].deplacer(0, vitesse);
+        }
+        timerDeplacement.start();
+    }
 }
 
 void Partie::afficher()
 {
-
     if (timerFPS.getTicks() > 1000/SCREEN_FPS)
     {
-
-        string line;
-
         //Création de la couleur de fond
         SDL_SetRenderDrawColor(pRenderer, 88, 41, 0, 255);
         SDL_RenderClear(pRenderer);
 
+        //Affichage de la route
+        route.afficher(roadTexture);
 
-        //route.AfficherRoute();
-        route.afficher(roadTexture, vitesse);
+        //route.afficherVoies();
 
-        gestion_decor(false);
-
-        // Gestion des déplacement, faire des fonctions
-
-        if(tabVoiture[0].getPosY() > SCREEN_HEIGHT)
+        //Affichages des décors
+        for(int i = 0 ; i < 9; i++)
         {
-            int cpt = 0;
-            for(int i = 0 ; i < 4; ++i)
-            {
-                getline(infile, line);
-                cout<< line<< endl;
-
-                for( int j = 0 ;j < 4 ; ++j)
-                {
-                    if(line[j] == '1')
-                    {
-                        tabVoiture[cpt].setWeight(90);
-                        tabVoiture[cpt].setHeight(150);
-                        int position = route.getPositionXRoad() + j *route.getLargeurVoie();
-                        tabVoiture[cpt].placer(position, -200 + i*50);
-                        cout<<cpt+1<< endl;
-                        cpt++;
-                    }
-                }
-            }
-
+            tabDecor[i].afficher(decorTexture);
         }
 
         //Affichage des voitures
         for(int i = 0 ; i < 4; i++)
         {
-
-            SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 0);
             tabVoiture[i].afficher(carsTexture);
-            tabVoiture[i].deplacer(0,5);
         }
 
-        //Gestion des collisions
-        for(int i = 0 ; i < 10; i++)
-        {
-            if(colission(voiture_joueur, tabVoiture[i]))
-            {
-                SDL_Delay(10);
-            }
-        }
-
-        SDL_SetRenderDrawColor(pRenderer, 100, 180, 70, 0);
-        //voiture_joueur.AfficherVoiture();
+        //Affichage voiture joueur
         voiture_joueur.afficher(carsTexture);
+
         SDL_RenderPresent(pRenderer);
 
         timerFPS.start();
