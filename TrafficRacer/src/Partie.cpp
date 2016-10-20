@@ -91,6 +91,18 @@ void Partie::gestion_touches()
                 }
                 break;
 
+            case 'p':
+                if(timerDeplacement.isStarted())
+                {
+                    timerDeplacement.pause();
+                }
+                else
+                {
+                    timerDeplacement.unpause();
+                }
+
+                break;
+
             default:
                 break;
             }
