@@ -4,7 +4,7 @@
 	<SDL2/SDL.h>
 	<string>
 
-1476361850 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/main.cpp
+1476964901 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/main.cpp
 	"SDL_Tools.hpp"
 	"Partie.hpp"
 
@@ -13,7 +13,7 @@
 
 1475153864 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Joueur.h
 
-1476684225 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Voiture.cpp
+1476964902 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Voiture.cpp
 	"Voiture.hpp"
 	"Route.hpp"
 
@@ -55,7 +55,7 @@
 1475755197 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Partie.h
 	"Voiture.h"
 
-1476684225 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Partie.cpp
+1476972662 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Partie.cpp
 	"Partie.hpp"
 
 1475755277 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/SDL_Init.cpp
@@ -146,35 +146,42 @@
 
 1474871262 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Joueur.hpp
 
-1476362143 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Route.hpp
+1476969564 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Route.hpp
 	"SDL_Tools.hpp"
+	"Decor.hpp"
+	"Voiture.hpp"
 
 1476361350 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Header.hpp
 	<SDL2/SDL.h>
 
 1476362217 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Joueur.hpp
 
-1476684224 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Partie.hpp
+1476972282 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Partie.hpp
 	"Voiture.hpp"
 	"Route.hpp"
 	"Decor.hpp"
+	"Timer.hpp"
 	<fstream>
 
-1476362238 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Voiture.hpp
+1476964901 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Voiture.hpp
 	"SDL_Tools.hpp"
 
-1476361299 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Route.cpp
+1476972087 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Route.cpp
 	"Route.hpp"
-	<math.h>
-	"Decor.hpp"
-	"Voiture.hpp"
 
-1476361965 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/SDL_Tools.hpp
+1476964901 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/SDL_Tools.hpp
 	<stdlib.h>
 	<stdio.h>
 	<iostream>
 	<SDL2/SDL.h>
 
-1476361982 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/SDL_Tools.cpp
+1476964902 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/SDL_Tools.cpp
 	"SDL_Tools.hpp"
+
+1476686772 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Timer.hpp
+	<stdint.h>
+	<SDL2/SDL.h>
+
+1476687496 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Timer.cpp
+	"Timer.hpp"
 

@@ -22,11 +22,13 @@ class Partie
         bool jouer;
         SDL_Texture* decorTexture;
         SDL_Texture* carsTexture;
+        SDL_Texture* roadTexture;
         Voiture voiture_joueur;
         Route route;
         Voiture tabVoiture[10];
         Decor tabDecor[10];
         Timer timerFPS;
+        int vitesse;
 };
 
 #endif // PARTIE_H

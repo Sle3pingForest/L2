@@ -9,13 +9,16 @@ Partie::Partie()
 {
     jouer = true;
     decorTexture = LoadBmpWithTransparency("autres/images/decor.bmp", 0, 255, 255);
-    carsTexture = LoadBmpWithTransparency("autres/images/cars.bmp", 0, 55, 255);
-    
+    carsTexture = LoadBmpWithTransparency("autres/images/cars.bmp", 0, 255, 255);
+    roadTexture = LoadBmpWithTransparency("autres/images/road.bmp", 0, 255, 255);
+
     voiture_joueur.setWeight(route.getLargeurVoie() - 15);
     voiture_joueur.setHeight(150);
     voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getCarHeight()-20); //Fixer le 20
     gestion_decor(true);
     timerFPS.start();
+
+    vitesse = 0;
 }
 
 Partie::~Partie()
@@ -40,9 +43,15 @@ void Partie::gestion_touches()
             switch( event.key.keysym.sym )
             {
             case SDLK_UP:
+                vitesse += 1;
+                if(vitesse > 20)
+                    vitesse = 20;
                 break;
 
             case SDLK_DOWN:
+                vitesse -= 2;
+                if(vitesse < 0)
+                    vitesse = 0;
                 break;
 
             case SDLK_LEFT:
@@ -88,7 +97,7 @@ void Partie::gestion_decor(bool init)
             if(tabDecor[i].getPosY() > SCREEN_HEIGHT)
                 tabDecor[i].placer(tabDecor[i].getPosX(), 0 - tabDecor[i].getDecorHeight() ) ;
 
-            tabDecor[i].deplacer(0,10);
+            tabDecor[i].deplacer(0, vitesse);
             tabDecor[i].afficher(decorTexture);
         }
     }
@@ -138,22 +147,24 @@ bool Partie::colission(Voiture R1, Voiture R2)
 
 void Partie::afficher()
 {
-    
+
     if (timerFPS.getTicks() > 1000/SCREEN_FPS)
     {
-        
+
         string line;
-        
+
         //Création de la couleur de fond
         SDL_SetRenderDrawColor(pRenderer, 88, 41, 0, 255);
         SDL_RenderClear(pRenderer);
-        
-        route.AfficherRoute();
-        
+
+
+        //route.AfficherRoute();
+        route.afficher(roadTexture, vitesse);
+
         gestion_decor(false);
-        
+
         // Gestion des déplacement, faire des fonctions
-        
+
         if(tabVoiture[0].getPosY() > SCREEN_HEIGHT)
         {
             int cpt = 0;
@@ -161,12 +172,13 @@ void Partie::afficher()
             {
                 getline(infile, line);
                 cout<< line<< endl;
-                
+
                 for( int j = 0 ;j < 4 ; ++j)
                 {
                     if(line[j] == '1')
                     {
                         tabVoiture[cpt].setWeight(90);
+                        tabVoiture[cpt].setHeight(150);
                         int position = route.getPositionXRoad() + j *route.getLargeurVoie();
                         tabVoiture[cpt].placer(position, -200 + i*50);
                         cout<<cpt+1<< endl;
@@ -174,18 +186,18 @@ void Partie::afficher()
                     }
                 }
             }
-            
+
         }
-        
+
         //Affichage des voitures
         for(int i = 0 ; i < 4; i++)
         {
-            
+
             SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 0);
-            tabVoiture[i].AfficherVoiture();
+            tabVoiture[i].afficher(carsTexture);
             tabVoiture[i].deplacer(0,5);
         }
-        
+
         //Gestion des collisions
         for(int i = 0 ; i < 10; i++)
         {
@@ -194,12 +206,12 @@ void Partie::afficher()
                 SDL_Delay(10);
             }
         }
-        
+
         SDL_SetRenderDrawColor(pRenderer, 100, 180, 70, 0);
         //voiture_joueur.AfficherVoiture();
         voiture_joueur.afficher(carsTexture);
         SDL_RenderPresent(pRenderer);
-        
+
         timerFPS.start();
     }
 }

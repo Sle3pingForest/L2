@@ -2,6 +2,8 @@
 #define ROUTE_H
 
 #include "SDL_Tools.hpp"
+#include "Decor.hpp"
+#include "Voiture.hpp"
 
 class Route
 {
@@ -17,10 +19,12 @@ class Route
         void tracerVoies(int nombre);
         SDL_Rect* getRectRoute();
         void AfficherRoute();
+        void afficher(SDL_Texture* texture, int vitesse);
         virtual ~Route();
     protected:
     private:
         SDL_Rect road;
+        SDL_Rect roadPortionRender;
         SDL_Rect tabVoie[4];
 };
 
