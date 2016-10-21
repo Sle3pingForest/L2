@@ -2,17 +2,32 @@
 
 using namespace std;
 
-Route::Route()
+Route::Route() : Objet()
 {
-    road.w = SCREEN_WIDTH*0.5;
-    road.h = SCREEN_HEIGHT;
-    road.x = (SCREEN_WIDTH - road.w)/2;
-    road.y = 0;
+    objet.w = SCREEN_WIDTH*0.5;
+    objet.h = SCREEN_HEIGHT;
+    objet.x = (SCREEN_WIDTH - objet.w)/2;
+    objet.y = 0;
 
-    roadPortionRender = road;
-    roadPortionRender.h = 300;
+    image = objet;
+    image.h = 300;
 }
 
+Route::Route(int w, int h, int x, int y) : Objet(w, h, x, y)
+{
+    objet.w = w;
+    objet.h = h;
+    objet.x = x;
+    objet.y = y;
+
+    image = objet;
+    image.h = 300;
+}
+
+Route::~Route()
+{
+    //dtor
+}
 
 void Route::afficherVoies()
 {
@@ -20,7 +35,7 @@ void Route::afficherVoies()
     int positionVoie = SCREEN_WIDTH/2 - 2* getLargeurVoie();
     SDL_Rect ligne;
     ligne.x = positionVoie;
-    ligne.h = road.h;
+    ligne.h = objet.h;
     ligne.y = 0 ;
     ligne.w = 2 ;
     for ( int i = 0 ; i < 5 ; ++i)
@@ -34,18 +49,18 @@ void Route::afficherVoies()
 void Route::afficher(SDL_Texture* texture)
 {
     int nb_repetition_image = 3;
-    if(roadPortionRender.y > SCREEN_HEIGHT)
+    if(image.y > SCREEN_HEIGHT)
     {
-        roadPortionRender.y -= roadPortionRender.h * (nb_repetition_image + 1);
+        image.y -= image.h * (nb_repetition_image + 1);
     }
-    SDL_RenderCopy(pRenderer, texture, NULL, &roadPortionRender);
-    SDL_Rect test = roadPortionRender;
+    SDL_RenderCopy(pRenderer, texture, NULL, &image);
+    SDL_Rect test = image;
     for(int i = 0; i < 3; ++i)
     {
-        test.y += roadPortionRender.h;
+        test.y += image.h;
         if(test.y > SCREEN_HEIGHT)
         {
-            test.y -= roadPortionRender.h * (nb_repetition_image + 1);
+            test.y -= image.h * (nb_repetition_image + 1);
         }
         SDL_RenderCopy(pRenderer, texture, NULL, &test);
     }
@@ -53,34 +68,10 @@ void Route::afficher(SDL_Texture* texture)
 
 void Route::deplacer(int vitesse)
 {
-    roadPortionRender.y += vitesse;
-}
-
-SDL_Rect* Route::getRectRoute()
-{
-    return &road;
-}
-
-int Route::getWeightRoad()
-{
-    return road.w;
-}
-int Route::getPositionXRoad()
-{
-    return road.x;
+    image.y += vitesse;
 }
 
 int Route::getLargeurVoie()
 {
-    return road.w/4;
-}
-
-int Route::getHeightRoad()
-{
-    return road.h;
-}
-
-Route::~Route()
-{
-    //dtor
+    return objet.w/4;
 }

@@ -48,6 +48,7 @@
 		<Unit filename="autres/niveau1" />
 		<Unit filename="include/Decor.hpp" />
 		<Unit filename="include/Joueur.hpp" />
+		<Unit filename="include/Objet.hpp" />
 		<Unit filename="include/Partie.hpp" />
 		<Unit filename="include/Route.hpp" />
 		<Unit filename="include/SDL_Tools.hpp" />
@@ -56,6 +57,7 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Decor.cpp" />
 		<Unit filename="src/Joueur.cpp" />
+		<Unit filename="src/Objet.cpp" />
 		<Unit filename="src/Partie.cpp" />
 		<Unit filename="src/Route.cpp" />
 		<Unit filename="src/SDL_Tools.cpp" />

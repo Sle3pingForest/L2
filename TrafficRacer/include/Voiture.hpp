@@ -2,31 +2,17 @@
 #define VOITURE_H
 
 #include "SDL_Tools.hpp"
+#include "Objet.hpp"
 
-class Voiture
+class Voiture : public Objet
 {
     public:
         Voiture();
-        Voiture(int w, int h);
-        void placer( int x, int y);
-        void AfficherVoiture();
-        void afficher(SDL_Texture* texture);
-        SDL_Rect* getRectCar();
-        void setRectCar(SDL_Rect* car);
-        int getPosX();
-        int getPosY();
-        int getCarWidth();
-        int getCarHeight();
-        int getCouleur();
-        void setCouleur( int codeCouleur);
-        void setWeight(int tailleW);
-        void setHeight(int tailleH);
-        void deplacer(int x, int y);
+        Voiture(int x, int y, int w, int h);
         virtual ~Voiture();
+
     protected:
     private:
-        SDL_Rect rectCar;
-        int couleur;
 };
 
 #endif // VOITURE_H

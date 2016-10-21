@@ -2,30 +2,22 @@
 #define ROUTE_H
 
 #include "SDL_Tools.hpp"
-#include "Decor.hpp"
-#include "Voiture.hpp"
+#include "Objet.hpp"
 
-class Route
+class Route : public Objet
 {
     public:
         Route();
-        int getWeightRoad();
-        int getHeightRoad();
-        int getColorRoad();
-        int getLargeurVoie();
-        int getPositionXRoad();
-        void InitVoie();
-        void setVoie(int x);
-        void tracerVoies(int nombre);
-        SDL_Rect* getRectRoute();
-        void afficherVoies();
-        void afficher(SDL_Texture* texture);
-        void deplacer(int vitesse);
+        Route(int w, int h, int x, int y);
         virtual ~Route();
+
+        int getLargeurVoie();
+        void afficher(SDL_Texture* texture);
+        void afficherVoies();
+        void deplacer(int vitesse);
+
     protected:
     private:
-        SDL_Rect road;
-        SDL_Rect roadPortionRender;
 };
 
 #endif

@@ -2,29 +2,19 @@
 #define DECOR_H
 
 #include "SDL_Tools.hpp"
+#include "Objet.hpp"
 
-class Decor
+class Decor: public Objet
 {
     public:
         Decor();
         Decor(int w ,int h, int x , int y);
         virtual ~Decor();
-    
+
         void selectDecor(int type, int nb);
-    
-        void placer(int x, int y);
-        void deplacer(int x, int y);
-        void afficher(SDL_Texture* texture);
-    
-        int getPosX();
-        int getPosY();
-        int getDecorWidth();
-        int getDecorHeight();
-    
+
     protected:
     private:
-        SDL_Rect rectDecor;
-        SDL_Rect rectImage;
 };
 
 const int arbre_width = 64;
