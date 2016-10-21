@@ -31,6 +31,11 @@ Route::~Route()
 
 void Route::afficherVoies()
 {
+    objet.w = SCREEN_WIDTH*0.5;
+    objet.h = SCREEN_HEIGHT;
+    objet.x = (SCREEN_WIDTH - objet.w)/2;
+    objet.y = 0;
+
     SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 255);
     int positionVoie = SCREEN_WIDTH/2 - 2* getLargeurVoie();
     SDL_Rect ligne;
@@ -48,6 +53,10 @@ void Route::afficherVoies()
 
 void Route::afficher(SDL_Texture* texture)
 {
+    objet.x = (SCREEN_WIDTH - objet.w)/2;
+    image.x = objet.x;
+    //objet.w = SCREEN_WIDTH*0.5;
+    //image.w = objet.w;
 
     int nb_repetition_image = 3;
     if(image.y > SCREEN_HEIGHT)
@@ -66,6 +75,7 @@ void Route::afficher(SDL_Texture* texture)
         SDL_RenderCopy(pRenderer, texture, NULL, &test);
     }
 }
+
 
 void Route::deplacer(int vitesse)
 {

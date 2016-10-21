@@ -13,13 +13,13 @@ Partie::Partie()
 
     voiture_joueur.setWidth(route.getLargeurVoie() - 15);
     voiture_joueur.setHeight(150);
-    voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getHeight()- SCREEN_HEIGHT/50); //Fixer le 20
+    voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getHeight()- SCREEN_HEIGHT/50);
 
     placer_Decors();
 
     timerFPS.start();
     timerDeplacement.start();
-    vitesse = 0;
+    vitesse = SCREEN_HEIGHT/50;
 }
 
 Partie::~Partie()
@@ -60,6 +60,8 @@ void Partie::gestion_touches()
             case SDL_WINDOWEVENT_SIZE_CHANGED:
                 SCREEN_WIDTH = event.window.data1;
                 SCREEN_HEIGHT = event.window.data2;
+                vitesse = SCREEN_HEIGHT/50;
+                voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getHeight()- SCREEN_HEIGHT/50);
                 break;
 
             case SDL_WINDOWEVENT_FOCUS_LOST:
@@ -134,7 +136,7 @@ void Partie::gestion_collisions()
     {
         if(collision(voiture_joueur, tabVoiture[i]))
         {
-            vitesse = 3;
+            //vitesse = 3;
         }
     }
 }
@@ -245,7 +247,7 @@ void Partie::afficher()
         //Affichage de la route
         route.afficher(roadTexture);
 
-        route.afficherVoies();
+        //route.afficherVoies();
 
         //Affichages des décors
         for(int i = 0 ; i < 9; i++)
