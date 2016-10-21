@@ -48,6 +48,7 @@ void Route::afficherVoies()
 
 void Route::afficher(SDL_Texture* texture)
 {
+
     int nb_repetition_image = 3;
     if(image.y > SCREEN_HEIGHT)
     {

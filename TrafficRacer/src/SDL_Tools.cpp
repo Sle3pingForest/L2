@@ -59,7 +59,7 @@ bool CreateRenderer()
 
 bool CreateWindowAndRenderer()
 {
-    if( SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN, &pWindow, &pRenderer) ) //0 = succès
+    if( SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE, &pWindow, &pRenderer) ) //0 = succès
     {
         fprintf(stderr, "Échec de la création de la fenêtre et du rendu: %s\n", SDL_GetError());
         return false;

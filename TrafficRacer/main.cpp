@@ -12,6 +12,10 @@
 SDL_Window *pWindow =NULL;
 SDL_Renderer *pRenderer = NULL;
 
+int SCREEN_WIDTH = 700;
+int SCREEN_HEIGHT = 700;
+int SCREEN_FPS = 50;
+
 int main(int argc, const char * argv[])
 {
 

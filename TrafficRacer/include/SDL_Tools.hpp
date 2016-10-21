@@ -15,9 +15,9 @@
 #include <SDL2/SDL.h>
 
 //Variables globlales taille de la fenêtre
-const int SCREEN_WIDTH = 700;
-const int SCREEN_HEIGHT = 700;
-const int SCREEN_FPS = 50;
+extern int SCREEN_WIDTH;
+extern int SCREEN_HEIGHT;
+extern int SCREEN_FPS;
 
 //Variables globales pour rendu SDL
 extern SDL_Window *pWindow;

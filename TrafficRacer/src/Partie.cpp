@@ -13,7 +13,7 @@ Partie::Partie()
 
     voiture_joueur.setWidth(route.getLargeurVoie() - 15);
     voiture_joueur.setHeight(150);
-    voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getHeight()-20); //Fixer le 20
+    voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getHeight()- SCREEN_HEIGHT/50); //Fixer le 20
 
     placer_Decors();
 
@@ -47,11 +47,29 @@ void Partie::gestion_touches()
     while( SDL_PollEvent( &event ) != 0 )
     {
         //Fermer la fenêtre
-        if (event.type == SDL_QUIT)
+        if(event.type == SDL_QUIT)
         {
             jouer = false;
 
         }
+        //Evenements de fenêtre
+        if(event.type == SDL_WINDOWEVENT)
+        {
+            switch (event.window.event)
+            {
+            case SDL_WINDOWEVENT_SIZE_CHANGED:
+                SCREEN_WIDTH = event.window.data1;
+                SCREEN_HEIGHT = event.window.data2;
+                break;
+
+            case SDL_WINDOWEVENT_FOCUS_LOST:
+                if(not pause)
+                    pause = true;
+                break;
+            }
+
+        }
+
         // Les touches
         else if( event.type == SDL_KEYDOWN )
         {
@@ -172,7 +190,6 @@ void Partie::chargement_voitures_fichier()
         for(int i = 0 ; i < 4; ++i)
         {
             getline(infile, line);
-            //cout<< line<< endl;
 
             for( int j = 0 ; j < 4 ; ++j)
             {
@@ -182,7 +199,6 @@ void Partie::chargement_voitures_fichier()
                     tabVoiture[cpt].setHeight(150);
                     int position = route.getPosX() + j *route.getLargeurVoie() +7;
                     tabVoiture[cpt].placer(position, -200 + i*50); // Fixer les tailles
-                    cout<<cpt+1<< endl;
                     cpt++;
                 }
             }
@@ -229,7 +245,7 @@ void Partie::afficher()
         //Affichage de la route
         route.afficher(roadTexture);
 
-        //route.afficherVoies();
+        route.afficherVoies();
 
         //Affichages des décors
         for(int i = 0 ; i < 9; i++)
