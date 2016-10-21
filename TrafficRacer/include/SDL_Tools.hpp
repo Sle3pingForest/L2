@@ -16,8 +16,8 @@
 
 //Variables globlales taille de la fenêtre
 const int SCREEN_WIDTH = 700;
-const int SCREEN_HEIGHT = 900;
-const int SCREEN_FPS = 60;
+const int SCREEN_HEIGHT = 700;
+const int SCREEN_FPS = 50;
 
 //Variables globales pour rendu SDL
 extern SDL_Window *pWindow;

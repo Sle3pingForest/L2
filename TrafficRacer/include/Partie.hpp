@@ -20,6 +20,7 @@ class Partie
         void deplacements();
         void gestion_collisions();
         bool continuer_partie();
+        int FPS = 0;
     protected:
     private:
         bool jouer;
@@ -33,6 +34,8 @@ class Partie
         Timer timerFPS;
         Timer timerDeplacement;
         int vitesse;
+        bool pause = false;
+    
 };
 
 #endif // PARTIE_H

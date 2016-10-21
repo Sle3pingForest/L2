@@ -10,16 +10,16 @@ Partie::Partie()
     decorTexture = LoadBmpWithTransparency("autres/images/decor.bmp", 0, 255, 255);
     carsTexture = LoadBmpWithTransparency("autres/images/cars.bmp", 0, 255, 255);
     roadTexture = LoadBmpWithTransparency("autres/images/road.bmp", 0, 255, 255);
-
+    
     voiture_joueur.setWeight(route.getLargeurVoie() - 15);
     voiture_joueur.setHeight(150);
     voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getCarHeight()-20); //Fixer le 20
-
+    
     placer_Decors();
-
+    
     timerFPS.start();
     timerDeplacement.start();
-    vitesse = 10;
+    vitesse = 0;
 }
 
 Partie::~Partie()
@@ -50,64 +50,63 @@ void Partie::gestion_touches()
         if (event.type == SDL_QUIT)
         {
             jouer = false;
-
+            
         }
         // Les touches
         else if( event.type == SDL_KEYDOWN )
         {
             switch( event.key.keysym.sym )
             {
-            case SDLK_UP:
-                vitesse += 1;
-                if(vitesse > 20)
-                    vitesse = 20;
-                break;
-
-            case SDLK_DOWN:
-                vitesse -= 2;
-                if(vitesse < 0)
-                    vitesse = 0;
-                break;
-
-            case SDLK_LEFT:
-                voiture_joueur.deplacer(-25, 0);
-                if(voiture_joueur.getPosX() <= route.getPositionXRoad())
-                {
-                    voiture_joueur.placer(route.getPositionXRoad(), voiture_joueur.getPosY());
-                    vitesse -= 5;
+                case SDLK_UP:
+                    vitesse += 1;
+                    if(vitesse > 16)
+                        vitesse = 16;
+                    break;
+                    
+                case SDLK_DOWN:
+                    vitesse -= 2;
                     if(vitesse < 0)
                         vitesse = 0;
-                }
-                break;
-
-            case SDLK_RIGHT:
-                voiture_joueur.deplacer(+25, 0);
-                if(voiture_joueur.getPosX() + voiture_joueur.getCarWidth() >= route.getPositionXRoad() + route.getWeightRoad())
-                {
-                    voiture_joueur.placer(route.getPositionXRoad() + route.getWeightRoad() - voiture_joueur.getCarWidth() , voiture_joueur.getPosY());
-                    vitesse -= 5;
-                    if(vitesse < 0)
-                        vitesse = 0;
-                }
-                break;
-
-            case 'p':
-                if(timerDeplacement.isStarted())
-                {
-                    timerDeplacement.pause();
-                }
-                else
-                {
-                    timerDeplacement.unpause();
-                }
-
-                break;
-
-            default:
-                break;
+                    break;
+                    
+                case SDLK_LEFT:
+                    voiture_joueur.deplacer(-25, 0);
+                    if(voiture_joueur.getPosX() <= route.getPositionXRoad())
+                    {
+                        voiture_joueur.placer(route.getPositionXRoad(), voiture_joueur.getPosY());
+                        vitesse -= 5;
+                        if(vitesse < 0)
+                            vitesse = 0;
+                    }
+                    break;
+                    
+                case SDLK_RIGHT:
+                    voiture_joueur.deplacer(+25, 0);
+                    if(voiture_joueur.getPosX() + voiture_joueur.getCarWidth() >= route.getPositionXRoad() + route.getWeightRoad())
+                    {
+                        voiture_joueur.placer(route.getPositionXRoad() + route.getWeightRoad() - voiture_joueur.getCarWidth() , voiture_joueur.getPosY());
+                        vitesse -= 5;
+                        if(vitesse < 0)
+                            vitesse = 0;
+                    }
+                    break;
+                    
+                case 'p':
+                    if(pause)
+                        pause = false;
+                    else
+                        pause = true;
+                    break;
+                    
+                case 'q':
+                    jouer = false;
+                    break;
+                    
+                default:
+                    break;
             }
         }
-
+        
     }
 }
 
@@ -173,8 +172,8 @@ void Partie::chargement_voitures_fichier()
         for(int i = 0 ; i < 4; ++i)
         {
             getline(infile, line);
-            cout<< line<< endl;
-
+            //cout<< line<< endl;
+            
             for( int j = 0 ; j < 4 ; ++j)
             {
                 if(line[j] == '1')
@@ -193,19 +192,19 @@ void Partie::chargement_voitures_fichier()
 
 void Partie::deplacements()
 {
-    if (timerDeplacement.getTicks() > 10) // changer ce compteur
+    if (timerDeplacement.getTicks() > 10 and not pause) // changer ce compteur
     {
         int vitesseAutresVoitures = 8;
-
+        
         //Déplacement de la route
         route.deplacer(vitesse);
-
+        
         //Déplacement des voitures
         for(int i = 0 ; i < 4; i++)
         {
             tabVoiture[i].deplacer(0, vitesse - vitesseAutresVoitures );
         }
-
+        
         //Déplacement des décors
         for(int i = 0 ; i < 9; i++)
         {
@@ -221,34 +220,35 @@ void Partie::deplacements()
 
 void Partie::afficher()
 {
-    if (timerFPS.getTicks() > 1000/SCREEN_FPS)
+    if (timerFPS.getTicks() >= 1000/SCREEN_FPS)
     {
         //Création de la couleur de fond
         SDL_SetRenderDrawColor(pRenderer, 88, 41, 0, 255);
         SDL_RenderClear(pRenderer);
-
+        
         //Affichage de la route
         route.afficher(roadTexture);
-
+        
         //route.afficherVoies();
-
+        
         //Affichages des décors
         for(int i = 0 ; i < 9; i++)
         {
             tabDecor[i].afficher(decorTexture);
         }
-
+        
         //Affichage des voitures
         for(int i = 0 ; i < 4; i++)
         {
             tabVoiture[i].afficher(carsTexture);
         }
-
+        
         //Affichage voiture joueur
         voiture_joueur.afficher(carsTexture);
-
+        
         SDL_RenderPresent(pRenderer);
-
+        
+        FPS++;
         timerFPS.start();
     }
 }
