@@ -19,7 +19,13 @@ Partie::Partie()
     voiture_joueur.setHeight(150);
     voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getHeight()- SCREEN_HEIGHT/50);
 
-    placer_Decors();
+    //placer_Decors();
+    
+    for (int i = 0; i < 30; ++i)
+    {
+        tab[i] = new Decor(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT - SCREEN_HEIGHT);
+        tab[i]->selectDecor(1, rand()%9);
+    }
 
     timerFPS.start();
     timerDeplacement.start();
@@ -29,6 +35,10 @@ Partie::Partie()
 Partie::~Partie()
 {
     //dtor
+    for (int i = 0; i < 30; ++i)
+    {
+        delete tab[i];
+    }
 }
 
 void Partie::placer_Decors() //Place les décors une première fois
@@ -234,15 +244,30 @@ void Partie::deplacements()
         }
 
         //Déplacement des décors
-        for(int i = 0 ; i < 9; i++)
-        {
-            if(tabDecor[i].getPosY() > SCREEN_HEIGHT)
-            {
-                tabDecor[i].placer(tabDecor[i].getPosX(), 0 - tabDecor[i].getHeight() ) ;
-            }
-            tabDecor[i].deplacer(0, vitesse);
-        }
+//        for(int i = 0 ; i < 9; i++)
+//        {
+//            if(tabDecor[i].getPosY() > SCREEN_HEIGHT)
+//            {
+//                tabDecor[i].placer(tabDecor[i].getPosX(), 0 - tabDecor[i].getHeight() ) ;
+//            }
+//            tabDecor[i].deplacer(0, vitesse);
+//        }
+        gestion_decors();
         timerDeplacement.start();
+    }
+}
+
+void Partie::gestion_decors()
+{
+    for (int i = 0; i < 30; ++i)
+    {
+        if (tab[i]->isDead())
+        {
+            delete tab[i];
+            tab[i] = new Decor(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT - SCREEN_HEIGHT);
+            tab[i]->selectDecor(1, rand()%9);
+        }
+        tab[i]->deplacer(0, vitesse);
     }
 }
 
@@ -254,16 +279,17 @@ void Partie::afficher()
         SDL_SetRenderDrawColor(pRenderer, 88, 41, 0, 255);
         SDL_RenderClear(pRenderer);
 
-        //Affichage de la route
-        route.afficher(roadTexture);
-
-        route.afficherVoies();
 
         //Affichages des décors
-        for(int i = 0 ; i < 9; i++)
+        for(int i = 0 ; i < 30; i++)
         {
-            tabDecor[i].afficher(decorTexture);
+            tab[i]->afficher(decorTexture);
         }
+        
+        //Affichage de la route
+        route.afficher(roadTexture);
+        
+        route.afficherVoies();
 
         //Affichage des voitures
         for(int i = 0 ; i < 4; i++)

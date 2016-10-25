@@ -9,10 +9,8 @@ Decor::Decor() : Objet()
     objet.y = 0;
 }
 
-Decor::Decor(int w, int h, int x, int y) : Objet(w, h, x, y)
+Decor::Decor(int x, int y)
 {
-    objet.w = w;
-    objet.h = h;
     objet.x = x;
     objet.y = y;
 }
@@ -27,6 +25,14 @@ void Decor::selectDecor(int type, int nb)
         objet.h = arbre_heigth;
     }
     image.x = nb * arbre_width;
+}
+
+bool Decor::isDead()
+{
+    if (objet.y > SCREEN_HEIGHT) {
+        return true;
+    }
+    return false;
 }
 
 Decor::~Decor()

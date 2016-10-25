@@ -1,20 +1,20 @@
 #ifndef DECOR_H
 #define DECOR_H
 
-#include "SDL_Tools.hpp"
 #include "Objet.hpp"
 
 class Decor: public Objet
 {
-    public:
-        Decor();
-        Decor(int w ,int h, int x , int y);
-        virtual ~Decor();
-
-        void selectDecor(int type, int nb);
-
-    protected:
-    private:
+public:
+    Decor();
+    Decor(int x, int y);
+    virtual ~Decor();
+    
+    void selectDecor(int type, int nb);
+    bool isDead();
+    
+protected:
+private:
 };
 
 const int arbre_width = 64;

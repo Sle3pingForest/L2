@@ -4,24 +4,15 @@ using namespace std;
 
 Route::Route() : Objet()
 {
-    objet.w = SCREEN_WIDTH*0.5;
-    objet.h = SCREEN_HEIGHT;
     objet.x = (SCREEN_WIDTH - objet.w)/2;
     objet.y = 0;
+    objet.w = SCREEN_WIDTH*0.5;
+    objet.h = SCREEN_HEIGHT;
 
-    image = objet;
-    image.h = 300;
-}
-
-Route::Route(int w, int h, int x, int y) : Objet(w, h, x, y)
-{
-    objet.w = w;
-    objet.h = h;
-    objet.x = x;
-    objet.y = y;
-
-    image = objet;
-    image.h = 300;
+    image.x = objet.x - image.w*0.04;
+    image.y = 0;
+    image.w = objet.w * 1.08;
+    image.h = objet.w;
 }
 
 Route::~Route()
@@ -31,38 +22,37 @@ Route::~Route()
 
 void Route::afficherVoies()
 {
-//    SDL_SetRenderDrawColor(pRenderer, 170, 0, 255, 0);
-//    int positionVoie = objet.x;
-//    SDL_Rect ligne;
-//    ligne.x = positionVoie;
-//    ligne.h = objet.h;
-//    ligne.y = 0 ;
-//    ligne.w = 2 ;
-//    for ( int i = 0 ; i < 5 ; ++i)
-//    {
-//        ligne.x = positionVoie;
-//        SDL_RenderFillRect(pRenderer, &ligne);
-//        positionVoie += getLargeurVoie();
-//    }
-    SDL_SetRenderDrawColor(pRenderer, 170, 0, 255, 0);
-    SDL_RenderDrawRect(pRenderer, &objet);
+    SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 0);
+    int positionVoie = objet.x;
+    SDL_Rect ligne;
+    ligne.x = positionVoie;
+    ligne.h = objet.h;
+    ligne.y = 0;
+    ligne.w = 3;
+    for ( int i = 0 ; i < 5 ; ++i)
+    {
+        ligne.x = positionVoie;
+        SDL_RenderFillRect(pRenderer, &ligne);
+        positionVoie += getLargeurVoie();
+    }
 }
 
 void Route::afficher(SDL_Texture* texture)
 {
+    //Actualiser, à mettre dans une fonction
     objet.x = (SCREEN_WIDTH - objet.w)/2;
-    image.x = objet.x;
-    //objet.w = SCREEN_WIDTH*0.5;
-    //image.w = objet.w;
+    objet.h = SCREEN_HEIGHT;
+    image.x = objet.x - image.w*0.04;
+    image.w = objet.w * 1.09;
 
-    int nb_repetition_image = 3;
+    int nb_repetition_image = SCREEN_HEIGHT/image.h + 1;
     if(image.y > SCREEN_HEIGHT)
     {
         image.y -= image.h * (nb_repetition_image + 1);
     }
     SDL_RenderCopy(pRenderer, texture, NULL, &image);
     SDL_Rect test = image;
-    for(int i = 0; i < 3; ++i)
+    for(int i = 0; i < nb_repetition_image; ++i)
     {
         test.y += image.h;
         if(test.y > SCREEN_HEIGHT)
