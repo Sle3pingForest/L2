@@ -1,7 +1,6 @@
 #ifndef VOITURE_H
 #define VOITURE_H
 
-#include "SDL_Tools.hpp"
 #include "Objet.hpp"
 
 class Voiture : public Objet

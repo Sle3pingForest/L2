@@ -136,15 +136,20 @@ void Partie::gestion_touches()
 
 void Partie::gestion_collisions()
 {
+    SDL_bool collision;
+    SDL_Rect intersect;
     for(int i = 0 ; i < 10; i++)
     {
-        if(collision(voiture_joueur, tabVoiture[i]))
+        //if(collision(voiture_joueur, tabVoiture[i]))
+        collision = SDL_IntersectRect(voiture_joueur.getObjet(), tabVoiture[i].getObjet(), &intersect);
+        if (collision)
         {
-            //vitesse = 3;
+            vitesse = 3;
         }
     }
 }
 
+// Plus utilisée
 bool Partie::collision(Voiture R1, Voiture R2)
 {
     int leftR1 = R1.getPosX();
@@ -252,7 +257,7 @@ void Partie::afficher()
         //Affichage de la route
         route.afficher(roadTexture);
 
-        //route.afficherVoies();
+        route.afficherVoies();
 
         //Affichages des décors
         for(int i = 0 ; i < 9; i++)
@@ -273,7 +278,7 @@ void Partie::afficher()
         {
             SDL_Rect pause;
             pause.w = SCREEN_WIDTH*0.5;
-            pause.h = SCREEN_HEIGHT*0.5;
+            pause.h = pause.w;
             pause.x = (SCREEN_WIDTH - pause.w) / 2;
             pause.y = (SCREEN_HEIGHT - pause.h) / 2;
             SDL_SetTextureAlphaMod(pauseTexture, 200);

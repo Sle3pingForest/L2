@@ -31,24 +31,21 @@ Route::~Route()
 
 void Route::afficherVoies()
 {
-    objet.w = SCREEN_WIDTH*0.5;
-    objet.h = SCREEN_HEIGHT;
-    objet.x = (SCREEN_WIDTH - objet.w)/2;
-    objet.y = 0;
-
-    SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 255);
-    int positionVoie = SCREEN_WIDTH/2 - 2* getLargeurVoie();
-    SDL_Rect ligne;
-    ligne.x = positionVoie;
-    ligne.h = objet.h;
-    ligne.y = 0 ;
-    ligne.w = 2 ;
-    for ( int i = 0 ; i < 5 ; ++i)
-    {
-        ligne.x = positionVoie;
-        SDL_RenderFillRect(pRenderer, &ligne);
-        positionVoie += getLargeurVoie();
-    }
+//    SDL_SetRenderDrawColor(pRenderer, 170, 0, 255, 0);
+//    int positionVoie = objet.x;
+//    SDL_Rect ligne;
+//    ligne.x = positionVoie;
+//    ligne.h = objet.h;
+//    ligne.y = 0 ;
+//    ligne.w = 2 ;
+//    for ( int i = 0 ; i < 5 ; ++i)
+//    {
+//        ligne.x = positionVoie;
+//        SDL_RenderFillRect(pRenderer, &ligne);
+//        positionVoie += getLargeurVoie();
+//    }
+    SDL_SetRenderDrawColor(pRenderer, 170, 0, 255, 0);
+    SDL_RenderDrawRect(pRenderer, &objet);
 }
 
 void Route::afficher(SDL_Texture* texture)
