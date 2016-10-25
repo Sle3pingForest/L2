@@ -11,6 +11,7 @@ Partie::Partie()
     carsTexture = LoadBmpWithTransparency("autres/images/cars.bmp", 0, 255, 255);
     roadTexture = LoadBmpWithTransparency("autres/images/road.bmp", 0, 255, 255);
 
+    voiture_joueur.selectVoiture(2);
     voiture_joueur.setWidth(route.getLargeurVoie() - 15);
     voiture_joueur.setHeight(150);
     voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getHeight()- SCREEN_HEIGHT/50);
@@ -136,7 +137,7 @@ void Partie::gestion_collisions()
     {
         if(collision(voiture_joueur, tabVoiture[i]))
         {
-            //vitesse = 3;
+            vitesse = 3;
         }
     }
 }
@@ -197,6 +198,7 @@ void Partie::chargement_voitures_fichier()
             {
                 if(line[j] == '1')
                 {
+                    tabVoiture[cpt].selectVoiture(rand()%8);
                     tabVoiture[cpt].setWidth(route.getLargeurVoie() - 15);
                     tabVoiture[cpt].setHeight(150);
                     int position = route.getPosX() + j *route.getLargeurVoie() +7;

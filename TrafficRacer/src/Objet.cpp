@@ -2,16 +2,19 @@
 
 Objet::Objet() // constructeur sans parametre
 {
-    objet.x ;
-    objet.y ;
-    objet.w ;
-    objet.h ;
+    objet.x = 0;
+    objet.y = 0;
+    objet.w = 0;
+    objet.h = 0;
+
+    image.x = 0;
+    image.y = 0;
+    image.w = 0;
+    image.h = 0;
 }
 
 Objet::Objet( int w, int h)
 {
-    objet.x;
-    objet.y ;
     objet.w = w;
     objet.h = h;
 }
