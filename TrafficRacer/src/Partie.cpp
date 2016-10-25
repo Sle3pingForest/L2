@@ -7,11 +7,14 @@ std::ifstream infile("autres/niveau1");
 Partie::Partie()
 {
     jouer = true;
+    pause = false;
+    
     decorTexture = LoadBmpWithTransparency("autres/images/decor.bmp", 0, 255, 255);
     carsTexture = LoadBmpWithTransparency("autres/images/cars.bmp", 0, 255, 255);
     roadTexture = LoadBmpWithTransparency("autres/images/road.bmp", 0, 255, 255);
+    pauseTexture = LoadBmpWithTransparency("autres/images/pause.bmp", 0, 255, 255);
 
-    voiture_joueur.selectVoiture(2);
+    voiture_joueur.selectVoiture(0);
     voiture_joueur.setWidth(route.getLargeurVoie() - 15);
     voiture_joueur.setHeight(150);
     voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getHeight()- SCREEN_HEIGHT/50);
@@ -67,7 +70,7 @@ void Partie::gestion_touches()
 
             case SDL_WINDOWEVENT_FOCUS_LOST:
                 if(not pause)
-                    pause = true;
+                    //pause = true;
                 break;
             }
 
@@ -137,7 +140,7 @@ void Partie::gestion_collisions()
     {
         if(collision(voiture_joueur, tabVoiture[i]))
         {
-            vitesse = 3;
+            //vitesse = 3;
         }
     }
 }
@@ -202,7 +205,7 @@ void Partie::chargement_voitures_fichier()
                     tabVoiture[cpt].setWidth(route.getLargeurVoie() - 15);
                     tabVoiture[cpt].setHeight(150);
                     int position = route.getPosX() + j *route.getLargeurVoie() +7;
-                    tabVoiture[cpt].placer(position, -200 + i*50); // Fixer les tailles
+                    tabVoiture[cpt].placer(position, -300 + i*50); // Fixer les tailles
                     cpt++;
                 }
             }
@@ -240,7 +243,7 @@ void Partie::deplacements()
 
 void Partie::afficher()
 {
-    if (timerFPS.getTicks() >= 1000/SCREEN_FPS)
+    //if (timerFPS.getTicks() >= 1000/SCREEN_FPS)
     {
         //Création de la couleur de fond
         SDL_SetRenderDrawColor(pRenderer, 88, 41, 0, 255);
@@ -265,11 +268,22 @@ void Partie::afficher()
 
         //Affichage voiture joueur
         voiture_joueur.afficher(carsTexture);
+        
+        if (pause)
+        {
+            SDL_Rect pause;
+            pause.w = SCREEN_WIDTH*0.5;
+            pause.h = SCREEN_HEIGHT*0.5;
+            pause.x = (SCREEN_WIDTH - pause.w) / 2;
+            pause.y = (SCREEN_HEIGHT - pause.h) / 2;
+            SDL_SetTextureAlphaMod(pauseTexture, 200);
+            SDL_RenderCopy(pRenderer, pauseTexture, NULL, &pause);
+        }
 
         SDL_RenderPresent(pRenderer);
 
         FPS++;
-        timerFPS.start();
+        //timerFPS.start();
     }
 }
 

@@ -23,18 +23,20 @@ class Partie
         int FPS = 0;
     protected:
     private:
-        bool jouer;
+
         SDL_Texture* decorTexture;
         SDL_Texture* carsTexture;
         SDL_Texture* roadTexture;
+        SDL_Texture* pauseTexture;
         Voiture voiture_joueur;
         Route route;
         Voiture tabVoiture[10];
         Decor tabDecor[10];
         Timer timerFPS;
         Timer timerDeplacement;
+        bool jouer;
+        bool pause;
         int vitesse;
-        bool pause = false;
     
 };
 

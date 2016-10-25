@@ -14,9 +14,12 @@ bool InitSDLEverything()
     if( !InitSDL() )
         return false;
 
-    if( !CreateWindowAndRenderer() )
+    if( !CreateWindow() )
         return false;
 
+    if( !CreateRenderer() )
+        return false;
+    
     SDL_SetWindowTitle(pWindow,"TrafficRacer");
 
     return true;
@@ -34,7 +37,7 @@ bool InitSDL()
 
 bool CreateWindow()
 {
-    pWindow = SDL_CreateWindow("Hello World", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    pWindow = SDL_CreateWindow("TrafficRacer", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
 
     if( !pWindow )
     {
@@ -48,7 +51,7 @@ bool CreateWindow()
 
 bool CreateRenderer()
 {
-    pRenderer =  SDL_CreateRenderer( pWindow, -1, SDL_RENDERER_ACCELERATED);
+    pRenderer =  SDL_CreateRenderer( pWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if( !pRenderer )
     {
         fprintf(stderr, "Échec de la création du rendu: %s\n", SDL_GetError());
