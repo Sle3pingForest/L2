@@ -20,6 +20,7 @@ public:
     void deplacements();
     void gestion_collisions();
     void gestion_decors();
+    void calculerEchelle();
     bool continuer_partie();
     int FPS = 0;
 protected:

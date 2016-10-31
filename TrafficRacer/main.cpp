@@ -9,13 +9,6 @@
 #include "SDL_Tools.hpp"
 #include "Partie.hpp"
 
-SDL_Window *pWindow =NULL;
-SDL_Renderer *pRenderer = NULL;
-
-int SCREEN_WIDTH = 700;
-int SCREEN_HEIGHT = 700;
-int SCREEN_FPS = 50;
-
 int main(int argc, const char * argv[])
 {
 
@@ -27,8 +20,8 @@ int main(int argc, const char * argv[])
     while (partie.continuer_partie())
     {
             partie.gestion_touches();
-            //partie.gestion_collisions();
-            //partie.chargement_voitures_fichier();
+            partie.gestion_collisions();
+            partie.chargement_voitures_fichier();
             partie.deplacements();
             partie.afficher();
             if(CPU.getTicks() >= 1000)

@@ -58,7 +58,7 @@ void Objet::calculerLargeur()
 
 void Objet::calculerHauteur()
 {
-    objet.h = image.h * objet.w / image.w;
+    positionPlateau.h = image.h * positionPlateau.w / image.w;
 }
 
 SDL_Rect Objet::calculerPosFenetre()
@@ -71,6 +71,16 @@ SDL_Rect Objet::calculerPosFenetre()
     positionFenetre.w = positionPlateau.w * echelle;
     positionFenetre.h = positionPlateau.h * echelle;
     return positionFenetre;
+}
+
+int Objet::calculerHauteurDansFenetre()
+{
+    return positionPlateau.h * echelle;
+}
+
+int Objet::calculerLargeurDansFenetre()
+{
+    return positionPlateau.w * echelle;
 }
 
 int Objet::getPosX()

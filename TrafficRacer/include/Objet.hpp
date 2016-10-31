@@ -19,6 +19,8 @@ public:
     void calculerHauteur();
     
     SDL_Rect calculerPosFenetre();
+    int calculerLargeurDansFenetre();
+    int calculerHauteurDansFenetre();
     
     
     int getPosX();

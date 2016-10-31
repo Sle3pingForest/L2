@@ -16,10 +16,10 @@ Voiture::Voiture()
 
 Voiture::Voiture(int x, int y, int w, int h)
 {
-    objet.x = x;
-    objet.y = y;
-    objet.w = w;
-    objet.h = h;
+    positionPlateau.x = x;
+    positionPlateau.y = y;
+    positionPlateau.w = w;
+    positionPlateau.h = h;
 }
 
 void Voiture::selectVoiture(int nb)
