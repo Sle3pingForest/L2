@@ -2,17 +2,14 @@
 
 using namespace std;
 
-Route::Route() : Objet()
+Route::Route()
 {
-    objet.x = (SCREEN_WIDTH - objet.w)/2;
-    objet.y = 0;
-    objet.w = SCREEN_WIDTH*0.5;
-    objet.h = SCREEN_HEIGHT;
-
-    image.x = objet.x - image.w*0.04;
-    image.y = 0;
-    image.w = objet.w * 1.08;
-    image.h = objet.w;
+    positionPlateau.w = LEVEL_WIDTH * 0.25;
+    positionPlateau.h = LEVEL_HEIGHT;
+    positionPlateau.x = (LEVEL_WIDTH - positionPlateau.w)/2;
+    positionPlateau.y = 0;
+    
+    position_y = 0;
 }
 
 Route::~Route()
@@ -22,54 +19,57 @@ Route::~Route()
 
 void Route::afficherVoies()
 {
-    SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 0);
-    int positionVoie = objet.x;
-    SDL_Rect ligne;
-    ligne.x = positionVoie;
-    ligne.h = objet.h;
-    ligne.y = 0;
+    SDL_Rect ligne = calculerPosFenetre();
     ligne.w = 3;
+    
     for ( int i = 0 ; i < 5 ; ++i)
     {
-        ligne.x = positionVoie;
         SDL_RenderFillRect(pRenderer, &ligne);
-        positionVoie += getLargeurVoie();
+        ligne.x += getLargeurVoieFenetre();
     }
 }
 
 void Route::afficher(SDL_Texture* texture)
 {
-    //Actualiser, à mettre dans une fonction
-    objet.x = (SCREEN_WIDTH - objet.w)/2;
-    objet.h = SCREEN_HEIGHT;
-    image.x = objet.x - image.w*0.04;
-    image.w = objet.w * 1.09;
-
-    int nb_repetition_image = SCREEN_HEIGHT/image.h + 1;
-    if(image.y > SCREEN_HEIGHT)
+    
+    int nbRepetitionImage = 3;
+    positionPlateau.h = positionPlateau.w;
+    if (position_y > LEVEL_HEIGHT)
     {
-        image.y -= image.h * (nb_repetition_image + 1);
+        position_y -= positionPlateau.h * nbRepetitionImage;
     }
-    SDL_RenderCopy(pRenderer, texture, NULL, &image);
-    SDL_Rect test = image;
-    for(int i = 0; i < nb_repetition_image; ++i)
+    
+    positionPlateau.y = position_y;
+    
+    for ( int i = 0 ; i < 3 ; ++i)
     {
-        test.y += image.h;
-        if(test.y > SCREEN_HEIGHT)
+        SDL_Rect positionFenetre = calculerPosFenetre();
+        SDL_RenderCopy(pRenderer, texture, NULL, &positionFenetre);
+        positionPlateau.y += positionPlateau.h;
+        if (positionPlateau.y > 0)
         {
-            test.y -= image.h * (nb_repetition_image + 1);
+            positionPlateau.y -= (positionPlateau.h * nbRepetitionImage);
         }
-        SDL_RenderCopy(pRenderer, texture, NULL, &test);
     }
+
+    
+    // Replace les position comme au début
+    positionPlateau.h = LEVEL_HEIGHT;
+    positionPlateau.y = 0;
 }
 
 
 void Route::deplacer(int vitesse)
 {
-    image.y += vitesse;
+    position_y += vitesse;
 }
 
-int Route::getLargeurVoie()
+int Route::getLargeurVoiePlateau()
 {
-    return objet.w/4;
+    return (positionPlateau.w/4);
+}
+
+int Route::getLargeurVoieFenetre()
+{
+    return (positionPlateau.w/4)*echelle;
 }

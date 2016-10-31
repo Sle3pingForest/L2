@@ -19,8 +19,6 @@ bool InitSDLEverything()
 
     if( !CreateRenderer() )
         return false;
-    
-    SDL_SetWindowTitle(pWindow,"TrafficRacer");
 
     return true;
 }

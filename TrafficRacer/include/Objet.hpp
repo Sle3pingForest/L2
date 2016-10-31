@@ -5,31 +5,38 @@
 
 class Objet
 {
-    public:
-        Objet();
-        Objet(int w, int h);
-        Objet(int w, int h, int x, int y);
-
-        void placer(int x, int y);
-        void afficher(SDL_Texture* texture);
-        void afficherObjet();
-        void deplacer(int x, int y);
-
-        int getPosX();
-        int getPosY();
-        int getWidth();
-        int getHeight();
-        void setPosX(int x);
-        void setPosY(int y);
-        void setWidth(int w);
-        void setHeight(int h);
-        SDL_Rect* getObjet();
-        virtual ~Objet();
-
-    protected:
-        SDL_Rect objet;
-        SDL_Rect image;
-    private:
+public:
+    Objet();
+    Objet(int w, int h);
+    Objet(int x, int y, int w, int h);
+    virtual ~Objet();
+    
+    void placer(int x, int y);
+    void deplacer(int x, int y);
+    void afficher(SDL_Texture* texture);
+    void afficherRectObjet();
+    void calculerLargeur();
+    void calculerHauteur();
+    
+    SDL_Rect calculerPosFenetre();
+    
+    
+    int getPosX();
+    int getPosY();
+    int getWidth();
+    int getHeight();
+    SDL_Rect* getObjet();
+    
+    void setPosX(int x);
+    void setPosY(int y);
+    void setWidth(int w);
+    void setHeight(int h);
+    
+protected:
+    SDL_Rect positionPlateau;
+    SDL_Rect objet;
+    SDL_Rect image;
+private:
 };
 
 #endif // OBJET_H
