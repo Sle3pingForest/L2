@@ -2,10 +2,10 @@
 
 Objet::Objet() // constructeur sans parametre
 {
-    objet.x = 0;
-    objet.y = 0;
-    objet.w = 0;
-    objet.h = 0;
+    positionPlateau.x = 0;
+    positionPlateau.y = 0;
+    positionPlateau.w = 0;
+    positionPlateau.h = 0;
 
     image.x = 0;
     image.y = 0;
@@ -15,16 +15,16 @@ Objet::Objet() // constructeur sans parametre
 
 Objet::Objet( int w, int h)
 {
-    objet.w = w;
-    objet.h = h;
+    positionPlateau.w = w;
+    positionPlateau.h = h;
 }
 
 Objet::Objet( int x, int y, int w, int h)
 {
-    objet.x = x;
-    objet.y = y;
-    objet.w = w;
-    objet.h = h;
+    positionPlateau.x = x;
+    positionPlateau.y = y;
+    positionPlateau.w = w;
+    positionPlateau.h = h;
 }
 
 void Objet::placer(int x, int y)
@@ -53,7 +53,7 @@ void Objet::afficherRectObjet()
 
 void Objet::calculerLargeur()
 {
-    objet.w = image.w * objet.h / image.h;
+    positionPlateau.w = image.w * positionPlateau.h / image.h;
 }
 
 void Objet::calculerHauteur()

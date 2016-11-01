@@ -51,10 +51,12 @@ Partie::Partie()
     plateau.setWidth(LEVEL_WIDTH);
     plateau.setHeight(LEVEL_HEIGHT);
     
-    camera.x = 0;
-    camera.y = (plateau.calculerHauteurDansFenetre() - SCREEN_HEIGHT)/2;
+    //Initialisation de la position de la caméra
     camera.w = LEVEL_WIDTH;
     camera.h = LEVEL_HEIGHT;
+    calculerEchelle();
+    camera.x = 0;
+    camera.y = (plateau.calculerHauteurDansFenetre() - SCREEN_HEIGHT)/2;
 //////////////////////////////////////////////
     
 }
@@ -103,40 +105,40 @@ void Partie::gestion_touches()
         {
             switch( event.key.keysym.sym )
             {
-//                case SDLK_UP:
-//                    vitesse += 1;
-//                    if(vitesse > 20)
-//                        vitesse = 20;
-//                    break;
-//
-//                case SDLK_DOWN:
-//                    vitesse -= 2;
-//                    if(vitesse < 0)
-//                        vitesse = 0;
-//                    break;
-//
-//                case SDLK_LEFT:
-//                    voiture_joueur.deplacer(-25, 0);
-//                    if(voiture_joueur.getPosX() <= route.getPosX())
-//                    {
-//                        voiture_joueur.placer(route.getPosX(), voiture_joueur.getPosY());
-//                        vitesse -= 5;
-//                        if(vitesse < 0)
-//                            vitesse = 0;
-//                    }
-//                    break;
-//
-//                case SDLK_RIGHT:
-//                    voiture_joueur.deplacer(+25, 0);
-//                    if(voiture_joueur.getPosX() + voiture_joueur.getWidth() >= route.getPosX() + route.getWidth())
-//                    {
-//                        voiture_joueur.placer(route.getPosX() + route.getWidth() - voiture_joueur.getWidth() , voiture_joueur.getPosY());
-//                        vitesse -= 5;
-//                        if(vitesse < 0)
-//                            vitesse = 0;
-//                    }
-//                    break;
+                case SDLK_UP:
+                    vitesse += 1;
+                    if(vitesse > 20)
+                        vitesse = 20;
+                    break;
 
+                case SDLK_DOWN:
+                    vitesse -= 2;
+                    if(vitesse < 0)
+                        vitesse = 0;
+                    break;
+
+                case SDLK_LEFT:
+                    voiture_joueur.deplacer(-25, 0);
+                    if(voiture_joueur.getPosX() <= route.getPosX())
+                    {
+                        voiture_joueur.placer(route.getPosX(), voiture_joueur.getPosY());
+                        vitesse -= 5;
+                        if(vitesse < 0)
+                            vitesse = 0;
+                    }
+                    break;
+
+                case SDLK_RIGHT:
+                    voiture_joueur.deplacer(+25, 0);
+                    if(voiture_joueur.getPosX() + voiture_joueur.getWidth() >= route.getPosX() + route.getWidth())
+                    {
+                        voiture_joueur.placer(route.getPosX() + route.getWidth() - voiture_joueur.getWidth() , voiture_joueur.getPosY());
+                        vitesse -= 5;
+                        if(vitesse < 0)
+                            vitesse = 0;
+                    }
+                    break;
+                    
                 case 'p':
                     if(pause)
                         pause = false;
@@ -146,28 +148,24 @@ void Partie::gestion_touches()
                     
                 case 'm' :
                     jouer = false;
-
+                    
                 // Déplacement de la caméra
-                //case 'q':
-                case SDLK_LEFT:
+                case 'q':
                     camera.x -= 100;
                     break;
                     
-                //case 'd':
-                case SDLK_RIGHT:
+                case 'd':
                     camera.x += 100;
                     break;
                     
-                //case 'z':
-                case SDLK_UP:
+                case 'z':
                     camera.y -= 100;
                     break;
                     
-                //case 's':
-                case SDLK_DOWN :
+                case 's':
                     camera.y += 100;
                     break;
-                
+                    
                 case 'a' :
                     camera.w += 50;
                     camera.h += 50;
@@ -178,19 +176,32 @@ void Partie::gestion_touches()
                     camera.h -= 50;
                     break;
                     
+                //Afficher la route centrée à l'echelle 1
                 case 'r':
-                    camera.x = (SCREEN_WIDTH - route.calculerLargeurDansFenetre()) / 2;
-                    camera.y = LEVEL_HEIGHT - SCREEN_HEIGHT;
                     camera.w = SCREEN_WIDTH;
                     camera.h = SCREEN_HEIGHT;
+                    calculerEchelle();
+                    camera.x = (route.getPosX() * echelle) - ((SCREEN_WIDTH - route.calculerLargeurDansFenetre())/2); // Fonction
+                    camera.y = LEVEL_HEIGHT - SCREEN_HEIGHT;
                     break;
                     
+                // Afficher tout le plateau
                 case 't' :
                     camera.w = LEVEL_WIDTH;
                     camera.h = LEVEL_HEIGHT;
+                    calculerEchelle();
                     camera.x = 0;
                     camera.y = (plateau.calculerHauteurDansFenetre() - SCREEN_HEIGHT)/2;
                     break;
+                    
+                //Afficher toute la hauteur de la route
+                case 'y' :
+                    camera.h = LEVEL_HEIGHT;
+                    camera.w = LEVEL_HEIGHT * ((float)SCREEN_WIDTH/(float)SCREEN_HEIGHT);
+                    calculerEchelle();
+                    camera.x = (route.getPosX() * echelle) - ((SCREEN_WIDTH - route.calculerLargeurDansFenetre())/2); // Fonction
+                    camera.y = 0;
+                    
 
                 default:
                     break;
@@ -284,21 +295,16 @@ void Partie::afficher()
 {
     
     //Création de la couleur de fond
-    SDL_SetRenderDrawColor(pRenderer, 88, 41, 0, 0);
+    SDL_SetRenderDrawColor(pRenderer, 40, 40, 40, 255);
     SDL_RenderClear(pRenderer);
     
-
-
     
-
+    //Affichage le plateau
+    SDL_SetRenderDrawColor(pRenderer, 88, 41, 0, 255);
+    plateau.afficherRectObjet();
     
-    
-    
-/////// TEST ROUTE 2000x1200  /////////////
-    
-    //Déplace le plateau en foncton de la caméra
-    SDL_Rect plateauDest = plateau.calculerPosFenetre();
-    SDL_RenderCopy(pRenderer, testTexture, NULL, &plateauDest);
+    //SDL_Rect plateauDest = plateau.calculerPosFenetre();
+    //SDL_RenderCopy(pRenderer, testTexture, NULL, &plateauDest);
 
     
     //Affichages des décors
@@ -311,7 +317,7 @@ void Partie::afficher()
     }
     
     //Affichage de la route
-    route.afficher(routeTexture);
+    //route.afficher(routeTexture);
     SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 150);
     route.afficherRectObjet();
     SDL_SetRenderDrawColor(pRenderer, 0, 255, 0, 255);
@@ -346,9 +352,6 @@ void Partie::afficher()
 //    testVoiture.afficherRectObjet();
 //    testVoiture.afficher(carsTexture);
     
-    
-    
-/////// FIN ROUTE 2000x1200  /////////////
     
     if (pause)
     {

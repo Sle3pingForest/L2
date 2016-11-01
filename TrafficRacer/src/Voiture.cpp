@@ -3,10 +3,10 @@
 
 Voiture::Voiture()
 {
-    objet.w = 0;
-    objet.h = 0;
-    objet.x = 0;
-    objet.y = 0;
+    positionPlateau.w = 0;
+    positionPlateau.h = 0;
+    positionPlateau.x = 0;
+    positionPlateau.y = 0;
     
     image.x = 0;
     image.y = 0;

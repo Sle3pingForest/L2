@@ -36,7 +36,6 @@ public:
     
 protected:
     SDL_Rect positionPlateau;
-    SDL_Rect objet;
     SDL_Rect image;
 private:
 };
