@@ -4,7 +4,7 @@ ifeq ($(UNAME_S),Linux)
 	CXXFLAGS = -lSDL2
 endif
 ifeq ($(UNAME_S),Darwin)
-	CXXFLAGS = -I/Library/Frameworks/SDL2.framework/Headers -F/Library/Frameworks -framework SDL2
+	CXXFLAGS = -F/Library/Frameworks -framework SDL2
 endif
 
 CXX = g++
