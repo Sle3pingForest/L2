@@ -2,10 +2,10 @@
 
 Objet::Objet() // constructeur sans parametre
 {
-    objet.x = 0;
-    objet.y = 0;
-    objet.w = 0;
-    objet.h = 0;
+    positionPlateau.x = 0;
+    positionPlateau.y = 0;
+    positionPlateau.w = 0;
+    positionPlateau.h = 0;
 
     image.x = 0;
     image.y = 0;
@@ -15,83 +15,119 @@ Objet::Objet() // constructeur sans parametre
 
 Objet::Objet( int w, int h)
 {
-    objet.w = w;
-    objet.h = h;
+    positionPlateau.w = w;
+    positionPlateau.h = h;
 }
 
-Objet::Objet( int w, int h, int x, int y)
+Objet::Objet( int x, int y, int w, int h)
 {
-    objet.x = x;
-    objet.y = y;
-    objet.w = w;
-    objet.h = h;
+    positionPlateau.x = x;
+    positionPlateau.y = y;
+    positionPlateau.w = w;
+    positionPlateau.h = h;
 }
 
 void Objet::placer(int x, int y)
 {
-    objet.x = x;
-    objet.y = y;
+    positionPlateau.x = x;
+    positionPlateau.y = y;
 }
 
 void Objet::deplacer( int x, int y)
 {
-    objet.x += x;
-    objet.y += y;
+    positionPlateau.x += x;
+    positionPlateau.y += y;
 }
 
 void Objet::afficher(SDL_Texture* texture)
 {
-    SDL_RenderCopy(pRenderer, texture, &image, &objet);
+    SDL_Rect positionFenetre = calculerPosFenetre();
+    SDL_RenderCopy(pRenderer, texture, &image, &positionFenetre);
 }
 
-void Objet::afficherObjet()
+void Objet::afficherRectObjet()
 {
-    SDL_RenderFillRect(pRenderer, &objet);
+    SDL_Rect positionFenetre = calculerPosFenetre();
+    SDL_RenderFillRect(pRenderer, &positionFenetre);
+}
+
+void Objet::calculerLargeur()
+{
+    positionPlateau.w = image.w * positionPlateau.h / image.h;
+}
+
+void Objet::calculerHauteur()
+{
+    positionPlateau.h = image.h * positionPlateau.w / image.w;
+}
+
+SDL_Rect Objet::calculerPosFenetre()
+{
+    SDL_Rect positionFenetre;
+    //Calcul du déplacement
+    positionFenetre.x = (positionPlateau.x * echelle) - camera.x;
+    positionFenetre.y = (positionPlateau.y * echelle) - camera.y;
+    //Calcul du redimensionnement
+    positionFenetre.w = positionPlateau.w * echelle;
+    positionFenetre.h = positionPlateau.h * echelle;
+    return positionFenetre;
+}
+
+int Objet::calculerHauteurDansFenetre()
+{
+    return positionPlateau.h * echelle;
+}
+
+int Objet::calculerLargeurDansFenetre()
+{
+    return positionPlateau.w * echelle;
 }
 
 int Objet::getPosX()
 {
-    return objet.x;
+    return positionPlateau.x;
 }
 
 int Objet::getPosY()
 {
-    return objet.y;
+    return positionPlateau.y;
 }
 
 int Objet::getWidth()
 {
-    return objet.w;
+    return positionPlateau.w;
 }
 
 int Objet::getHeight()
 {
-    return objet.h;
+    return positionPlateau.h;
+}
+
+SDL_Rect* Objet::getObjet()
+{
+    return &positionPlateau;
 }
 
 void Objet::setPosX(int x)
 {
-    objet.x = x;
+    positionPlateau.x = x;
 }
 
 void Objet::setPosY(int y)
 {
-    objet.y = y;
+    positionPlateau.y = y;
 }
 
 void Objet::setWidth(int w)
 {
-    objet.w = w;
+    positionPlateau.w = w;
 }
 
 void Objet::setHeight(int h)
 {
-    objet.h = h;
+    positionPlateau.h = h;
 }
-SDL_Rect* Objet::getObjet()
-{
-    return &objet;
-}
+
 
 Objet::~Objet()
 {

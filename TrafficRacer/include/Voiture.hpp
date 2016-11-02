@@ -54,5 +54,6 @@ const int truck_x = 305;
 const int truck_y = 0;
 const int truck_w = 193;
 const int truck_h = 616;
+
 #endif // VOITURE_H
 

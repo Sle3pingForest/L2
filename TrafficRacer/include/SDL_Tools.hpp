@@ -19,6 +19,12 @@ extern int SCREEN_WIDTH;
 extern int SCREEN_HEIGHT;
 extern int SCREEN_FPS;
 
+extern int LEVEL_HEIGHT;
+extern int LEVEL_WIDTH;
+
+extern SDL_Rect camera;
+extern float echelle;
+
 //Variables globales pour rendu SDL
 extern SDL_Window *pWindow;
 extern SDL_Renderer *pRenderer;

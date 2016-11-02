@@ -3,23 +3,23 @@
 
 Voiture::Voiture()
 {
-    objet.w = 48;
-    objet.h = 80;
-    objet.x = 0;
-    objet.y = 0;
+    positionPlateau.w = 0;
+    positionPlateau.h = 0;
+    positionPlateau.x = 0;
+    positionPlateau.y = 0;
     
     image.x = 0;
     image.y = 0;
-    image.w = 98;
-    image.h = 214;
+    image.w = 0;
+    image.h = 0;
 }
 
-Voiture::Voiture(int x, int y, int w, int h) : Objet(w, h, x, y)
+Voiture::Voiture(int x, int y, int w, int h)
 {
-    objet.x = x;
-    objet.y = y;
-    objet.w = w;
-    objet.h = h;
+    positionPlateau.x = x;
+    positionPlateau.y = y;
+    positionPlateau.w = w;
+    positionPlateau.h = h;
 }
 
 void Voiture::selectVoiture(int nb)

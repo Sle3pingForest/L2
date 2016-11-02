@@ -1,8 +1,20 @@
 #include "Partie.hpp"
 
 using namespace std;
-
 std::ifstream infile("autres/niveau1");
+
+SDL_Window *pWindow =NULL;
+SDL_Renderer *pRenderer = NULL;
+
+int SCREEN_WIDTH = 700;
+int SCREEN_HEIGHT = 700;
+int SCREEN_FPS = 50;
+
+int LEVEL_WIDTH = 2000;
+int LEVEL_HEIGHT = 1200;
+
+SDL_Rect camera;
+float echelle;
 
 Partie::Partie()
 {
@@ -11,25 +23,42 @@ Partie::Partie()
     
     decorTexture = LoadBmpWithTransparency("autres/images/decor.bmp", 0, 255, 255);
     carsTexture = LoadBmpWithTransparency("autres/images/cars.bmp", 0, 255, 255);
-    roadTexture = LoadBmpWithTransparency("autres/images/road.bmp", 0, 255, 255);
+    routeTexture = LoadBmpWithTransparency("autres/images/road.bmp", 0, 255, 255);
     pauseTexture = LoadBmpWithTransparency("autres/images/pause.bmp", 0, 255, 255);
+    testTexture = LoadBmpWithTransparency("autres/images/test.bmp", 0, 255, 255);
 
     voiture_joueur.selectVoiture(0);
-    voiture_joueur.setWidth(route.getLargeurVoie() - 15);
-    voiture_joueur.setHeight(150);
-    voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getHeight()- SCREEN_HEIGHT/50);
+    voiture_joueur.setWidth(route.getLargeurVoiePlateau() - 15);
+    voiture_joueur.calculerHauteur();
+    voiture_joueur.placer(LEVEL_WIDTH/2, LEVEL_HEIGHT - voiture_joueur.getHeight() - 50);
 
-    //placer_Decors();
-    
+    //Placer les Decors
     for (int i = 0; i < 30; ++i)
     {
-        tab[i] = new Decor(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT - SCREEN_HEIGHT);
+        tab[i] = new Decor(rand()%LEVEL_WIDTH, rand()%LEVEL_HEIGHT - LEVEL_HEIGHT);
         tab[i]->selectDecor(1, rand()%9);
     }
 
     timerFPS.start();
     timerDeplacement.start();
-    vitesse = SCREEN_HEIGHT/50;
+    vitesse = 10;
+    
+    tabVoiture[0].setPosY(SCREEN_HEIGHT+1);
+    
+    SDL_SetRenderDrawBlendMode(pRenderer, SDL_BLENDMODE_BLEND);
+//////////////////////////////////////////////
+    plateau.placer(0, 0);
+    plateau.setWidth(LEVEL_WIDTH);
+    plateau.setHeight(LEVEL_HEIGHT);
+    
+    //Initialisation de la position de la caméra
+    camera.w = LEVEL_WIDTH;
+    camera.h = LEVEL_HEIGHT;
+    calculerEchelle();
+    camera.x = 0;
+    camera.y = (plateau.calculerHauteurDansFenetre() - SCREEN_HEIGHT)/2;
+//////////////////////////////////////////////
+    
 }
 
 Partie::~Partie()
@@ -41,23 +70,10 @@ Partie::~Partie()
     }
 }
 
-void Partie::placer_Decors() //Place les décors une première fois
-{
-    int posY = 0;
-    for(int i = 0 ; i < 9; i++)
-    {
-        tabDecor[i].selectDecor(1, i);
-        tabDecor[i].placer((i%2)*70, posY);
-        if (i%2)
-        {
-            posY += 120;
-        }
-    }
-}
-
 void Partie::gestion_touches()
 {
     SDL_Event event;
+    calculerEchelle();
     while( SDL_PollEvent( &event ) != 0 )
     {
         //Fermer la fenêtre
@@ -74,8 +90,6 @@ void Partie::gestion_touches()
             case SDL_WINDOWEVENT_SIZE_CHANGED:
                 SCREEN_WIDTH = event.window.data1;
                 SCREEN_HEIGHT = event.window.data2;
-                vitesse = SCREEN_HEIGHT/50;
-                voiture_joueur.placer(SCREEN_WIDTH/2, SCREEN_HEIGHT-voiture_joueur.getHeight()- SCREEN_HEIGHT/50);
                 break;
 
             case SDL_WINDOWEVENT_FOCUS_LOST:
@@ -124,17 +138,70 @@ void Partie::gestion_touches()
                             vitesse = 0;
                     }
                     break;
-
+                    
                 case 'p':
                     if(pause)
                         pause = false;
                     else
                         pause = true;
                     break;
-
-                case 'q':
+                    
+                case 'm' :
                     jouer = false;
+                    
+                // Déplacement de la caméra
+                case 'q':
+                    camera.x -= 100;
                     break;
+                    
+                case 'd':
+                    camera.x += 100;
+                    break;
+                    
+                case 'z':
+                    camera.y -= 100;
+                    break;
+                    
+                case 's':
+                    camera.y += 100;
+                    break;
+                    
+                case 'a' :
+                    camera.w += 50;
+                    camera.h += 50;
+                    break;
+                    
+                case 'e':
+                    camera.w -= 50;
+                    camera.h -= 50;
+                    break;
+                    
+                //Afficher la route centrée à l'echelle 1
+                case 'r':
+                    camera.w = SCREEN_WIDTH;
+                    camera.h = SCREEN_HEIGHT;
+                    calculerEchelle();
+                    camera.x = (route.getPosX() * echelle) - ((SCREEN_WIDTH - route.calculerLargeurDansFenetre())/2); // Fonction
+                    camera.y = LEVEL_HEIGHT - SCREEN_HEIGHT;
+                    break;
+                    
+                // Afficher tout le plateau
+                case 't' :
+                    camera.w = LEVEL_WIDTH;
+                    camera.h = LEVEL_HEIGHT;
+                    calculerEchelle();
+                    camera.x = 0;
+                    camera.y = (plateau.calculerHauteurDansFenetre() - SCREEN_HEIGHT)/2;
+                    break;
+                    
+                //Afficher toute la hauteur de la route
+                case 'y' :
+                    camera.h = LEVEL_HEIGHT;
+                    camera.w = LEVEL_HEIGHT * ((float)SCREEN_WIDTH/(float)SCREEN_HEIGHT);
+                    calculerEchelle();
+                    camera.x = (route.getPosX() * echelle) - ((SCREEN_WIDTH - route.calculerLargeurDansFenetre())/2); // Fonction
+                    camera.y = 0;
+                    
 
                 default:
                     break;
@@ -150,7 +217,6 @@ void Partie::gestion_collisions()
     SDL_Rect intersect;
     for(int i = 0 ; i < 10; i++)
     {
-        //if(collision(voiture_joueur, tabVoiture[i]))
         collision = SDL_IntersectRect(voiture_joueur.getObjet(), tabVoiture[i].getObjet(), &intersect);
         if (collision)
         {
@@ -159,54 +225,11 @@ void Partie::gestion_collisions()
     }
 }
 
-// Plus utilisée
-bool Partie::collision(Voiture R1, Voiture R2)
-{
-    int leftR1 = R1.getPosX();
-    int leftR2 = R2.getPosX();
-    int rightR1 = R1.getPosX() + R1.getWidth();
-    int rightR2 = R2.getPosX() + R2.getWidth();
-    int topR1 = R1.getPosY();
-    int topR2 = R2.getPosY();
-    int bottomR1 = R1.getPosY() + R1.getHeight();
-    int bottomR2 = R2.getPosY() + R2.getHeight();
-    bool toucher = false;
-    if(rightR1 >= leftR2 && rightR1 <= rightR2 && topR1 >= topR2 && topR1 <= bottomR2)
-    {
-        cout<< "Collision cote a gauche: "<<endl;
-        cout<< "X joueur: "<<rightR1 <<" Y joueur: "<< topR1 <<endl;
-        toucher = true;
-    }
-    else if(leftR1 >= leftR2 && leftR1 <= rightR2 && topR1 >= topR2 && topR1 <= bottomR2)
-    {
-        cout<< "Collision cote a gauche: "<<endl;
-        cout<< "X joueur: "<<leftR1 <<" Y joueur: "<< topR1 <<endl;
-        toucher = true;
-    }
-    else if(leftR1 >= leftR2 && leftR1 <= rightR2 && bottomR1 >= topR2 && bottomR1 <= bottomR2)
-    {
-        cout<< "Collision cote a gauche: "<<endl;
-        cout<< "X joueur: "<<leftR1 <<" Y joueur: "<< bottomR1 <<endl;
-        toucher = true;
-    }
-    else if(rightR1 >= leftR2 && rightR1 <= rightR2 && bottomR1 >= topR2 && bottomR1 <= bottomR2)
-    {
-        cout<< "Collision cote a gauche: "<<endl;
-        cout<< "X joueur: "<<rightR1 <<" Y joueur: "<< bottomR1 <<endl;
-        toucher = true;
-    }
-    else
-    {
-        toucher = false;
-    }
-    return toucher;
-}
-
 void Partie::chargement_voitures_fichier()
 {
-    string line;
     if(tabVoiture[0].getPosY() > SCREEN_HEIGHT)
     {
+        string line;
         int cpt = 0;
         for(int i = 0 ; i < 4; ++i)
         {
@@ -217,10 +240,11 @@ void Partie::chargement_voitures_fichier()
                 if(line[j] == '1')
                 {
                     tabVoiture[cpt].selectVoiture(rand()%8);
-                    tabVoiture[cpt].setWidth(route.getLargeurVoie() - 15);
-                    tabVoiture[cpt].setHeight(150);
-                    int position = route.getPosX() + j *route.getLargeurVoie() +7;
-                    tabVoiture[cpt].placer(position, -300 + i*50); // Fixer les tailles
+                    tabVoiture[cpt].setWidth(route.getLargeurVoiePlateau() - 15);
+                    tabVoiture[cpt].calculerHauteur();
+                    int position_x = route.getPosX() + j *route.getLargeurVoiePlateau() + rand()%10;
+                    int position_y = i*(tabVoiture[cpt].getHeight() + 50) - LEVEL_HEIGHT; // Fixer les tailles
+                    tabVoiture[cpt].placer(position_x, position_y);
                     cpt++;
                 }
             }
@@ -243,15 +267,6 @@ void Partie::deplacements()
             tabVoiture[i].deplacer(0, vitesse - vitesseAutresVoitures );
         }
 
-        //Déplacement des décors
-//        for(int i = 0 ; i < 9; i++)
-//        {
-//            if(tabDecor[i].getPosY() > SCREEN_HEIGHT)
-//            {
-//                tabDecor[i].placer(tabDecor[i].getPosX(), 0 - tabDecor[i].getHeight() ) ;
-//            }
-//            tabDecor[i].deplacer(0, vitesse);
-//        }
         gestion_decors();
         timerDeplacement.start();
     }
@@ -264,58 +279,95 @@ void Partie::gestion_decors()
         if (tab[i]->isDead())
         {
             delete tab[i];
-            tab[i] = new Decor(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT - SCREEN_HEIGHT);
+            tab[i] = new Decor(rand()%LEVEL_WIDTH, rand()%LEVEL_HEIGHT - LEVEL_HEIGHT);
             tab[i]->selectDecor(1, rand()%9);
         }
         tab[i]->deplacer(0, vitesse);
     }
 }
 
+void Partie::calculerEchelle()
+{
+    echelle = (float)SCREEN_WIDTH / (float)camera.w;
+}
+
 void Partie::afficher()
 {
-    //if (timerFPS.getTicks() >= 1000/SCREEN_FPS)
+    
+    //Création de la couleur de fond
+    SDL_SetRenderDrawColor(pRenderer, 40, 40, 40, 255);
+    SDL_RenderClear(pRenderer);
+    
+    
+    //Affichage le plateau
+    SDL_SetRenderDrawColor(pRenderer, 88, 41, 0, 255);
+    plateau.afficherRectObjet();
+    
+    //SDL_Rect plateauDest = plateau.calculerPosFenetre();
+    //SDL_RenderCopy(pRenderer, testTexture, NULL, &plateauDest);
+
+    
+    //Affichages des décors
+    for(int i = 0 ; i < 30; i++)
     {
-        //Création de la couleur de fond
-        SDL_SetRenderDrawColor(pRenderer, 88, 41, 0, 255);
-        SDL_RenderClear(pRenderer);
-
-
-        //Affichages des décors
-        for(int i = 0 ; i < 30; i++)
+        if (tab[i] != NULL)
         {
             tab[i]->afficher(decorTexture);
         }
-        
-        //Affichage de la route
-        route.afficher(roadTexture);
-        
-        route.afficherVoies();
-
-        //Affichage des voitures
-        for(int i = 0 ; i < 4; i++)
-        {
-            tabVoiture[i].afficher(carsTexture);
-        }
-
-        //Affichage voiture joueur
-        voiture_joueur.afficher(carsTexture);
-        
-        if (pause)
-        {
-            SDL_Rect pause;
-            pause.w = SCREEN_WIDTH*0.5;
-            pause.h = pause.w;
-            pause.x = (SCREEN_WIDTH - pause.w) / 2;
-            pause.y = (SCREEN_HEIGHT - pause.h) / 2;
-            SDL_SetTextureAlphaMod(pauseTexture, 200);
-            SDL_RenderCopy(pRenderer, pauseTexture, NULL, &pause);
-        }
-
-        SDL_RenderPresent(pRenderer);
-
-        FPS++;
-        //timerFPS.start();
     }
+    
+    //Affichage de la route
+    //route.afficher(routeTexture);
+    SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 150);
+    route.afficherRectObjet();
+    SDL_SetRenderDrawColor(pRenderer, 0, 255, 0, 255);
+    route.afficherVoies();
+    
+    //Affichage des voitures
+    for(int i = 0 ; i < 4; i++)
+    {
+        tabVoiture[i].afficher(carsTexture);
+    }
+    
+    //Affichage voiture joueur
+    voiture_joueur.afficher(carsTexture);
+    
+//    Decor testDecor;
+//    testDecor.placer(200, 200);
+//    testDecor.selectDecor(1, 3);
+//    testDecor.afficher(decorTexture);
+//    
+//    Objet testObjet;
+//    testObjet.placer(1000, 500);
+//    testObjet.setWidth(route.getWidth()/4);
+//    testObjet.setHeight(250);
+//    testObjet.afficherRectObjet();
+//    
+//    Voiture testVoiture;
+//    testVoiture.selectVoiture(0);
+//    testVoiture.placer(200, 200);
+//    testVoiture.setWidth(200);
+//    testVoiture.setHeight(200);
+//    testVoiture.selectVoiture(0);
+//    testVoiture.afficherRectObjet();
+//    testVoiture.afficher(carsTexture);
+    
+    
+    if (pause)
+    {
+        SDL_Rect pause;
+        pause.w = SCREEN_WIDTH*0.5;
+        pause.h = pause.w;
+        pause.x = (SCREEN_WIDTH - pause.w) / 2;
+        pause.y = (SCREEN_HEIGHT - pause.h) / 2;
+        SDL_SetTextureAlphaMod(pauseTexture, 200);
+        SDL_RenderCopy(pRenderer, pauseTexture, NULL, &pause);
+    }
+    
+    SDL_RenderPresent(pRenderer);
+    
+    FPS++;
+    
 }
 
 bool Partie::continuer_partie()

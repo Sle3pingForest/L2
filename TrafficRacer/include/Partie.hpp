@@ -20,6 +20,7 @@ public:
     void deplacements();
     void gestion_collisions();
     void gestion_decors();
+    void calculerEchelle();
     bool continuer_partie();
     int FPS = 0;
 protected:
@@ -29,8 +30,9 @@ private:
     int vitesse;
     SDL_Texture* decorTexture;
     SDL_Texture* carsTexture;
-    SDL_Texture* roadTexture;
+    SDL_Texture* routeTexture;
     SDL_Texture* pauseTexture;
+    SDL_Texture* testTexture;
     Route route;
     Voiture voiture_joueur;
     Voiture tabVoiture[10];
@@ -38,6 +40,7 @@ private:
     Decor tabDecor[10];
     Timer timerFPS;
     Timer timerDeplacement;
+    Objet plateau;
 };
 
 #endif // PARTIE_H

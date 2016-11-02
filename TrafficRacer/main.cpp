@@ -9,13 +9,6 @@
 #include "SDL_Tools.hpp"
 #include "Partie.hpp"
 
-SDL_Window *pWindow =NULL;
-SDL_Renderer *pRenderer = NULL;
-
-int SCREEN_WIDTH = 700;
-int SCREEN_HEIGHT = 700;
-int SCREEN_FPS = 50;
-
 int main(int argc, const char * argv[])
 {
 
@@ -33,7 +26,7 @@ int main(int argc, const char * argv[])
             partie.afficher();
             if(CPU.getTicks() >= 1000)
             {
-                printf("FPS : %d\n", partie.FPS);
+                //printf("FPS : %d\n", partie.FPS);
                 partie.FPS = 0;
                 CPU.start();
             }
