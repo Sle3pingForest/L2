@@ -286,6 +286,21 @@ void Partie::gestion_decors()
     }
 }
 
+void Partie::gestion_voitures()
+{
+    for (int i = 0; i < 20; ++i)
+    {
+        if (tabVoit[i]->isDead())
+        {
+            delete tab[i];
+        }
+        else
+        {
+            tab[i]->deplacer(0, vitesse);
+        }
+    }
+}
+
 void Partie::calculerEchelle()
 {
     echelle = (float)SCREEN_WIDTH / (float)camera.w;

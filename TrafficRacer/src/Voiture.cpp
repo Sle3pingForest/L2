@@ -7,7 +7,7 @@ Voiture::Voiture()
     positionPlateau.h = 0;
     positionPlateau.x = 0;
     positionPlateau.y = 0;
-    
+
     image.x = 0;
     image.y = 0;
     image.w = 0;
@@ -22,6 +22,11 @@ Voiture::Voiture(int x, int y, int w, int h)
     positionPlateau.h = h;
 }
 
+Voiture::~Voiture()
+{
+    //dtor
+}
+
 void Voiture::selectVoiture(int nb)
 {
     switch (nb) {
@@ -31,7 +36,7 @@ void Voiture::selectVoiture(int nb)
             image.w = audi_w;
             image.h = audi_h;
             break;
-            
+
         case 1:
             image.x = car_x;
             image.y = car_y;
@@ -52,7 +57,7 @@ void Voiture::selectVoiture(int nb)
             image.w = miniTruck_w;
             image.h = miniTruck_h;
             break;
-            
+
         case 4:
             image.x = ambulance_x;
             image.y = ambulance_y;
@@ -86,8 +91,10 @@ void Voiture::selectVoiture(int nb)
     }
 }
 
-
-Voiture::~Voiture()
+bool Voiture::isDead()
 {
-    //dtor
+    if (positionPlateau.y > LEVEL_HEIGHT + 1000)
+        return true;
+    return false;
 }
+

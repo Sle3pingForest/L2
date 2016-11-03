@@ -29,9 +29,8 @@ void Decor::selectDecor(int type, int nb)
 
 bool Decor::isDead()
 {
-    if (positionPlateau.y > LEVEL_HEIGHT) {
+    if (positionPlateau.y > LEVEL_HEIGHT)
         return true;
-    }
     return false;
 }
 

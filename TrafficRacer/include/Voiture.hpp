@@ -8,9 +8,10 @@ class Voiture : public Objet
     public:
         Voiture();
         Voiture(int x, int y, int w, int h);
-        void selectVoiture(int nb);
         virtual ~Voiture();
 
+        void selectVoiture(int nb);
+        bool isDead();
     protected:
     private:
 };

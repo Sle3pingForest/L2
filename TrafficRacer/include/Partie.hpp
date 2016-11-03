@@ -35,9 +35,9 @@ private:
     SDL_Texture* testTexture;
     Route route;
     Voiture voiture_joueur;
+    Voiture* tabVoit[20];
     Voiture tabVoiture[10];
-    Decor* tab[30];
-    Decor tabDecor[10];
+    Decor* tabDecors[30];
     Timer timerFPS;
     Timer timerDeplacement;
     Objet plateau;
