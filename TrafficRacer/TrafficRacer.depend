@@ -189,3 +189,66 @@
 1478177965 source:/home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/src/Objet.cpp
 	"Objet.hpp"
 
+1478188848 source:/home/sf_hoaphivu/workspace/L2/L2/TrafficRacer/main.cpp
+	"SDL_Tools.hpp"
+	"Partie.hpp"
+
+1478188848 /home/sf_hoaphivu/workspace/L2/L2/TrafficRacer/include/SDL_Tools.hpp
+	<stdlib.h>
+	<stdio.h>
+	<iostream>
+	<SDL2/SDL.h>
+
+1478190264 /home/sf_hoaphivu/workspace/L2/L2/TrafficRacer/include/Partie.hpp
+	"Voiture.hpp"
+	"Route.hpp"
+	"Decor.hpp"
+	"Timer.hpp"
+	<fstream>
+
+1478189250 /home/sf_hoaphivu/workspace/L2/L2/TrafficRacer/include/Voiture.hpp
+	"Objet.hpp"
+
+1478188848 /home/sf_hoaphivu/workspace/L2/L2/TrafficRacer/include/Objet.hpp
+	"SDL_Tools.hpp"
+
+1478188848 /home/sf_hoaphivu/workspace/L2/L2/TrafficRacer/include/Route.hpp
+	"Objet.hpp"
+
+1478188848 /home/sf_hoaphivu/workspace/L2/L2/TrafficRacer/include/Decor.hpp
+	"Objet.hpp"
+
+1478188848 /home/sf_hoaphivu/workspace/L2/L2/TrafficRacer/include/Timer.hpp
+	<stdint.h>
+	<SDL2/SDL.h>
+
+1478188848 source:/home/sf_hoaphivu/workspace/L2/L2/TrafficRacer/src/Decor.cpp
+	"Decor.hpp"
+
+1478189410 source:/home/sf_hoaphivu/workspace/L2/L2/TrafficRacer/src/Joueur.cpp
+	"Joueur.hpp"
+
+1478189444 /home/sf_hoaphivu/workspace/L2/L2/TrafficRacer/include/Joueur.hpp
+	<fstream>
+	<iostream>
+	<string>
+
+1478188848 source:/home/sf_hoaphivu/workspace/L2/L2/TrafficRacer/src/Objet.cpp
+	"Objet.hpp"
+
+1478188848 source:/home/sf_hoaphivu/workspace/L2/L2/TrafficRacer/src/Route.cpp
+	"Route.hpp"
+
+1478188848 source:/home/sf_hoaphivu/workspace/L2/L2/TrafficRacer/src/SDL_Tools.cpp
+	"SDL_Tools.hpp"
+
+1478188848 source:/home/sf_hoaphivu/workspace/L2/L2/TrafficRacer/src/Timer.cpp
+	"Timer.hpp"
+
+1478189226 source:/home/sf_hoaphivu/workspace/L2/L2/TrafficRacer/src/Voiture.cpp
+	"Voiture.hpp"
+	"Route.hpp"
+
+1478189664 source:/home/sf_hoaphivu/workspace/L2/L2/TrafficRacer/src/Partie.cpp
+	"Partie.hpp"
+

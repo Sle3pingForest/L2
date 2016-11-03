@@ -20,6 +20,7 @@ public:
     void deplacements();
     void gestion_collisions();
     void gestion_decors();
+    void gestion_voitures();
     void calculerEchelle();
     bool continuer_partie();
     int FPS = 0;
@@ -40,6 +41,7 @@ private:
     Decor* tabDecors[30];
     Timer timerFPS;
     Timer timerDeplacement;
+    Timer timerChargementFichier;
     Objet plateau;
 };
 

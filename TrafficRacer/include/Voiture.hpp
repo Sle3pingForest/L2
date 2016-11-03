@@ -9,11 +9,13 @@ class Voiture : public Objet
         Voiture();
         Voiture(int x, int y, int w, int h);
         virtual ~Voiture();
-
+        int getVitesseVoiture();
+        void setVitesseVoiture( int newVitesse);
         void selectVoiture(int nb);
         bool isDead();
     protected:
     private:
+        int vitesse;
 };
 
 const int audi_x = 0;

@@ -98,3 +98,13 @@ bool Voiture::isDead()
     return false;
 }
 
+int Voiture::getVitesseVoiture()
+{
+    return vitesse;
+}
+
+void Voiture::setVitesseVoiture( int newVitesse)
+{
+    vitesse = newVitesse;
+}
+
