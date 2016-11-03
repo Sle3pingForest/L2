@@ -240,7 +240,7 @@ void Partie::gestion_collisions()
 
 void Partie::chargement_voitures_fichier()
 {
-    if (timerChargementFichier.getTicks() > 3000)
+    if (timerChargementFichier.getTicks() > 5000)
     {
         infile.open("autres/niveau2");
         string line;
@@ -253,6 +253,14 @@ void Partie::chargement_voitures_fichier()
             {
                 if(line[j] == '1' || line[j] == '2')
                 {
+                    if(line[j] == '1')
+                    {
+                        tabVoiture[cpt].setVitesseVoiture(8);
+                    }
+                    else if (line[j] == '2')
+                    {
+                        tabVoiture[cpt].setVitesseVoiture(10);
+                    }
                     tabVoiture[cpt].selectVoiture(rand()%8);
                     tabVoiture[cpt].setWidth(route.getLargeurVoiePlateau() - 15);
                     tabVoiture[cpt].calculerHauteur();
@@ -260,16 +268,6 @@ void Partie::chargement_voitures_fichier()
                     int position_y = i*(tabVoiture[cpt].getHeight() + 50) - LEVEL_HEIGHT; // Fixer les tailles
                     tabVoiture[cpt].placer(position_x, position_y);
                     cpt++;
-                    cout<< " nam"<< endl;
-
-                    if(line[j] == '1')
-                    {
-                        tabVoiture[cpt].setVitesseVoiture(8);
-                    }
-                    if (line[j] == '2')
-                    {
-                        tabVoiture[cpt].setVitesseVoiture(10);
-                    }
                 }
             }
         }
