@@ -8,8 +8,11 @@ Route::Route()
     positionPlateau.h = LEVEL_HEIGHT;
     positionPlateau.x = (LEVEL_WIDTH - positionPlateau.w)/2;
     positionPlateau.y = 0;
-    
+
     position_y = 0;
+
+    image = positionPlateau;
+    image.h = image.w;
 }
 
 Route::~Route()
@@ -21,7 +24,7 @@ void Route::afficherVoies()
 {
     SDL_Rect ligne = calculerPosFenetre();
     ligne.w = 3;
-    
+
     for ( int i = 0 ; i < 5 ; ++i)
     {
         SDL_RenderFillRect(pRenderer, &ligne);
@@ -29,47 +32,46 @@ void Route::afficherVoies()
     }
 }
 
-void Route::afficher(SDL_Texture* texture)
+void Route::afficherDefilement(SDL_Texture* texture)
 {
-    
-    int nbRepetitionImage = 3;
-    positionPlateau.h = positionPlateau.w;
-    if (position_y > LEVEL_HEIGHT)
+    static const int nb_repetition_image = 4;
+    if (image.y > LEVEL_HEIGHT)
     {
-        position_y -= positionPlateau.h * nbRepetitionImage;
+        image.y -= (image.h * nb_repetition_image) - (5 * nb_repetition_image);
     }
-    
-    positionPlateau.y = position_y;
-    
-    for ( int i = 0 ; i < 3 ; ++i)
+    int position = image.y;
+
+    SDL_Rect positionFenetre;
+    //Calcul du déplacement
+    positionFenetre.x = (image.x * echelle) - camera.x;
+    //Calcul du redimensionnement
+    positionFenetre.w = image.w * echelle;
+    positionFenetre.h = image.h * echelle;
+    // Ajouter le décalage de la rambarde
+
+    for (int i = 0 ; i < nb_repetition_image ; i++)
     {
-        SDL_Rect positionFenetre = calculerPosFenetre();
-        SDL_RenderCopy(pRenderer, texture, NULL, &positionFenetre);
-        positionPlateau.y += positionPlateau.h;
-        if (positionPlateau.y > 0)
+        position = position + (image.h * i) - 5;
+        if (position > LEVEL_HEIGHT)
         {
-            positionPlateau.y -= (positionPlateau.h * nbRepetitionImage);
+            position -= (image.h * nb_repetition_image) - (5 * nb_repetition_image);
         }
+        positionFenetre.y = (position * echelle) - camera.y;
+        SDL_RenderCopy(pRenderer, texture, NULL, &positionFenetre);
     }
-
-    
-    // Replace les position comme au début
-    positionPlateau.h = LEVEL_HEIGHT;
-    positionPlateau.y = 0;
 }
-
 
 void Route::deplacer(int vitesse)
 {
-    position_y += vitesse;
+    image.y += vitesse;
 }
 
 int Route::getLargeurVoiePlateau()
 {
-    return (positionPlateau.w/4);
+    return (positionPlateau.w / 4);
 }
 
 int Route::getLargeurVoieFenetre()
 {
-    return (positionPlateau.w/4)*echelle;
+    return (positionPlateau.w / 4) * echelle;
 }

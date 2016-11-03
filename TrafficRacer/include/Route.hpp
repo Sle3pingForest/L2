@@ -9,13 +9,14 @@ public:
     Route();
     Route(int w, int h, int x, int y);
     virtual ~Route();
-    
+
     int getLargeurVoiePlateau();
     int getLargeurVoieFenetre();
-    void afficher(SDL_Texture* texture);
+    void afficherDefilement(SDL_Texture* texture);
     void afficherVoies();
+
     void deplacer(int vitesse);
-    
+
 protected:
 private:
     int position_y;

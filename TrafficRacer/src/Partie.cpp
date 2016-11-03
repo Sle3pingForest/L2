@@ -20,7 +20,7 @@ Partie::Partie()
 {
     jouer = true;
     pause = false;
-    
+
     decorTexture = LoadBmpWithTransparency("autres/images/decor.bmp", 0, 255, 255);
     carsTexture = LoadBmpWithTransparency("autres/images/cars.bmp", 0, 255, 255);
     routeTexture = LoadBmpWithTransparency("autres/images/road.bmp", 0, 255, 255);
@@ -42,15 +42,15 @@ Partie::Partie()
     timerFPS.start();
     timerDeplacement.start();
     vitesse = 10;
-    
+
     tabVoiture[0].setPosY(SCREEN_HEIGHT+1);
-    
+
     SDL_SetRenderDrawBlendMode(pRenderer, SDL_BLENDMODE_BLEND);
 //////////////////////////////////////////////
     plateau.placer(0, 0);
     plateau.setWidth(LEVEL_WIDTH);
     plateau.setHeight(LEVEL_HEIGHT);
-    
+
     //Initialisation de la position de la caméra
     camera.w = LEVEL_WIDTH;
     camera.h = LEVEL_HEIGHT;
@@ -58,7 +58,7 @@ Partie::Partie()
     camera.x = 0;
     camera.y = (plateau.calculerHauteurDansFenetre() - SCREEN_HEIGHT)/2;
 //////////////////////////////////////////////
-    
+
 }
 
 Partie::~Partie()
@@ -138,44 +138,44 @@ void Partie::gestion_touches()
                             vitesse = 0;
                     }
                     break;
-                    
+
                 case 'p':
                     if(pause)
                         pause = false;
                     else
                         pause = true;
                     break;
-                    
+
                 case 'm' :
                     jouer = false;
-                    
+
                 // Déplacement de la caméra
                 case 'q':
                     camera.x -= 100;
                     break;
-                    
+
                 case 'd':
                     camera.x += 100;
                     break;
-                    
+
                 case 'z':
                     camera.y -= 100;
                     break;
-                    
+
                 case 's':
                     camera.y += 100;
                     break;
-                    
+
                 case 'a' :
                     camera.w += 50;
                     camera.h += 50;
                     break;
-                    
+
                 case 'e':
                     camera.w -= 50;
                     camera.h -= 50;
                     break;
-                    
+
                 //Afficher la route centrée à l'echelle 1
                 case 'r':
                     camera.w = SCREEN_WIDTH;
@@ -184,7 +184,7 @@ void Partie::gestion_touches()
                     camera.x = (route.getPosX() * echelle) - ((SCREEN_WIDTH - route.calculerLargeurDansFenetre())/2); // Fonction
                     camera.y = LEVEL_HEIGHT - SCREEN_HEIGHT;
                     break;
-                    
+
                 // Afficher tout le plateau
                 case 't' :
                     camera.w = LEVEL_WIDTH;
@@ -193,7 +193,7 @@ void Partie::gestion_touches()
                     camera.x = 0;
                     camera.y = (plateau.calculerHauteurDansFenetre() - SCREEN_HEIGHT)/2;
                     break;
-                    
+
                 //Afficher toute la hauteur de la route
                 case 'y' :
                     camera.h = LEVEL_HEIGHT;
@@ -201,7 +201,7 @@ void Partie::gestion_touches()
                     calculerEchelle();
                     camera.x = (route.getPosX() * echelle) - ((SCREEN_WIDTH - route.calculerLargeurDansFenetre())/2); // Fonction
                     camera.y = 0;
-                    
+
 
                 default:
                     break;
@@ -293,20 +293,20 @@ void Partie::calculerEchelle()
 
 void Partie::afficher()
 {
-    
+
     //Création de la couleur de fond
     SDL_SetRenderDrawColor(pRenderer, 40, 40, 40, 255);
     SDL_RenderClear(pRenderer);
-    
-    
+
+
     //Affichage le plateau
     SDL_SetRenderDrawColor(pRenderer, 88, 41, 0, 255);
     plateau.afficherRectObjet();
-    
+
     //SDL_Rect plateauDest = plateau.calculerPosFenetre();
     //SDL_RenderCopy(pRenderer, testTexture, NULL, &plateauDest);
 
-    
+
     //Affichages des décors
     for(int i = 0 ; i < 30; i++)
     {
@@ -315,34 +315,34 @@ void Partie::afficher()
             tab[i]->afficher(decorTexture);
         }
     }
-    
+
     //Affichage de la route
-    //route.afficher(routeTexture);
+    route.afficherDefilement(routeTexture);
     SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 150);
-    route.afficherRectObjet();
+    //route.afficherRectObjet();
     SDL_SetRenderDrawColor(pRenderer, 0, 255, 0, 255);
-    route.afficherVoies();
-    
+    //route.afficherVoies();
+
     //Affichage des voitures
     for(int i = 0 ; i < 4; i++)
     {
         tabVoiture[i].afficher(carsTexture);
     }
-    
+
     //Affichage voiture joueur
     voiture_joueur.afficher(carsTexture);
-    
+
 //    Decor testDecor;
 //    testDecor.placer(200, 200);
 //    testDecor.selectDecor(1, 3);
 //    testDecor.afficher(decorTexture);
-//    
+//
 //    Objet testObjet;
 //    testObjet.placer(1000, 500);
 //    testObjet.setWidth(route.getWidth()/4);
 //    testObjet.setHeight(250);
 //    testObjet.afficherRectObjet();
-//    
+//
 //    Voiture testVoiture;
 //    testVoiture.selectVoiture(0);
 //    testVoiture.placer(200, 200);
@@ -351,8 +351,8 @@ void Partie::afficher()
 //    testVoiture.selectVoiture(0);
 //    testVoiture.afficherRectObjet();
 //    testVoiture.afficher(carsTexture);
-    
-    
+
+
     if (pause)
     {
         SDL_Rect pause;
@@ -363,11 +363,11 @@ void Partie::afficher()
         SDL_SetTextureAlphaMod(pauseTexture, 200);
         SDL_RenderCopy(pRenderer, pauseTexture, NULL, &pause);
     }
-    
+
     SDL_RenderPresent(pRenderer);
-    
+
     FPS++;
-    
+
 }
 
 bool Partie::continuer_partie()
