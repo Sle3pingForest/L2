@@ -14,7 +14,8 @@ Decor::Decor(int x, int y, int type, int typeNb)
 
 void Decor::selectDecor(int type, int nb)
 {
-    if (type == 1) {
+    if (type == 1)
+    {
         image.w = arbre_width;
         image.h = arbre_heigth;
         image.x = nb * arbre_width;

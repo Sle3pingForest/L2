@@ -1,5 +1,6 @@
 #ifndef JOUEUR_H
 #define JOUEUR_H
+
 #include <fstream>
 #include <iostream>
 #include <string>

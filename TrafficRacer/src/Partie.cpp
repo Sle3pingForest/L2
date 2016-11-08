@@ -1,8 +1,5 @@
 #include "Partie.hpp"
 
-using namespace std;
-std::ifstream infile;
-
 SDL_Window *pWindow =NULL;
 SDL_Renderer *pRenderer = NULL;
 
@@ -15,8 +12,6 @@ int LEVEL_HEIGHT = 1200;
 
 SDL_Rect camera;
 float echelle;
-
-ifstream fichier("autres/niveau2", ios::in);
 
 Partie::Partie()
 {
@@ -35,15 +30,11 @@ Partie::Partie()
 
     timerFPS.start();
     timerDeplacement.start();
-    timerChargementFichier.start();
 
     vitesse = 10;
 
-    SDL_SetRenderDrawBlendMode(pRenderer, SDL_BLENDMODE_BLEND);
+    srand((unsigned int)time(NULL));
     
-    srand(time(NULL));
-    
-//////////////////////////////////////////////
     plateau.setWidth(LEVEL_WIDTH);
     plateau.setHeight(LEVEL_HEIGHT);
 
@@ -53,20 +44,19 @@ Partie::Partie()
     calculerEchelle();
     camera.x = 0;
     camera.y = (plateau.calculerHauteurDansFenetre() - SCREEN_HEIGHT)/2;
-//////////////////////////////////////////////
 
 }
 
 Partie::~Partie()
 {
     //dtor
-    for (int i = 0; i < 20; ++i)
-    {
-        if (tabVoiture[i] != NULL)
-        {
-            delete tabVoiture[i];
-        }
-    }
+}
+
+void Partie::play()
+{
+    gestion_touches();
+    deplacements();
+    afficher();
 }
 
 void Partie::gestion_touches()
@@ -93,7 +83,7 @@ void Partie::gestion_touches()
 
             case SDL_WINDOWEVENT_FOCUS_LOST:
                 if(not pause)
-                    //pause = true;
+                    pause = true;
                 break;
             }
 
@@ -206,63 +196,7 @@ void Partie::gestion_touches()
                     break;
             }
         }
-
     }
-}
-
-void Partie::gestion_collisions()
-{
-    SDL_bool collision;
-    SDL_Rect intersect;
-    for(int i = 0 ; i < 20; i++)
-    {
-        if (tabVoiture[i] != NULL)
-        {
-            collision = SDL_IntersectRect(voiture_joueur.getObjet(), tabVoiture[i]->getObjet(), &intersect);
-            if (collision)
-            {
-                vitesse = 3;
-            }
-        }
-    }
-}
-
-void Partie::chargement_voitures_fichier()
-{
-    //infile.open("autres/niveau2");
-    if (timerChargementFichier.getTicks() >3000)
-    {
-        string line;
-        //getline(infile, line);
-        fichier >> line;
-        int j = 0;
-        for( int i = 0 ; i < 4 ; ++i)
-        {
-            if(line[i] == '1' || line[i] == '2')
-            {
-                //On trouve une place libre dans le tableau de pointeurs de voitures
-                while (tabVoiture[j] != NULL)
-                {
-                    ++j;
-                }
-                
-                int position_x = route.getPosX() + i * route.getLargeurVoiePlateau() + rand()%10;
-                tabVoiture[j] = new Voiture(position_x, -600, route.getLargeurVoiePlateau(), rand()%8);
-                if(line[i] == '1')
-                {
-                    tabVoiture[j]->setVitesseVoiture(6);
-                }
-                else if (line[i] == '2')
-                {
-                    tabVoiture[j]->setVitesseVoiture(8);
-                }
-            }
-        }
-        
-        infile.close();
-        timerChargementFichier.start();
-    }
-    
 }
 
 void Partie::deplacements()
@@ -274,48 +208,29 @@ void Partie::deplacements()
         route.deplacer(vitesse);
 
         //Déplacement des décors
-        Decor_gestionnaire.gestion(vitesse);
+        decor_gestionnaire.gestion(vitesse);
         
         //Déplacement des voitures
+        voiture_gestionnaire.chargement_voitures_fichier(&route);
+        if ( voiture_gestionnaire.gestion_voitures(vitesse, voiture_joueur.getObjet()) )
+            vitesse = 3;
         /*
-        for(int i = 0 ; i < 4; i++)
-        {
-            tabVoiture[i]->deplacer(0, vitesse - tabVoiture[i]->getVitesseVoiture() );
-            if(tabVoiture[i+1]->getVitesseVoiture() > tabVoiture[i]->getVitesseVoiture()
-                && tabVoiture[i+1]->getPosX() < tabVoiture[i]->getPosX() + route.getLargeurVoiePlateau())
-            {
-                //tabVoiture[i+1].placer( tabVoiture[i+1].getPosX() + route.getLargeurVoiePlateau()/4, tabVoiture[i+1].getPosY()); SDL_IntersectRect(tabVoiture[i+1].getObjet(), tabVoiture[i].getObjet(), &intersect
-                tabVoiture[i+1]->deplacer(2,0);
-
-            }
-        }*/
-
-
-        //Déplacement des voitures
-        gestion_voitures();
+         for(int i = 0 ; i < 4; i++)
+         {
+         tabVoiture[i]->deplacer(0, vitesse - tabVoiture[i]->getVitesseVoiture() );
+         if(tabVoiture[i+1]->getVitesseVoiture() > tabVoiture[i]->getVitesseVoiture()
+         && tabVoiture[i+1]->getPosX() < tabVoiture[i]->getPosX() + route.getLargeurVoiePlateau())
+         {
+         //tabVoiture[i+1].placer( tabVoiture[i+1].getPosX() + route.getLargeurVoiePlateau()/4, tabVoiture[i+1].getPosY()); SDL_IntersectRect(tabVoiture[i+1].getObjet(), tabVoiture[i].getObjet(), &intersect
+         tabVoiture[i+1]->deplacer(2,0);
+         
+         }
+         }*/
         
         timerDeplacement.start();
     }
 }
 
-void Partie::gestion_voitures()
-{
-    for (int i = 0; i < 20; ++i)
-    {
-        if (tabVoiture[i] != NULL)
-        {
-            if (tabVoiture[i]->isDead())
-            {
-                delete tabVoiture[i];
-                tabVoiture[i] = NULL;
-            }
-            else
-            {
-                tabVoiture[i]->avancer(vitesse);
-            }
-        }
-    }
-}
 
 void Partie::calculerEchelle()
 {
@@ -335,7 +250,7 @@ void Partie::afficher()
     plateau.afficherRectObjet();
 
     //Affichages des décors
-    Decor_gestionnaire.afficherDecors(decorTexture);
+    decor_gestionnaire.afficherDecors(decorTexture);
 
     //Affichage de la route
     route.afficherDefilement(routeTexture);
@@ -345,13 +260,8 @@ void Partie::afficher()
     //route.afficherVoies();
 
     //Affichage des voitures
-    for(int i = 0 ; i < 4; i++)
-    {
-        if (tabVoiture[i] != NULL)
-        {
-            tabVoiture[i]->afficher(carsTexture);
-        }
-    }
+    voiture_gestionnaire.afficherVoitures(carsTexture);
+
 
     //Affichage voiture joueur
     voiture_joueur.afficher(carsTexture);

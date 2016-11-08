@@ -4,6 +4,7 @@
 #include "Voiture.hpp"
 #include "Route.hpp"
 #include "Decor_gestionnaire.hpp"
+#include "Voiture_gestionnaire.hpp"
 #include "Timer.hpp"
 #include <fstream>
 
@@ -12,16 +13,8 @@ class Partie
 public:
     Partie();
     virtual ~Partie();
-    void gestion_touches();
-    void placer_Decors();
-    void afficher();
-    bool collision(Voiture v, Voiture v2);
-    void chargement_voitures_fichier();
-    void deplacements();
-    void gestion_collisions();
-    void gestion_voitures();
-    void calculerEchelle();
     bool continuer_partie();
+    void play();
     int FPS = 0;
 protected:
 private:
@@ -34,12 +27,17 @@ private:
     SDL_Texture* pauseTexture;
     Route route;
     Voiture voiture_joueur;
-    Voiture* tabVoiture[20];
     Timer timerFPS;
     Timer timerDeplacement;
-    Timer timerChargementFichier;
     Objet plateau;
-    Decor_gestionnaire Decor_gestionnaire;
+    Decor_gestionnaire decor_gestionnaire;
+    Voiture_gestionnaire voiture_gestionnaire;
+    
+    void gestion_touches();
+    void placer_Decors();
+    void afficher();
+    void deplacements();
+    void calculerEchelle();
 };
 
 #endif // PARTIE_H

@@ -19,6 +19,7 @@ bool InitSDLEverything()
 
     if( !CreateRenderer() )
         return false;
+    SDL_SetRenderDrawBlendMode(pRenderer, SDL_BLENDMODE_BLEND);
 
     return true;
 }

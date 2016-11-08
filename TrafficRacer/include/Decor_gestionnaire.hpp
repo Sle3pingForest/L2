@@ -1,11 +1,3 @@
-//
-//  Decor_gestionnaire.hpp
-//  TrafficRacer
-//
-//  Created by Arnaud on 08/11/2016.
-//  Copyright © 2016 Arnaud. All rights reserved.
-//
-
 #ifndef Decor_gestionnaire_hpp
 #define Decor_gestionnaire_hpp
 

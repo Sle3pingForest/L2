@@ -115,4 +115,3 @@ void Voiture::avancer(int vitesseJeu)
 {
     positionPlateau.y += vitesseJeu - vitesse;
 }
-

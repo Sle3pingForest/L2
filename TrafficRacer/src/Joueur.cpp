@@ -1,7 +1,5 @@
 #include "Joueur.hpp"
 
-
-
 Joueur::Joueur()
 {
     string nameDefault = "Computer";

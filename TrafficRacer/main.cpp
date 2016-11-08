@@ -19,18 +19,14 @@ int main(int argc, const char * argv[])
 
     while (partie.continuer_partie())
     {
-            partie.gestion_touches();
-            partie.gestion_collisions();
-            partie.chargement_voitures_fichier();
-            partie.deplacements();
-            partie.afficher();
-            if(CPU.getTicks() >= 1000)
-            {
-                //printf("FPS : %d\n", partie.FPS);
-                partie.FPS = 0;
-                CPU.start();
-            }
-            SDL_Delay(10);
+        partie.play();
+        if(CPU.getTicks() >= 1000)
+        {
+            //printf("FPS : %d\n", partie.FPS);
+            partie.FPS = 0;
+            CPU.start();
+        }
+        SDL_Delay(10);
     }
 
     SDL_DestroyRenderer(pRenderer);

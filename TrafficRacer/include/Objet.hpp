@@ -40,4 +40,4 @@ protected:
 private:
 };
 
-#endif // OBJET_H
+#endif
