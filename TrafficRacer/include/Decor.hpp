@@ -7,7 +7,7 @@ class Decor: public Objet
 {
 public:
     Decor();
-    Decor(int x, int y);
+    Decor(int x, int y, int type, int typeNb);
     virtual ~Decor();
     
     void selectDecor(int type, int nb);

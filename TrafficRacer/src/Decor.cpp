@@ -3,16 +3,13 @@ using namespace std;
 
 Decor::Decor() : Objet()
 {
-    positionPlateau.w = 0;
-    positionPlateau.h = 0;
-    positionPlateau.x = 0;
-    positionPlateau.y = 0;
 }
 
-Decor::Decor(int x, int y)
+Decor::Decor(int x, int y, int type, int typeNb)
 {
     positionPlateau.x = x;
     positionPlateau.y = y;
+    selectDecor(type, typeNb);
 }
 
 void Decor::selectDecor(int type, int nb)

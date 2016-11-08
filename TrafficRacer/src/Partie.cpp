@@ -33,13 +33,6 @@ Partie::Partie()
     voiture_joueur.calculerHauteur();
     voiture_joueur.placer(LEVEL_WIDTH/2, LEVEL_HEIGHT - voiture_joueur.getHeight() - 50);
 
-    //Placer les Decors
-    for (int i = 0; i < 30; ++i)
-    {
-        tabDecors[i] = new Decor(rand()%LEVEL_WIDTH, rand()%LEVEL_HEIGHT - LEVEL_HEIGHT);
-        tabDecors[i]->selectDecor(1, rand()%9);
-    }
-
     timerFPS.start();
     timerDeplacement.start();
     timerChargementFichier.start();
@@ -67,14 +60,6 @@ Partie::Partie()
 Partie::~Partie()
 {
     //dtor
-    for (int i = 0; i < 30; ++i)
-    {
-        if (tabDecors[i] != NULL)
-        {
-            delete tabDecors[i];
-        }
-    }
-
     for (int i = 0; i < 20; ++i)
     {
         if (tabVoiture[i] != NULL)
@@ -289,7 +274,7 @@ void Partie::deplacements()
         route.deplacer(vitesse);
 
         //Déplacement des décors
-        gestion_decors();
+        Decor_gestionnaire.gestion(vitesse);
         
         //Déplacement des voitures
         /*
@@ -310,24 +295,6 @@ void Partie::deplacements()
         gestion_voitures();
         
         timerDeplacement.start();
-    }
-}
-
-void Partie::gestion_decors()
-{
-    for (int i = 0; i < 30; ++i)
-    {
-        if (tabDecors[i] != NULL)
-        {
-            if (tabDecors[i]->isDead())
-            {
-                delete tabDecors[i];
-                tabDecors[i] = NULL;
-                tabDecors[i] = new Decor(rand()%LEVEL_WIDTH, rand()%LEVEL_HEIGHT - LEVEL_HEIGHT);
-                tabDecors[i]->selectDecor(1, rand()%9);
-            }
-            tabDecors[i]->deplacer(0, vitesse);
-        }
     }
 }
 
@@ -367,18 +334,8 @@ void Partie::afficher()
     SDL_SetRenderDrawColor(pRenderer, 88, 41, 0, 255);
     plateau.afficherRectObjet();
 
-    //SDL_Rect plateauDest = plateau.calculerPosFenetre();
-    //SDL_RenderCopy(pRenderer, testTexture, NULL, &plateauDest);
-
-
     //Affichages des décors
-    for(int i = 0 ; i < 30; i++)
-    {
-        if (tabDecors[i] != NULL)
-        {
-            tabDecors[i]->afficher(decorTexture);
-        }
-    }
+    Decor_gestionnaire.afficherDecors(decorTexture);
 
     //Affichage de la route
     route.afficherDefilement(routeTexture);

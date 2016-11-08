@@ -3,7 +3,7 @@
 
 #include "Voiture.hpp"
 #include "Route.hpp"
-#include "Decor.hpp"
+#include "Decor_gestionnaire.hpp"
 #include "Timer.hpp"
 #include <fstream>
 
@@ -19,7 +19,6 @@ public:
     void chargement_voitures_fichier();
     void deplacements();
     void gestion_collisions();
-    void gestion_decors();
     void gestion_voitures();
     void calculerEchelle();
     bool continuer_partie();
@@ -33,15 +32,14 @@ private:
     SDL_Texture* carsTexture;
     SDL_Texture* routeTexture;
     SDL_Texture* pauseTexture;
-    SDL_Texture* testTexture;
     Route route;
     Voiture voiture_joueur;
     Voiture* tabVoiture[20];
-    Decor* tabDecors[30];
     Timer timerFPS;
     Timer timerDeplacement;
     Timer timerChargementFichier;
     Objet plateau;
+    Decor_gestionnaire Decor_gestionnaire;
 };
 
 #endif // PARTIE_H
