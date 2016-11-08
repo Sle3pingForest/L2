@@ -35,7 +35,7 @@ int main(int argc, const char * argv[])
 
     SDL_DestroyRenderer(pRenderer);
     SDL_DestroyWindow(pWindow);
-
+    
     SDL_Quit();
 
     return 0;

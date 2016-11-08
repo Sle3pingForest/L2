@@ -14,12 +14,15 @@ Voiture::Voiture()
     image.h = 0;
 }
 
-Voiture::Voiture(int x, int y, int w, int h)
+Voiture::Voiture(int posX, int posY, int widht, int voitureType)
 {
-    positionPlateau.x = x;
-    positionPlateau.y = y;
-    positionPlateau.w = w;
-    positionPlateau.h = h;
+    positionPlateau.x = posX;
+    positionPlateau.y = posY;
+    
+    selectVoiture(voitureType);
+    positionPlateau.w = widht;
+    calculerHauteur();
+    
 }
 
 Voiture::~Voiture()
@@ -106,5 +109,10 @@ int Voiture::getVitesseVoiture()
 void Voiture::setVitesseVoiture( int newVitesse)
 {
     vitesse = newVitesse;
+}
+
+void Voiture::avancer(int vitesseJeu)
+{
+    positionPlateau.y += vitesseJeu - vitesse;
 }
 

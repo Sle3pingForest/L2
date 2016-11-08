@@ -5,17 +5,18 @@
 
 class Voiture : public Objet
 {
-    public:
-        Voiture();
-        Voiture(int x, int y, int w, int h);
-        virtual ~Voiture();
-        int getVitesseVoiture();
-        void setVitesseVoiture( int newVitesse);
-        void selectVoiture(int nb);
-        bool isDead();
-    protected:
-    private:
-        int vitesse;
+public:
+    Voiture();
+    Voiture(int posX, int posY, int widht, int voitureType);
+    virtual ~Voiture();
+    int getVitesseVoiture();
+    void setVitesseVoiture( int newVitesse);
+    void avancer(int vitesseJeu);
+    void selectVoiture(int nb);
+    bool isDead();
+protected:
+private:
+    int vitesse;
 };
 
 const int audi_x = 0;

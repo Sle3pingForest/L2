@@ -16,6 +16,8 @@ int LEVEL_HEIGHT = 1200;
 SDL_Rect camera;
 float echelle;
 
+ifstream fichier("autres/niveau2", ios::in);
+
 Partie::Partie()
 {
     jouer = true;
@@ -25,8 +27,7 @@ Partie::Partie()
     carsTexture = LoadBmpWithTransparency("autres/images/cars.bmp", 0, 255, 255);
     routeTexture = LoadBmpWithTransparency("autres/images/road.bmp", 0, 255, 255);
     pauseTexture = LoadBmpWithTransparency("autres/images/pause.bmp", 0, 255, 255);
-    testTexture = LoadBmpWithTransparency("autres/images/test.bmp", 0, 255, 255);
-
+    
     voiture_joueur.selectVoiture(0);
     voiture_joueur.setWidth(route.getLargeurVoiePlateau() - 15);
     voiture_joueur.calculerHauteur();
@@ -45,11 +46,11 @@ Partie::Partie()
 
     vitesse = 10;
 
-    tabVoiture[0].setPosY(LEVEL_HEIGHT+1);
-
     SDL_SetRenderDrawBlendMode(pRenderer, SDL_BLENDMODE_BLEND);
+    
+    srand(time(NULL));
+    
 //////////////////////////////////////////////
-    plateau.placer(0, 0);
     plateau.setWidth(LEVEL_WIDTH);
     plateau.setHeight(LEVEL_HEIGHT);
 
@@ -76,9 +77,9 @@ Partie::~Partie()
 
     for (int i = 0; i < 20; ++i)
     {
-        if (tabVoit[i] != NULL)
+        if (tabVoiture[i] != NULL)
         {
-            delete tabVoit[i];
+            delete tabVoiture[i];
         }
     }
 }
@@ -228,53 +229,55 @@ void Partie::gestion_collisions()
 {
     SDL_bool collision;
     SDL_Rect intersect;
-    for(int i = 0 ; i < 10; i++)
+    for(int i = 0 ; i < 20; i++)
     {
-        collision = SDL_IntersectRect(voiture_joueur.getObjet(), tabVoiture[i].getObjet(), &intersect);
-        if (collision)
+        if (tabVoiture[i] != NULL)
         {
-            vitesse = 3;
+            collision = SDL_IntersectRect(voiture_joueur.getObjet(), tabVoiture[i]->getObjet(), &intersect);
+            if (collision)
+            {
+                vitesse = 3;
+            }
         }
     }
 }
 
 void Partie::chargement_voitures_fichier()
 {
-    if (timerChargementFichier.getTicks() > 5000)
+    //infile.open("autres/niveau2");
+    if (timerChargementFichier.getTicks() >3000)
     {
-        infile.open("autres/niveau2");
         string line;
-        int cpt = 0;
-
-        for(int i = 0 ; i < 4; ++i)
+        //getline(infile, line);
+        fichier >> line;
+        int j = 0;
+        for( int i = 0 ; i < 4 ; ++i)
         {
-            getline(infile, line);
-            for( int j = 0 ; j < 4 ; ++j)
+            if(line[i] == '1' || line[i] == '2')
             {
-                if(line[j] == '1' || line[j] == '2')
+                //On trouve une place libre dans le tableau de pointeurs de voitures
+                while (tabVoiture[j] != NULL)
                 {
-                    if(line[j] == '1')
-                    {
-                        tabVoiture[cpt].setVitesseVoiture(8);
-                    }
-                    else if (line[j] == '2')
-                    {
-                        tabVoiture[cpt].setVitesseVoiture(10);
-                    }
-                    tabVoiture[cpt].selectVoiture(rand()%8);
-                    tabVoiture[cpt].setWidth(route.getLargeurVoiePlateau() - 15);
-                    tabVoiture[cpt].calculerHauteur();
-                    int position_x = route.getPosX() + j *route.getLargeurVoiePlateau() + rand()%10;
-                    int position_y = i*(tabVoiture[cpt].getHeight() + 50) - LEVEL_HEIGHT; // Fixer les tailles
-                    tabVoiture[cpt].placer(position_x, position_y);
-                    cpt++;
+                    ++j;
+                }
+                
+                int position_x = route.getPosX() + i * route.getLargeurVoiePlateau() + rand()%10;
+                tabVoiture[j] = new Voiture(position_x, -600, route.getLargeurVoiePlateau(), rand()%8);
+                if(line[i] == '1')
+                {
+                    tabVoiture[j]->setVitesseVoiture(6);
+                }
+                else if (line[i] == '2')
+                {
+                    tabVoiture[j]->setVitesseVoiture(8);
                 }
             }
         }
+        
         infile.close();
         timerChargementFichier.start();
     }
-
+    
 }
 
 void Partie::deplacements()
@@ -285,20 +288,27 @@ void Partie::deplacements()
         //Déplacement de la route
         route.deplacer(vitesse);
 
+        //Déplacement des décors
+        gestion_decors();
+        
         //Déplacement des voitures
+        /*
         for(int i = 0 ; i < 4; i++)
         {
-            tabVoiture[i].deplacer(0, vitesse - tabVoiture[i].getVitesseVoiture() );
-            if(tabVoiture[i+1].getVitesseVoiture() > tabVoiture[i].getVitesseVoiture()
-                && tabVoiture[i+1].getPosX() < tabVoiture[i].getPosX() + route.getLargeurVoiePlateau())
+            tabVoiture[i]->deplacer(0, vitesse - tabVoiture[i]->getVitesseVoiture() );
+            if(tabVoiture[i+1]->getVitesseVoiture() > tabVoiture[i]->getVitesseVoiture()
+                && tabVoiture[i+1]->getPosX() < tabVoiture[i]->getPosX() + route.getLargeurVoiePlateau())
             {
                 //tabVoiture[i+1].placer( tabVoiture[i+1].getPosX() + route.getLargeurVoiePlateau()/4, tabVoiture[i+1].getPosY()); SDL_IntersectRect(tabVoiture[i+1].getObjet(), tabVoiture[i].getObjet(), &intersect
-                tabVoiture[i+1].deplacer(2,0);
+                tabVoiture[i+1]->deplacer(2,0);
 
             }
-        }
+        }*/
 
-        gestion_decors();
+
+        //Déplacement des voitures
+        gestion_voitures();
+        
         timerDeplacement.start();
     }
 }
@@ -307,13 +317,17 @@ void Partie::gestion_decors()
 {
     for (int i = 0; i < 30; ++i)
     {
-        if (tabDecors[i]->isDead())
+        if (tabDecors[i] != NULL)
         {
-            delete tabDecors[i];
-            tabDecors[i] = new Decor(rand()%LEVEL_WIDTH, rand()%LEVEL_HEIGHT - LEVEL_HEIGHT);
-            tabDecors[i]->selectDecor(1, rand()%9);
+            if (tabDecors[i]->isDead())
+            {
+                delete tabDecors[i];
+                tabDecors[i] = NULL;
+                tabDecors[i] = new Decor(rand()%LEVEL_WIDTH, rand()%LEVEL_HEIGHT - LEVEL_HEIGHT);
+                tabDecors[i]->selectDecor(1, rand()%9);
+            }
+            tabDecors[i]->deplacer(0, vitesse);
         }
-        tabDecors[i]->deplacer(0, vitesse);
     }
 }
 
@@ -321,13 +335,17 @@ void Partie::gestion_voitures()
 {
     for (int i = 0; i < 20; ++i)
     {
-        if (tabVoit[i]->isDead())
+        if (tabVoiture[i] != NULL)
         {
-            delete tabVoit[i];
-        }
-        else
-        {
-            tabVoit[i]->deplacer(0, vitesse);
+            if (tabVoiture[i]->isDead())
+            {
+                delete tabVoiture[i];
+                tabVoiture[i] = NULL;
+            }
+            else
+            {
+                tabVoiture[i]->avancer(vitesse);
+            }
         }
     }
 }
@@ -372,7 +390,10 @@ void Partie::afficher()
     //Affichage des voitures
     for(int i = 0 ; i < 4; i++)
     {
-        tabVoiture[i].afficher(carsTexture);
+        if (tabVoiture[i] != NULL)
+        {
+            tabVoiture[i]->afficher(carsTexture);
+        }
     }
 
     //Affichage voiture joueur
