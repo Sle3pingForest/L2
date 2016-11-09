@@ -5,6 +5,7 @@
 #include "Route.hpp"
 #include "Decor_gestionnaire.hpp"
 #include "Voiture_gestionnaire.hpp"
+#include "Voiture_joueur.hpp"
 #include "Timer.hpp"
 #include <fstream>
 
@@ -26,12 +27,12 @@ private:
     SDL_Texture* routeTexture;
     SDL_Texture* pauseTexture;
     Route route;
-    Voiture voiture_joueur;
     Timer timerFPS;
     Timer timerDeplacement;
     Objet plateau;
     Decor_gestionnaire decor_gestionnaire;
     Voiture_gestionnaire voiture_gestionnaire;
+    Voiture_joueur Test;
     
     void gestion_touches();
     void placer_Decors();

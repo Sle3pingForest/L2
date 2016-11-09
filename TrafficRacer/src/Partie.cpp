@@ -23,11 +23,6 @@ Partie::Partie()
     routeTexture = LoadBmpWithTransparency("autres/images/road.bmp", 0, 255, 255);
     pauseTexture = LoadBmpWithTransparency("autres/images/pause.bmp", 0, 255, 255);
 
-    voiture_joueur.selectVoiture(0);
-    voiture_joueur.setWidth(route.getLargeurVoiePlateau() - 15);
-    voiture_joueur.calculerHauteur();
-    voiture_joueur.placer(LEVEL_WIDTH/2, LEVEL_HEIGHT - voiture_joueur.getHeight() - 50);
-
     timerFPS.start();
     timerDeplacement.start();
 
@@ -45,6 +40,10 @@ Partie::Partie()
     camera.x = 0;
     camera.y = (plateau.calculerHauteurDansFenetre() - SCREEN_HEIGHT)/2;
 
+    Test.selectVoiture(0);
+    Test.setWidth(route.getLargeurVoiePlateau() - 15);
+    Test.calculerHauteur();
+    Test.placer(LEVEL_WIDTH/2, LEVEL_HEIGHT - Test.getHeight() - 50);
 }
 
 Partie::~Partie()
@@ -88,45 +87,47 @@ void Partie::gestion_touches()
             }
 
         }
+        
+        Test.gestionTouches( event );
 
         // Les touches
-        else if( event.type == SDL_KEYDOWN )
+        if( event.type == SDL_KEYDOWN )
         {
             switch( event.key.keysym.sym )
             {
-                case SDLK_UP:
-                    vitesse += 1;
-                    if(vitesse > 20)
-                        vitesse = 20;
-                    break;
-
-                case SDLK_DOWN:
-                    vitesse -= 2;
-                    if(vitesse < 0)
-                        vitesse = 0;
-                    break;
-
-                case SDLK_LEFT:
-                    voiture_joueur.deplacer(-2 * vitesse, 0);
-                    if(voiture_joueur.getPosX() <= route.getPosX())
-                    {
-                        voiture_joueur.placer(route.getPosX(), voiture_joueur.getPosY());
-                        vitesse -= 5;
-                        if(vitesse < 0)
-                            vitesse = 0;
-                    }
-                    break;
-
-                case SDLK_RIGHT:
-                    voiture_joueur.deplacer(+2 * vitesse, 0);
-                    if(voiture_joueur.getPosX() + voiture_joueur.getWidth() >= route.getPosX() + route.getWidth())
-                    {
-                        voiture_joueur.placer(route.getPosX() + route.getWidth() - voiture_joueur.getWidth() , voiture_joueur.getPosY());
-                        vitesse -= 5;
-                        if(vitesse < 0)
-                            vitesse = 0;
-                    }
-                    break;
+//                case SDLK_UP:
+//                    vitesse += 1;
+//                    if(vitesse > 20)
+//                        vitesse = 20;
+//                    break;
+//
+//                case SDLK_DOWN:
+//                    vitesse -= 2;
+//                    if(vitesse < 0)
+//                        vitesse = 0;
+//                    break;
+//
+//                case SDLK_LEFT:
+//                    voiture_joueur.deplacer(-2 * vitesse, 0);
+//                    if(voiture_joueur.getPosX() <= route.getPosX())
+//                    {
+//                        voiture_joueur.placer(route.getPosX(), voiture_joueur.getPosY());
+//                        vitesse -= 5;
+//                        if(vitesse < 0)
+//                            vitesse = 0;
+//                    }
+//                    break;
+//
+//                case SDLK_RIGHT:
+//                    voiture_joueur.deplacer(+2 * vitesse, 0);
+//                    if(voiture_joueur.getPosX() + voiture_joueur.getWidth() >= route.getPosX() + route.getWidth())
+//                    {
+//                        voiture_joueur.placer(route.getPosX() + route.getWidth() - voiture_joueur.getWidth() , voiture_joueur.getPosY());
+//                        vitesse -= 5;
+//                        if(vitesse < 0)
+//                            vitesse = 0;
+//                    }
+//                    break;
 
                 case 'p':
                     if(pause)
@@ -203,6 +204,9 @@ void Partie::deplacements()
 {
     if (timerDeplacement.getTicks() > 10 and not pause) // changer ce compteur
     {
+        
+        vitesse = Test.vitesse;
+        
 
         //Déplacement de la route
         route.deplacer(vitesse);
@@ -212,8 +216,8 @@ void Partie::deplacements()
 
         //Déplacement des voitures
         voiture_gestionnaire.chargement_voitures_fichier(&route);
-        if ( voiture_gestionnaire.gestion_voitures(vitesse, voiture_joueur.getObjet()) )
-            vitesse = 3;
+        if ( voiture_gestionnaire.gestion_voitures(vitesse, Test.getObjet()) )
+            Test.vitesse = 3;
         /*
          for(int i = 0 ; i < 4; i++)
          {
@@ -226,6 +230,8 @@ void Partie::deplacements()
 
          }
          }*/
+        
+        Test.deplacer();
 
         timerDeplacement.start();
     }
@@ -261,12 +267,11 @@ void Partie::afficher()
 
     //Affichage des voitures
     voiture_gestionnaire.afficherVoitures(carsTexture);
-
-
+    
     //Affichage voiture joueur
-    voiture_joueur.afficher(carsTexture);
-    SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 120);
-    voiture_joueur.afficherRectCollision();
+    Test.afficher(carsTexture);
+//    SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 120);
+//    voiture_joueur.afficherRectCollision();
 
 //    Decor testDecor;
 //    testDecor.placer(200, 200);
