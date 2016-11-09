@@ -56,6 +56,7 @@
 		<Unit filename="include/Timer.hpp" />
 		<Unit filename="include/Voiture.hpp" />
 		<Unit filename="include/Voiture_gestionnaire.hpp" />
+		<Unit filename="include/Voiture_joueur.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Decor.cpp" />
 		<Unit filename="src/Decor_gestionnaire.cpp" />
@@ -67,6 +68,7 @@
 		<Unit filename="src/Timer.cpp" />
 		<Unit filename="src/Voiture.cpp" />
 		<Unit filename="src/Voiture_gestionnaire.cpp" />
+		<Unit filename="src/Voiture_joueur.cpp" />
 		<Extensions>
 			<envvars />
 			<code_completion />

@@ -2,7 +2,7 @@
 
 Voiture_joueur::Voiture_joueur() : Voiture()
 {
-    
+
 }
 
 Voiture_joueur::Voiture_joueur(int voitureType)
@@ -12,47 +12,71 @@ Voiture_joueur::Voiture_joueur(int voitureType)
 
 Voiture_joueur::~Voiture_joueur()
 {
-    
+
 }
 
-void Voiture_joueur::gestionTouches( SDL_Event& e )
+void Voiture_joueur::gestionTouches( SDL_Event& event )
 {
     Y_VEL = 0.7 * vitesse;
-    //If a key was pressed
-    if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
+
+    //Touches pressées
+    if( event.type == SDL_KEYDOWN && event.key.repeat == 0 )
     {
         //Adjust the velocity
-        switch( e.key.keysym.sym )
+        switch( event.key.keysym.sym )
         {
-            case SDLK_UP: vitesse += Vitesse_VEL; break;
-            case SDLK_DOWN: vitesse -= Vitesse_VEL; break;
+            //case SDLK_UP: vitesse += Vitesse_VEL; break;
+            //case SDLK_DOWN: vitesse -= Vitesse_VEL; break;
             case SDLK_LEFT: mVelX -= Y_VEL; break;
             case SDLK_RIGHT: mVelX += Y_VEL; break;
         }
     }
-    //If a key was released
-    else if( e.type == SDL_KEYUP && e.key.repeat == 0 )
+
+    //Touches relachées
+    else if( event.type == SDL_KEYUP && event.key.repeat == 0 )
     {
         //Adjust the velocity
-        switch( e.key.keysym.sym )
+        switch( event.key.keysym.sym )
         {
-//            case SDLK_UP: vitesse -= Vitesse_VEL; break;
-//            case SDLK_DOWN: vitesse += Vitesse_VEL; break;
             case SDLK_LEFT: mVelX += Y_VEL; break;
             case SDLK_RIGHT: mVelX -= Y_VEL; break;
         }
     }
+
+    // On limite la vitesse entre 0 et 20
+    if( event.type == SDL_KEYDOWN )
+    {
+        switch( event.key.keysym.sym )
+        {
+            case SDLK_UP:
+                vitesse += Vitesse_VEL;
+                if( vitesse > 20)
+                {
+                    vitesse = 20;
+                }
+                break;
+            case SDLK_DOWN:
+                vitesse -= Vitesse_VEL;
+                if( vitesse < 0)
+                {
+                    vitesse = 0;
+                }
+                break;
+                break;
+        }
+
+    }
 }
 
-void Voiture_joueur::deplacer()
+void Voiture_joueur::deplacer(SDL_Rect* route)
 {
-    //Move the dot left or right
+    //Déplace la voiture
     positionPlateau.x  += mVelX;
-    
-    //If the dot went too far to the left or right
-    //if( ( mPosX < 0 ) || ( mPosX + DOT_WIDTH > SCREEN_WIDTH ) )
+
+    //Si elle est trop loin (en dehors de la route)
+    if( ( positionPlateau.x < route->x ) || ( (positionPlateau.x + positionPlateau.w) > (route->x + route->w) ))
     {
-        //Move back
-        //mPosX -= mVelX;
+        //On ne déplace pas
+        positionPlateau.x  -= mVelX;
     }
 }

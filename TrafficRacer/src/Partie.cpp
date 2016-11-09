@@ -86,7 +86,7 @@ void Partie::gestion_touches()
             }
 
         }
-        
+
         Test.gestionTouches( event );
 
         // Les touches
@@ -213,7 +213,10 @@ void Partie::deplacements()
         //Déplacement des voitures
         voiture_gestionnaire.chargement_voitures_fichier(&route);
         if ( voiture_gestionnaire.gestion_voitures(Test.vitesse, Test.getObjet()) )
-            Test.vitesse = 3;
+        {
+            //Test.vitesse = 3;
+        }
+
         /*
          for(int i = 0 ; i < 4; i++)
          {
@@ -226,8 +229,8 @@ void Partie::deplacements()
 
          }
          }*/
-        
-        Test.deplacer();
+
+        Test.deplacer(route.getObjet());
 
         timerDeplacement.start();
     }
@@ -263,11 +266,11 @@ void Partie::afficher()
 
     //Affichage des voitures
     voiture_gestionnaire.afficherVoitures(carsTexture);
-    
+
     //Affichage voiture joueur
     Test.afficher(carsTexture);
-//    SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 120);
-//    voiture_joueur.afficherRectCollision();
+    SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 120);
+    Test.afficherRectCollision();
 
 //    Decor testDecor;
 //    testDecor.placer(200, 200);
