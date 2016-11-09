@@ -26,8 +26,6 @@ Partie::Partie()
     timerFPS.start();
     timerDeplacement.start();
 
-    vitesse = 10;
-
     srand((unsigned int)time(NULL));
 
     plateau.setWidth(LEVEL_WIDTH);
@@ -44,6 +42,7 @@ Partie::Partie()
     Test.setWidth(route.getLargeurVoiePlateau() - 15);
     Test.calculerHauteur();
     Test.placer(LEVEL_WIDTH/2, LEVEL_HEIGHT - Test.getHeight() - 50);
+    Test.vitesse = 10;
 }
 
 Partie::~Partie()
@@ -204,19 +203,16 @@ void Partie::deplacements()
 {
     if (timerDeplacement.getTicks() > 10 and not pause) // changer ce compteur
     {
-        
-        vitesse = Test.vitesse;
-        
 
         //Déplacement de la route
-        route.deplacer(vitesse);
+        route.deplacer(Test.vitesse);
 
         //Déplacement des décors
-        decor_gestionnaire.gestion(vitesse);
+        decor_gestionnaire.gestion(Test.vitesse);
 
         //Déplacement des voitures
         voiture_gestionnaire.chargement_voitures_fichier(&route);
-        if ( voiture_gestionnaire.gestion_voitures(vitesse, Test.getObjet()) )
+        if ( voiture_gestionnaire.gestion_voitures(Test.vitesse, Test.getObjet()) )
             Test.vitesse = 3;
         /*
          for(int i = 0 ; i < 4; i++)

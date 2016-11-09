@@ -21,7 +21,6 @@ protected:
 private:
     bool jouer;
     bool pause;
-    int vitesse;
     SDL_Texture* decorTexture;
     SDL_Texture* carsTexture;
     SDL_Texture* routeTexture;
