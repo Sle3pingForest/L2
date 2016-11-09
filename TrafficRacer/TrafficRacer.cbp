@@ -47,6 +47,7 @@
 		<Unit filename="autres/images/x.bmp" />
 		<Unit filename="autres/niveau1" />
 		<Unit filename="include/Decor.hpp" />
+		<Unit filename="include/Decor_gestionnaire.hpp" />
 		<Unit filename="include/Joueur.hpp" />
 		<Unit filename="include/Objet.hpp" />
 		<Unit filename="include/Partie.hpp" />
@@ -54,8 +55,10 @@
 		<Unit filename="include/SDL_Tools.hpp" />
 		<Unit filename="include/Timer.hpp" />
 		<Unit filename="include/Voiture.hpp" />
+		<Unit filename="include/Voiture_gestionnaire.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Decor.cpp" />
+		<Unit filename="src/Decor_gestionnaire.cpp" />
 		<Unit filename="src/Joueur.cpp" />
 		<Unit filename="src/Objet.cpp" />
 		<Unit filename="src/Partie.cpp" />
@@ -63,6 +66,7 @@
 		<Unit filename="src/SDL_Tools.cpp" />
 		<Unit filename="src/Timer.cpp" />
 		<Unit filename="src/Voiture.cpp" />
+		<Unit filename="src/Voiture_gestionnaire.cpp" />
 		<Extensions>
 			<envvars />
 			<code_completion />

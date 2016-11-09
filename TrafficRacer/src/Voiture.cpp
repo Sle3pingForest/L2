@@ -12,17 +12,21 @@ Voiture::Voiture()
     image.y = 0;
     image.w = 0;
     image.h = 0;
+
+    rectCollision.x = 0;
+    rectCollision.y = 0;
+    rectCollision.w = 0;
+    rectCollision.h = 0;
 }
 
 Voiture::Voiture(int posX, int posY, int widht, int voitureType)
 {
     positionPlateau.x = posX;
     positionPlateau.y = posY;
-    
+
     selectVoiture(voitureType);
     positionPlateau.w = widht;
     calculerHauteur();
-    
 }
 
 Voiture::~Voiture()
@@ -96,9 +100,25 @@ void Voiture::selectVoiture(int nb)
 
 bool Voiture::isDead()
 {
-    if (positionPlateau.y > LEVEL_HEIGHT + 1000)
+    if (positionPlateau.y > LEVEL_HEIGHT + 2000)
         return true;
     return false;
+}
+
+void Voiture::afficherRectCollision()
+{
+    calculerRectCollision();
+    SDL_Rect positionFenetre = calculerPosFenetre(&rectCollision);
+    SDL_SetRenderDrawColor(pRenderer, 255, 255, 0, 120);
+    SDL_RenderFillRect(pRenderer, &positionFenetre);
+}
+
+void Voiture::calculerRectCollision()
+{
+    // On réduit la taille de l'objet dans le rect de collision pour les améliorer
+    rectCollision = positionPlateau;
+    rectCollision.x += (rectCollision.w * 0.2) / 2;
+    rectCollision.w -= rectCollision.w * 0.2;
 }
 
 int Voiture::getVitesseVoiture()
@@ -114,4 +134,9 @@ void Voiture::setVitesseVoiture( int newVitesse)
 void Voiture::avancer(int vitesseJeu)
 {
     positionPlateau.y += vitesseJeu - vitesse;
+}
+
+SDL_Rect* Voiture::getRectCollision()
+{
+    return &rectCollision;
 }

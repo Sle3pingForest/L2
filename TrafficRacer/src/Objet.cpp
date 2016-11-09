@@ -41,13 +41,13 @@ void Objet::deplacer( int x, int y)
 
 void Objet::afficher(SDL_Texture* texture)
 {
-    SDL_Rect positionFenetre = calculerPosFenetre();
+    SDL_Rect positionFenetre = calculerPosFenetre(&positionPlateau);
     SDL_RenderCopy(pRenderer, texture, &image, &positionFenetre);
 }
 
 void Objet::afficherRectObjet()
 {
-    SDL_Rect positionFenetre = calculerPosFenetre();
+    SDL_Rect positionFenetre = calculerPosFenetre(&positionPlateau);
     SDL_RenderFillRect(pRenderer, &positionFenetre);
 }
 
@@ -61,15 +61,15 @@ void Objet::calculerHauteur()
     positionPlateau.h = image.h * positionPlateau.w / image.w;
 }
 
-SDL_Rect Objet::calculerPosFenetre()
+SDL_Rect Objet::calculerPosFenetre(SDL_Rect* RectACalculer)
 {
     SDL_Rect positionFenetre;
     //Calcul du déplacement
-    positionFenetre.x = (positionPlateau.x * echelle) - camera.x;
-    positionFenetre.y = (positionPlateau.y * echelle) - camera.y;
+    positionFenetre.x = (RectACalculer->x * echelle) - camera.x;
+    positionFenetre.y = (RectACalculer->y * echelle) - camera.y;
     //Calcul du redimensionnement
-    positionFenetre.w = positionPlateau.w * echelle;
-    positionFenetre.h = positionPlateau.h * echelle;
+    positionFenetre.w = RectACalculer->w * echelle;
+    positionFenetre.h = RectACalculer->h * echelle;
     return positionFenetre;
 }
 
@@ -127,7 +127,6 @@ void Objet::setHeight(int h)
 {
     positionPlateau.h = h;
 }
-
 
 Objet::~Objet()
 {

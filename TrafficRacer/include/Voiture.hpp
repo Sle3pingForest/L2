@@ -9,13 +9,17 @@ public:
     Voiture();
     Voiture(int posX, int posY, int widht, int voitureType);
     virtual ~Voiture();
-    int getVitesseVoiture();
-    void setVitesseVoiture( int newVitesse);
     void avancer(int vitesseJeu);
     void selectVoiture(int nb);
     bool isDead();
+    void afficherRectCollision();
+    void calculerRectCollision();
+    int getVitesseVoiture();
+    void setVitesseVoiture( int newVitesse);
+    SDL_Rect* getRectCollision();
 protected:
 private:
+    SDL_Rect rectCollision;
     int vitesse;
 };
 

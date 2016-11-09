@@ -22,7 +22,7 @@ Partie::Partie()
     carsTexture = LoadBmpWithTransparency("autres/images/cars.bmp", 0, 255, 255);
     routeTexture = LoadBmpWithTransparency("autres/images/road.bmp", 0, 255, 255);
     pauseTexture = LoadBmpWithTransparency("autres/images/pause.bmp", 0, 255, 255);
-    
+
     voiture_joueur.selectVoiture(0);
     voiture_joueur.setWidth(route.getLargeurVoiePlateau() - 15);
     voiture_joueur.calculerHauteur();
@@ -34,7 +34,7 @@ Partie::Partie()
     vitesse = 10;
 
     srand((unsigned int)time(NULL));
-    
+
     plateau.setWidth(LEVEL_WIDTH);
     plateau.setHeight(LEVEL_HEIGHT);
 
@@ -107,7 +107,7 @@ void Partie::gestion_touches()
                     break;
 
                 case SDLK_LEFT:
-                    voiture_joueur.deplacer(-25, 0);
+                    voiture_joueur.deplacer(-2 * vitesse, 0);
                     if(voiture_joueur.getPosX() <= route.getPosX())
                     {
                         voiture_joueur.placer(route.getPosX(), voiture_joueur.getPosY());
@@ -118,7 +118,7 @@ void Partie::gestion_touches()
                     break;
 
                 case SDLK_RIGHT:
-                    voiture_joueur.deplacer(+25, 0);
+                    voiture_joueur.deplacer(+2 * vitesse, 0);
                     if(voiture_joueur.getPosX() + voiture_joueur.getWidth() >= route.getPosX() + route.getWidth())
                     {
                         voiture_joueur.placer(route.getPosX() + route.getWidth() - voiture_joueur.getWidth() , voiture_joueur.getPosY());
@@ -209,7 +209,7 @@ void Partie::deplacements()
 
         //Déplacement des décors
         decor_gestionnaire.gestion(vitesse);
-        
+
         //Déplacement des voitures
         voiture_gestionnaire.chargement_voitures_fichier(&route);
         if ( voiture_gestionnaire.gestion_voitures(vitesse, voiture_joueur.getObjet()) )
@@ -223,10 +223,10 @@ void Partie::deplacements()
          {
          //tabVoiture[i+1].placer( tabVoiture[i+1].getPosX() + route.getLargeurVoiePlateau()/4, tabVoiture[i+1].getPosY()); SDL_IntersectRect(tabVoiture[i+1].getObjet(), tabVoiture[i].getObjet(), &intersect
          tabVoiture[i+1]->deplacer(2,0);
-         
+
          }
          }*/
-        
+
         timerDeplacement.start();
     }
 }
@@ -265,6 +265,8 @@ void Partie::afficher()
 
     //Affichage voiture joueur
     voiture_joueur.afficher(carsTexture);
+    SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 120);
+    voiture_joueur.afficherRectCollision();
 
 //    Decor testDecor;
 //    testDecor.placer(200, 200);
@@ -295,7 +297,7 @@ void Partie::afficher()
         pause.x = (SCREEN_WIDTH - pause.w) / 2;
         pause.y = (SCREEN_HEIGHT - pause.h) / 2;
         SDL_SetTextureAlphaMod(pauseTexture, 200);
-        SDL_RenderCopy(pRenderer, pauseTexture, NULL, &pause);
+        //SDL_RenderCopy(pRenderer, pauseTexture, NULL, &pause);
     }
 
     SDL_RenderPresent(pRenderer);

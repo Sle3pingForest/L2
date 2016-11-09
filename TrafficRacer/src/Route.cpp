@@ -22,7 +22,7 @@ Route::~Route()
 
 void Route::afficherVoies()
 {
-    SDL_Rect ligne = calculerPosFenetre();
+    SDL_Rect ligne = calculerPosFenetre(&positionPlateau);
     ligne.w = 3;
 
     for ( int i = 0 ; i < 5 ; ++i)
@@ -37,7 +37,7 @@ void Route::afficherDefilement(SDL_Texture* texture)
     static const int nb_repetition_image = 4;
     if (image.y > LEVEL_HEIGHT)
     {
-        image.y -= (image.h * nb_repetition_image) - (5 * nb_repetition_image);
+        image.y -= (image.h * nb_repetition_image) - (1 * nb_repetition_image);
     }
     int position = image.y;
 
@@ -51,10 +51,10 @@ void Route::afficherDefilement(SDL_Texture* texture)
 
     for (int i = 0 ; i < nb_repetition_image ; i++)
     {
-        position = position + (image.h * i) - 5;
+        position = position + (image.h * i) - 1;
         if (position > LEVEL_HEIGHT)
         {
-            position -= (image.h * nb_repetition_image) - (5 * nb_repetition_image);
+            position -= (image.h * nb_repetition_image) - (1 * nb_repetition_image);
         }
         positionFenetre.y = (position * echelle) - camera.y;
         SDL_RenderCopy(pRenderer, texture, NULL, &positionFenetre);

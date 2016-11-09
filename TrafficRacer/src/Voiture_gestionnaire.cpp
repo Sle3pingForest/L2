@@ -41,7 +41,7 @@ bool Voiture_gestionnaire::gestion_voitures(int vitesse, SDL_Rect* rectVoitureJo
             else
             {
                 tabVoitures[i]->avancer(vitesse);
-                collision = SDL_IntersectRect(rectVoitureJoueur, tabVoitures[i]->getObjet(), &intersect);
+                collision = SDL_IntersectRect(rectVoitureJoueur, tabVoitures[i]->getRectCollision(), &intersect);
                 if (collision)
                 {
                     flagCollision = true;
@@ -56,7 +56,7 @@ bool Voiture_gestionnaire::gestion_voitures(int vitesse, SDL_Rect* rectVoitureJo
 void Voiture_gestionnaire::chargement_voitures_fichier(Route* route)
 {
     //infile.open("autres/niveau2");
-    if (timerChargementFichier.getTicks() >3000)
+    if (timerChargementFichier.getTicks() >1000)
     {
         string line;
         //getline(infile, line);
@@ -71,9 +71,9 @@ void Voiture_gestionnaire::chargement_voitures_fichier(Route* route)
                 {
                     ++j;
                 }
-                
+
                 int position_x = route->getPosX() + i * route->getLargeurVoiePlateau() + rand()%10;
-                tabVoitures[j] = new Voiture(position_x, -600, route->getLargeurVoiePlateau(), rand()%8);
+                tabVoitures[j] = new Voiture(position_x, -600, route->getLargeurVoiePlateau()-10, rand()%8);
                 if(line[i] == '1')
                 {
                     tabVoitures[j]->setVitesseVoiture(6);
@@ -96,6 +96,8 @@ void Voiture_gestionnaire::afficherVoitures(SDL_Texture* carsTexture)
         if (tabVoitures[i] != NULL)
         {
             tabVoitures[i]->afficher(carsTexture);
+            SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 150);
+            tabVoitures[i]->afficherRectCollision();
         }
     }
 }
