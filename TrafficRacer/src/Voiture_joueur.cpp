@@ -25,8 +25,6 @@ void Voiture_joueur::gestionTouches( SDL_Event& event )
         //Adjust the velocity
         switch( event.key.keysym.sym )
         {
-            //case SDLK_UP: vitesse += Vitesse_VEL; break;
-            //case SDLK_DOWN: vitesse -= Vitesse_VEL; break;
             case SDLK_LEFT: mVelX -= Y_VEL; break;
             case SDLK_RIGHT: mVelX += Y_VEL; break;
         }
@@ -56,7 +54,7 @@ void Voiture_joueur::gestionTouches( SDL_Event& event )
                 }
                 break;
             case SDLK_DOWN:
-                vitesse -= Vitesse_VEL;
+                vitesse -= Vitesse_VEL+1;
                 if( vitesse < 0)
                 {
                     vitesse = 0;
@@ -79,4 +77,11 @@ void Voiture_joueur::deplacer(SDL_Rect* route)
         //On ne déplace pas
         positionPlateau.x  -= mVelX;
     }
+    //printf("%d\n", mVelX);
+}
+
+void Voiture_joueur::eventCollision()
+{
+    vitesse = 3;
+    mVelX = 0;
 }

@@ -27,6 +27,7 @@ Voiture::Voiture(int posX, int posY, int widht, int voitureType)
     selectVoiture(voitureType);
     positionPlateau.w = widht;
     calculerHauteur();
+    calculerRectCollision();
 }
 
 Voiture::~Voiture()

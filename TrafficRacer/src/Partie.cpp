@@ -81,7 +81,7 @@ void Partie::gestion_touches()
 
             case SDL_WINDOWEVENT_FOCUS_LOST:
                 if(not pause)
-                    pause = true;
+                    //pause = true;
                 break;
             }
 
@@ -90,44 +90,10 @@ void Partie::gestion_touches()
         Test.gestionTouches( event );
 
         // Les touches
-        if( event.type == SDL_KEYDOWN )
+        if( event.type == SDL_KEYDOWN && event.key.repeat == 0 )
         {
             switch( event.key.keysym.sym )
             {
-//                case SDLK_UP:
-//                    vitesse += 1;
-//                    if(vitesse > 20)
-//                        vitesse = 20;
-//                    break;
-//
-//                case SDLK_DOWN:
-//                    vitesse -= 2;
-//                    if(vitesse < 0)
-//                        vitesse = 0;
-//                    break;
-//
-//                case SDLK_LEFT:
-//                    voiture_joueur.deplacer(-2 * vitesse, 0);
-//                    if(voiture_joueur.getPosX() <= route.getPosX())
-//                    {
-//                        voiture_joueur.placer(route.getPosX(), voiture_joueur.getPosY());
-//                        vitesse -= 5;
-//                        if(vitesse < 0)
-//                            vitesse = 0;
-//                    }
-//                    break;
-//
-//                case SDLK_RIGHT:
-//                    voiture_joueur.deplacer(+2 * vitesse, 0);
-//                    if(voiture_joueur.getPosX() + voiture_joueur.getWidth() >= route.getPosX() + route.getWidth())
-//                    {
-//                        voiture_joueur.placer(route.getPosX() + route.getWidth() - voiture_joueur.getWidth() , voiture_joueur.getPosY());
-//                        vitesse -= 5;
-//                        if(vitesse < 0)
-//                            vitesse = 0;
-//                    }
-//                    break;
-
                 case 'p':
                     if(pause)
                         pause = false;
@@ -214,21 +180,8 @@ void Partie::deplacements()
         voiture_gestionnaire.chargement_voitures_fichier(&route);
         if ( voiture_gestionnaire.gestion_voitures(Test.vitesse, Test.getObjet()) )
         {
-            //Test.vitesse = 3;
+            Test.eventCollision();
         }
-
-        /*
-         for(int i = 0 ; i < 4; i++)
-         {
-         tabVoiture[i]->deplacer(0, vitesse - tabVoiture[i]->getVitesseVoiture() );
-         if(tabVoiture[i+1]->getVitesseVoiture() > tabVoiture[i]->getVitesseVoiture()
-         && tabVoiture[i+1]->getPosX() < tabVoiture[i]->getPosX() + route.getLargeurVoiePlateau())
-         {
-         //tabVoiture[i+1].placer( tabVoiture[i+1].getPosX() + route.getLargeurVoiePlateau()/4, tabVoiture[i+1].getPosY()); SDL_IntersectRect(tabVoiture[i+1].getObjet(), tabVoiture[i].getObjet(), &intersect
-         tabVoiture[i+1]->deplacer(2,0);
-
-         }
-         }*/
 
         Test.deplacer(route.getObjet());
 
@@ -301,7 +254,7 @@ void Partie::afficher()
         pause.x = (SCREEN_WIDTH - pause.w) / 2;
         pause.y = (SCREEN_HEIGHT - pause.h) / 2;
         SDL_SetTextureAlphaMod(pauseTexture, 200);
-        //SDL_RenderCopy(pRenderer, pauseTexture, NULL, &pause);
+        SDL_RenderCopy(pRenderer, pauseTexture, NULL, &pause);
     }
 
     SDL_RenderPresent(pRenderer);

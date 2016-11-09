@@ -48,6 +48,11 @@ bool Voiture_gestionnaire::gestion_voitures(int vitesse, SDL_Rect* rectVoitureJo
                 if (collision)
                 {
                     flagCollision = true;
+                    printf("Colission Voiture %d\n", i);
+                    SDL_Rect* test = tabVoitures[i]->getRectCollision();
+                    printf("Voit x:%d y:%d w:%d h:%d\n", test->x, test->y, test->w, test->h);
+                    SDL_Rect test2 = intersect;
+                    printf("inter x:%d y:%d w:%d h:%d\n", test2.x, test2.y, test2.w, test2.h);
                 }
             }
         }
