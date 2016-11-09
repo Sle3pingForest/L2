@@ -80,8 +80,9 @@ void Voiture_gestionnaire::chargement_voitures_fichier(Route* route)
                     ++j;
                 }
 
-                int position_x = route->getPosX() + i * route->getLargeurVoiePlateau() + rand()%10;
+                int position_x = route->getPosX() + i * route->getLargeurVoiePlateau();
                 tabVoitures[j] = new Voiture(position_x, -600, route->getLargeurVoiePlateau()-10, rand()%8);
+                tabVoitures[j]->setVoie(i+1);
                  ++nb_voitures;
                 if(line[i] == '1')
                 {
@@ -89,7 +90,7 @@ void Voiture_gestionnaire::chargement_voitures_fichier(Route* route)
                 }
                 else if (line[i] == '2')
                 {
-                    tabVoitures[j]->setVitesseVoiture(8);
+                    tabVoitures[j]->setVitesseVoiture(10);
                 }
             }
         }
@@ -107,6 +108,39 @@ void Voiture_gestionnaire::afficherVoitures(SDL_Texture* carsTexture)
             tabVoitures[i]->afficher(carsTexture);
             SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 150);
             tabVoitures[i]->afficherRectCollision();
+        }
+    }
+}
+
+void Voiture_gestionnaire::depassement(Route route)
+{
+    bool flagCollision = false;
+    if(nb_voitures > 2)
+    {
+        for( int i = 0; i < nb_voitures; i++)
+        {
+            if( tabVoitures[i] != NULL)
+            {
+                for(int j = 1; j < nb_voitures; j++)
+                {
+                    if(tabVoitures[j] != NULL && tabVoitures[i]->getVitesseVoiture() > tabVoitures[j]->getVitesseVoiture())
+                    {
+                        if(tabVoitures[i]->getVoie() == tabVoitures[j]->getVoie()
+                        && tabVoitures[i]->getPosX() < tabVoitures[j]->getPosX() + route.getLargeurVoiePlateau())
+                        {
+
+                            if (tabVoitures[i]->getPosX() == route.getPosX() + 4 * route.getLargeurVoiePlateau())
+                            {
+                                tabVoitures[i]->deplacer(-2,0);
+                            }
+                            else
+                            {
+                                tabVoitures[i]->deplacer(2,0);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

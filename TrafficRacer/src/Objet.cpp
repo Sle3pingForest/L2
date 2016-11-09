@@ -108,6 +108,12 @@ SDL_Rect* Objet::getObjet()
     return &positionPlateau;
 }
 
+SDL_Rect Objet::getObjetNormal()
+{
+    return positionPlateau;
+}
+
+
 void Objet::setPosX(int x)
 {
     positionPlateau.x = x;

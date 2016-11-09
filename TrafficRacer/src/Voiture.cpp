@@ -141,3 +141,13 @@ SDL_Rect* Voiture::getRectCollision()
 {
     return &rectCollision;
 }
+
+int Voiture::getVoie()
+{
+    return numeroVoie;
+}
+
+void Voiture::setVoie(int numero)
+{
+    numeroVoie = numero;
+}

@@ -178,6 +178,7 @@ void Partie::deplacements()
 
         //Déplacement des voitures
         voiture_gestionnaire.chargement_voitures_fichier(&route);
+        voiture_gestionnaire.depassement(route);
         if ( voiture_gestionnaire.gestion_voitures(Test.vitesse, Test.getObjet()) )
         {
             Test.eventCollision();

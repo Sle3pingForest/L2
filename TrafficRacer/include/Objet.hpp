@@ -28,6 +28,7 @@ public:
     int getWidth();
     int getHeight();
     SDL_Rect* getObjet();
+    SDL_Rect getObjetNormal();
 
     void setPosX(int x);
     void setPosY(int y);
