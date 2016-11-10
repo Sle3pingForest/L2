@@ -114,22 +114,20 @@ void Voiture_gestionnaire::afficherVoitures(SDL_Texture* carsTexture)
 
 void Voiture_gestionnaire::depassement(Route route)
 {
-    bool flagCollision = false;
-    if(nb_voitures > 2)
+    if(nb_voitures > 0)
     {
         for( int i = 0; i < nb_voitures; i++)
         {
             if( tabVoitures[i] != NULL)
             {
-                for(int j = 1; j < nb_voitures; j++)
+                for(int j = 0; j < nb_voitures; j++)
                 {
                     if(tabVoitures[j] != NULL && tabVoitures[i]->getVitesseVoiture() > tabVoitures[j]->getVitesseVoiture())
                     {
                         if(tabVoitures[i]->getVoie() == tabVoitures[j]->getVoie()
                         && tabVoitures[i]->getPosX() < tabVoitures[j]->getPosX() + route.getLargeurVoiePlateau())
                         {
-
-                            if (tabVoitures[i]->getPosX() == route.getPosX() + 4 * route.getLargeurVoiePlateau())
+                            if (tabVoitures[i]->getPosX() >= route.getPosX() + 2 * route.getLargeurVoiePlateau())
                             {
                                 tabVoitures[i]->deplacer(-2,0);
                             }
@@ -138,6 +136,7 @@ void Voiture_gestionnaire::depassement(Route route)
                                 tabVoitures[i]->deplacer(2,0);
                             }
                         }
+                        tabVoitures[i]->setVoie(tabVoitures[j]->getVoie() + 1 );
                     }
                 }
             }

@@ -46,6 +46,7 @@
 		<Unit filename="autres/images/up.bmp" />
 		<Unit filename="autres/images/x.bmp" />
 		<Unit filename="autres/niveau1" />
+		<Unit filename="autres/niveau2" />
 		<Unit filename="include/Decor.hpp" />
 		<Unit filename="include/Decor_gestionnaire.hpp" />
 		<Unit filename="include/Joueur.hpp" />
