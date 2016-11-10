@@ -44,15 +44,16 @@ bool Voiture_gestionnaire::gestion_voitures(int vitesse, SDL_Rect* rectVoitureJo
             else
             {
                 tabVoitures[i]->avancer(vitesse);
+                tabVoitures[i]->calculerRectCollision();
                 collision = SDL_IntersectRect(rectVoitureJoueur, tabVoitures[i]->getRectCollision(), &intersect);
                 if (collision)
                 {
                     flagCollision = true;
-                    printf("Colission Voiture %d\n", i);
-                    SDL_Rect* test = tabVoitures[i]->getRectCollision();
-                    printf("Voit x:%d y:%d w:%d h:%d\n", test->x, test->y, test->w, test->h);
-                    SDL_Rect test2 = intersect;
-                    printf("inter x:%d y:%d w:%d h:%d\n", test2.x, test2.y, test2.w, test2.h);
+//                    printf("Colission Voiture %d\n", i);
+//                    SDL_Rect* test = tabVoitures[i]->getRectCollision();
+//                    printf("Voit x:%d y:%d w:%d h:%d\n", test->x, test->y, test->w, test->h);
+//                    SDL_Rect test2 = intersect;
+//                    printf("inter x:%d y:%d w:%d h:%d\n", test2.x, test2.y, test2.w, test2.h);
                 }
             }
         }
@@ -106,8 +107,8 @@ void Voiture_gestionnaire::afficherVoitures(SDL_Texture* carsTexture)
         if (tabVoitures[i] != NULL)
         {
             tabVoitures[i]->afficher(carsTexture);
-            SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 150);
-            tabVoitures[i]->afficherRectCollision();
+            //SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 150);
+            //tabVoitures[i]->afficherRectCollision();
         }
     }
 }

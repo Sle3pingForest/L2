@@ -87,7 +87,10 @@ void Partie::gestion_touches()
 
         }
 
+        // Les touches de déplacement de la voiture
         Test.gestionTouches( event );
+        
+        // Les touches de la caméra
 
         // Les touches
         if( event.type == SDL_KEYDOWN && event.key.repeat == 0 )
@@ -213,18 +216,20 @@ void Partie::afficher()
 
     //Affichage de la route
     route.afficherDefilement(routeTexture);
-    SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 150);
+    //SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 150);
     //route.afficherRectObjet();
-    SDL_SetRenderDrawColor(pRenderer, 0, 255, 0, 255);
+    //SDL_SetRenderDrawColor(pRenderer, 0, 255, 0, 255);
     //route.afficherVoies();
 
     //Affichage des voitures
     voiture_gestionnaire.afficherVoitures(carsTexture);
 
     //Affichage voiture joueur
+    //SDL_SetRenderDrawColor(pRenderer, 0, 255, 255, 255);
+    //Test.afficherRectObjet();
     Test.afficher(carsTexture);
-    SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 120);
-    Test.afficherRectCollision();
+//    SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 120);
+//    Test.afficherRectCollision();
 
 //    Decor testDecor;
 //    testDecor.placer(200, 200);
@@ -261,7 +266,6 @@ void Partie::afficher()
     SDL_RenderPresent(pRenderer);
 
     FPS++;
-
 }
 
 bool Partie::continuer_partie()

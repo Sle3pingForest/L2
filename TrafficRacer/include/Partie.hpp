@@ -1,13 +1,11 @@
 #ifndef PARTIE_H
 #define PARTIE_H
 
-#include "Voiture.hpp"
-#include "Route.hpp"
 #include "Decor_gestionnaire.hpp"
 #include "Voiture_gestionnaire.hpp"
 #include "Voiture_joueur.hpp"
+#include "Route.hpp"
 #include "Timer.hpp"
-#include <fstream>
 
 class Partie
 {

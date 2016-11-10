@@ -116,7 +116,7 @@ void Voiture::afficherRectCollision()
 
 void Voiture::calculerRectCollision()
 {
-    // On réduit la taille de l'objet dans le rect de collision pour les améliorer
+    // On réduit la taille de l'objet dans le rect de collision pour améliorer les collisions
     rectCollision = positionPlateau;
     rectCollision.x += (rectCollision.w * 0.2) / 2;
     rectCollision.w -= rectCollision.w * 0.2;

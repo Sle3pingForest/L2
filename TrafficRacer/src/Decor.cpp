@@ -20,8 +20,8 @@ void Decor::selectDecor(int type, int nb)
         image.h = arbre_heigth;
         image.x = nb * arbre_width;
         image.y = arbre_ligne;
-        positionPlateau.w = arbre_width;
-        positionPlateau.h = arbre_heigth;
+        positionPlateau.w = arbre_width * 2;
+        positionPlateau.h = arbre_heigth * 2;
     }
 }
 

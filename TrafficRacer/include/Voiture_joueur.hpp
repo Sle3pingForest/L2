@@ -15,7 +15,7 @@ public:
     void gestionTouches( SDL_Event& e );
     void eventCollision();
 
-    int Y_VEL = 10;
+    int Y_VEL;
     static const int Vitesse_VEL = 1;
 
     int vitesse;
