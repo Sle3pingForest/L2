@@ -184,9 +184,9 @@ void Partie::deplacements()
         voiture_gestionnaire.depassement(route);
         if ( voiture_gestionnaire.gestion_voitures(Test.vitesse, Test.getObjet()) )
         {
+            Test.collision = true;
             Test.eventCollision();
         }
-
         Test.deplacer(route.getObjet());
 
         timerDeplacement.start();

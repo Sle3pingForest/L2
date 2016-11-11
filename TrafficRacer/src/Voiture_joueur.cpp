@@ -24,18 +24,38 @@ void Voiture_joueur::gestionTouches( SDL_Event& event )
     {
         switch( event.key.keysym.sym )
         {
-            case SDLK_LEFT: mVelX -= Y_VEL; break;
-            case SDLK_RIGHT: mVelX += Y_VEL; break;
+            case SDLK_LEFT:
+                mVelX -= Y_VEL;
+                deplacementGauche = true;
+                break;
+                
+            case SDLK_RIGHT:
+                mVelX += Y_VEL;
+                deplacementDroit = true;
+                break;
         }
     }
 
     //Touches relachées
-    else if( event.type == SDL_KEYUP && event.key.repeat == 0 )
+    else if( event.type == SDL_KEYUP && event.key.repeat == 0)
     {
         switch( event.key.keysym.sym )
         {
-            case SDLK_LEFT: mVelX = 0; break;
-            case SDLK_RIGHT: mVelX = 0; break;
+            case SDLK_LEFT:
+                if (deplacementGauche)
+                {
+                    mVelX += Y_VEL;
+                    deplacementGauche = false;
+                }
+                break;
+                
+            case SDLK_RIGHT:
+                if (deplacementDroit)
+                {
+                    mVelX -= Y_VEL;
+                    deplacementDroit = false;
+                }
+                break;
         }
     }
 
@@ -51,6 +71,7 @@ void Voiture_joueur::gestionTouches( SDL_Event& event )
                     vitesse = 20;
                 }
                 break;
+                
             case SDLK_DOWN:
                 vitesse -= 3;
                 if( vitesse < 0)
@@ -80,9 +101,25 @@ void Voiture_joueur::deplacer(SDL_Rect* route)
         positionPlateau.x  -= mVelX;
         positionPlateau.x = route->x + route->w - positionPlateau.w;
     }
+    
+    // Si collision on déplace pas
+    if (collision)
+    {
+        positionPlateau.x  -= mVelX;
+        collision = false;
+    }
 }
 
 void Voiture_joueur::eventCollision()
 {
-    vitesse = 3;
+    mVelX = 0;
+    vitesse = 6;
+    if (deplacementGauche)
+    {
+        deplacementGauche = false;
+    }
+    if (deplacementDroit)
+    {
+        deplacementDroit = false;
+    }
 }

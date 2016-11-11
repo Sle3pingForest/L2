@@ -139,6 +139,7 @@ void Voiture::avancer(int vitesseJeu)
 
 SDL_Rect* Voiture::getRectCollision()
 {
+    calculerRectCollision();
     return &rectCollision;
 }
 

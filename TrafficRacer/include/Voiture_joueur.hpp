@@ -16,9 +16,11 @@ public:
     void eventCollision();
 
     int Y_VEL;
-    static const int Vitesse_VEL = 1;
-
+    int Y_VEL_OLD;
     int vitesse;
+    bool collision;
+    bool deplacementGauche;
+    bool deplacementDroit;
 
 protected:
 private:

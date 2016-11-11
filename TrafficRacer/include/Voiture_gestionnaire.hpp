@@ -21,7 +21,7 @@ public:
     void depassement(Route route);
 
 private:
-    static const int nb_voiture_max = 15;
+    static const int nb_voiture_max = 10;
     int nb_voitures;
     Voiture* tabVoitures[nb_voiture_max];
     Timer timerChargementFichier;

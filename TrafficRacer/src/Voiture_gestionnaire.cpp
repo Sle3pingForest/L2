@@ -44,7 +44,6 @@ bool Voiture_gestionnaire::gestion_voitures(int vitesse, SDL_Rect* rectVoitureJo
             else
             {
                 tabVoitures[i]->avancer(vitesse);
-                tabVoitures[i]->calculerRectCollision();
                 collision = SDL_IntersectRect(rectVoitureJoueur, tabVoitures[i]->getRectCollision(), &intersect);
                 if (collision)
                 {
@@ -61,37 +60,42 @@ bool Voiture_gestionnaire::gestion_voitures(int vitesse, SDL_Rect* rectVoitureJo
     return flagCollision;
 }
 
+
+/// ATTENTION NE PAS METTRE PLUS DE 20 VOITURES DANS LE FICHIER ///
 // Créer de nouvelles voitures et les positionner par rapport aux fichiers de niveaux
 void Voiture_gestionnaire::chargement_voitures_fichier(Route* route)
 {
     //infile.open("autres/niveau2");
-    if (timerChargementFichier.getTicks() >1000)
+    if (timerChargementFichier.getTicks() > 3000)
     {
         string line;
         //getline(infile, line);
         fichier >> line;
-        int j = 0;
         for( int i = 0 ; i < 4 ; ++i)
         {
             if(line[i] == '1' || line[i] == '2')
             {
                 //On trouve une place libre dans le tableau de pointeurs de voitures
+                int j = 0;
                 while (tabVoitures[j] != NULL)
                 {
                     ++j;
                 }
-
-                int position_x = route->getPosX() + i * route->getLargeurVoiePlateau();
-                tabVoitures[j] = new Voiture(position_x, -600, route->getLargeurVoiePlateau()-10, rand()%8);
-                tabVoitures[j]->setVoie(i+1);
-                 ++nb_voitures;
-                if(line[i] == '1')
+                
+                if (j < nb_voiture_max)
                 {
-                    tabVoitures[j]->setVitesseVoiture(6);
-                }
-                else if (line[i] == '2')
-                {
-                    tabVoitures[j]->setVitesseVoiture(10);
+                    int position_x = route->getPosX() + i * route->getLargeurVoiePlateau();
+                    tabVoitures[j] = new Voiture(position_x, -600, route->getLargeurVoiePlateau()-10, rand()%8);
+                    tabVoitures[j]->setVoie(i+1);
+                    ++nb_voitures;
+                    if(line[i] == '1')
+                    {
+                        tabVoitures[j]->setVitesseVoiture(6);
+                    }
+                    else if (line[i] == '2')
+                    {
+                        tabVoitures[j]->setVitesseVoiture(10);
+                    }
                 }
             }
         }
