@@ -74,10 +74,8 @@
 1475757605 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/drawing.hpp
 	"Header.hpp"
 
-1479109668 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/main.cpp
-	"SDL_Tools.hpp"
+1479114554 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/main.cpp
 	"Partie.hpp"
-	"Joueur.hpp"
 
 1475757038 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/drawing.cpp
 	"drawing.hpp"
@@ -112,7 +110,7 @@
 1475755277 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Partie.h
 	"Voiture.h"
 
-1479107027 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Partie.cpp
+1479113554 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Partie.cpp
 	"Partie.hpp"
 
 1475758145 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Header.hpp
@@ -122,12 +120,13 @@
 	<string>
 	<SDL2/SDL.h>
 
-1479107027 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Partie.hpp
+1479113554 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Partie.hpp
 	"Decor_gestionnaire.hpp"
 	"Voiture_gestionnaire.hpp"
 	"Voiture_joueur.hpp"
 	"Route.hpp"
 	"Timer.hpp"
+	"Camera.hpp"
 
 1479113554 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Voiture.hpp
 	"Objet.hpp"
@@ -325,7 +324,7 @@
 1479107027 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Objet.cpp
 	"Objet.hpp"
 
-1479108965 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Voiture_gestionnaire.hpp
+1479113554 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Voiture_gestionnaire.hpp
 	<stdio.h>
 	<fstream>
 	"Voiture.hpp"
@@ -349,7 +348,7 @@
 1479107028 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Voiture_joueur.cpp
 	"Voiture_joueur.hpp"
 
-1479108965 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Voiture_gestionnaire.cpp
+1479113554 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Voiture_gestionnaire.cpp
 	"Voiture_gestionnaire.hpp"
 
 1479108965 estionnaire.hpp"
@@ -363,4 +362,12 @@
 	"Route.hpp"
 
 1479112247 5c1c119a82bfe1a68fa056b255fe3b2aba6ab
+
+1479113554 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Camera.hpp
+	"SDL_Tools.hpp"
+	"Objet.hpp"
+	"Route.hpp"
+
+1479113554 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Camera.cpp
+	"Camera.hpp"
 

@@ -31,7 +31,7 @@ void Joueur::setName()
     //playerFile.open("autres/Player");
 
     playerFile>>line;
-    playerFile<<'\n' + newName + ": 0" +'\n' + '\n';
+    playerFile<<'\n' + newName + ": 0" + '\n';
     playerFile.close();
     playerName = newName;
 }

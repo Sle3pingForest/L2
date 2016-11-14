@@ -21,7 +21,7 @@ class Joueur
     protected:
     private:
         string playerName;
-        int playerScore ;
+        int playerScore = 0;
 };
 
 
