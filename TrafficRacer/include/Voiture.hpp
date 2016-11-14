@@ -1,5 +1,5 @@
-#ifndef VOITURE_H
-#define VOITURE_H
+#ifndef Voiture_hpp
+#define Voiture_hpp
 
 #include "Objet.hpp"
 
@@ -66,5 +66,4 @@ const int truck_y = 0;
 const int truck_w = 193;
 const int truck_h = 616;
 
-#endif // VOITURE_H
-
+#endif /* Voiture_hpp */

@@ -1,5 +1,5 @@
-#ifndef JOUEUR_H
-#define JOUEUR_H
+#ifndef Joueur_hpp
+#define Joueur_hpp
 
 #include <fstream>
 #include <iostream>
@@ -23,4 +23,4 @@ class Joueur
 };
 
 
-#endif // JOUEUR_H
+#endif /* Joueur_hpp */

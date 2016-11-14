@@ -1,5 +1,5 @@
-#ifndef TIMER_H
-#define TIMER_H
+#ifndef Timer_hpp
+#define Timer_hpp
 
 #include <stdint.h>
 #include <SDL2/SDL.h>
@@ -24,4 +24,4 @@ class Timer
         bool paused;
 };
 
-#endif // TIMER_H
+#endif /* Timer_hpp */

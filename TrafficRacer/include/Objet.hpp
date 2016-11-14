@@ -1,5 +1,5 @@
-#ifndef OBJET_H
-#define OBJET_H
+#ifndef Objet_hpp
+#define Objet_hpp
 
 #include "SDL_Tools.hpp"
 
@@ -41,4 +41,4 @@ protected:
 private:
 };
 
-#endif
+#endif /* Objet_hpp */

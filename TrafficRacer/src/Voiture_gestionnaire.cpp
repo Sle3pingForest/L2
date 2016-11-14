@@ -4,7 +4,7 @@ ifstream fichier("autres/niveau2", ios::in);
 
 Voiture_gestionnaire::Voiture_gestionnaire()
 {
-    for (int i = 0; i < nb_voiture_max; ++i)
+    for (int i = 0; i < nb_voitures_max; ++i)
     {
         tabVoitures[i] = NULL;
     }
@@ -14,7 +14,7 @@ Voiture_gestionnaire::Voiture_gestionnaire()
 
 Voiture_gestionnaire::~Voiture_gestionnaire()
 {
-    for (int i = 0; i < nb_voiture_max; ++i)
+    for (int i = 0; i < nb_voitures_max; ++i)
     {
         if (tabVoitures[i] != NULL)
         {
@@ -31,7 +31,7 @@ bool Voiture_gestionnaire::gestion_voitures(int vitesse, SDL_Rect* rectVoitureJo
     SDL_bool collision;
     SDL_Rect intersect;
     bool flagCollision = false;
-    for (int i = 0; i < nb_voiture_max; ++i)
+    for (int i = 0; i < nb_voitures_max; ++i)
     {
         if (tabVoitures[i] != NULL)
         {
@@ -80,19 +80,23 @@ void Voiture_gestionnaire::chargement_voitures_fichier(Route* route)
                 {
                     ++j;
                 }
+                if (j < nb_voitures_max)
+                {
 
-                int position_x = route->getPosX() + i * route->getLargeurVoiePlateau();
-                tabVoitures[j] = new Voiture(position_x, -600, route->getLargeurVoiePlateau()-10, rand()%8);
-                tabVoitures[j]->setVoie(i+1);
-                 ++nb_voitures;
-                if(line[i] == '1')
-                {
-                    tabVoitures[j]->setVitesseVoiture(6);
+                    int position_x = route->getPosX() + i * route->getLargeurVoiePlateau();
+                    tabVoitures[j] = new Voiture(position_x, -600, route->getLargeurVoiePlateau()-10, rand()%8);
+                    tabVoitures[j]->setVoie(i+1);
+                    ++nb_voitures;
+                    if(line[i] == '1')
+                    {
+                        tabVoitures[j]->setVitesseVoiture(6);
+                    }
+                    else if (line[i] == '2')
+                    {
+                        tabVoitures[j]->setVitesseVoiture(10);
+                    }
                 }
-                else if (line[i] == '2')
-                {
-                    tabVoitures[j]->setVitesseVoiture(10);
-                }
+
             }
         }
         infile.close();
@@ -102,7 +106,7 @@ void Voiture_gestionnaire::chargement_voitures_fichier(Route* route)
 
 void Voiture_gestionnaire::afficherVoitures(SDL_Texture* carsTexture)
 {
-    for(int i = 0 ; i < nb_voiture_max; i++)
+    for(int i = 0 ; i < nb_voitures_max; i++)
     {
         if (tabVoitures[i] != NULL)
         {
@@ -117,11 +121,11 @@ void Voiture_gestionnaire::depassement(Route route)
 {
     if(nb_voitures > 0)
     {
-        for( int i = 0; i < nb_voitures; i++)
+        for( int i = 0; i < nb_voitures_max; i++)
         {
             if( tabVoitures[i] != NULL)
             {
-                for(int j = 0; j < nb_voitures; j++)
+                for(int j = 0; j < nb_voitures_max; j++)
                 {
                     if(tabVoitures[j] != NULL && tabVoitures[i]->getVitesseVoiture() > tabVoitures[j]->getVitesseVoiture())
                     {

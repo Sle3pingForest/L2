@@ -1,5 +1,5 @@
-#ifndef ROUTE_H
-#define ROUTE_H
+#ifndef Route_hpp
+#define Route_hpp
 
 #include "Objet.hpp"
 
@@ -22,8 +22,4 @@ private:
     int position_y;
 };
 
-#endif
-
-
-
-
+#endif /* Route_hpp */
