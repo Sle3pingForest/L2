@@ -15,6 +15,8 @@ float echelle;
 
 Partie::Partie()
 {
+    InitSDLEverything();
+
     jouer = true;
     pause = false;
 
@@ -24,6 +26,7 @@ Partie::Partie()
     pauseTexture = LoadBmpWithTransparency("autres/images/pause.bmp", 0, 255, 255);
 
     timerFPS.start();
+    timerAfficherFPS.start();
     timerDeplacement.start();
 
     srand((unsigned int)time(NULL));
@@ -31,36 +34,45 @@ Partie::Partie()
     plateau.setWidth(LEVEL_WIDTH);
     plateau.setHeight(LEVEL_HEIGHT);
 
-    //Initialisation de la position de la caméra
-    camera.w = LEVEL_WIDTH;
-    camera.h = LEVEL_HEIGHT;
-    calculerEchelle();
-    camera.x = 0;
-    camera.y = (plateau.calculerHauteurDansFenetre() - SCREEN_HEIGHT)/2;
+    camera.CameraInit(0, &route, &plateau);
 
-    Test.selectVoiture(0);
-    Test.setWidth(route.getLargeurVoiePlateau() - 15);
-    Test.calculerHauteur();
-    Test.placer(LEVEL_WIDTH/2, LEVEL_HEIGHT - Test.getHeight() - 50);
-    Test.vitesse = 10;
+    voitureJoueur.selectVoiture(0);
+    voitureJoueur.setWidth(route.getLargeurVoiePlateau() - 15);
+    voitureJoueur.calculerHauteur();
+    voitureJoueur.placer(LEVEL_WIDTH/2, LEVEL_HEIGHT - voitureJoueur.getHeight() - 50);
+    voitureJoueur.vitesse = 10;
 }
 
-Partie::~Partie()
+Partie::~Partie() // A verifier !
 {
     //dtor
+    decor_gestionnaire.~Decor_gestionnaire();
+    voiture_gestionnaire.~Voiture_gestionnaire();
+    SDL_DestroyRenderer(pRenderer);
+    SDL_DestroyWindow(pWindow);
+    SDL_Quit();
 }
 
 void Partie::play()
 {
-    gestion_touches();
-    deplacements();
-    afficher();
+    while (jouer)
+    {
+        gestion_touches();
+        deplacements();
+        afficher();
+        if(timerAfficherFPS.getTicks() >= 1000)
+        {
+            //printf("FPS : %d\n", FPS);
+            FPS = 0;
+            timerAfficherFPS.start();
+        }
+        SDL_Delay(10); // A vérifier !!!
+    }
 }
 
 void Partie::gestion_touches()
 {
     SDL_Event event;
-    calculerEchelle();
     while( SDL_PollEvent( &event ) != 0 )
     {
         //Fermer la fenêtre
@@ -69,6 +81,7 @@ void Partie::gestion_touches()
             jouer = false;
 
         }
+
         //Evenements de fenêtre
         if(event.type == SDL_WINDOWEVENT)
         {
@@ -77,6 +90,7 @@ void Partie::gestion_touches()
             case SDL_WINDOWEVENT_SIZE_CHANGED:
                 SCREEN_WIDTH = event.window.data1;
                 SCREEN_HEIGHT = event.window.data2;
+                camera.afficherTouteRoute(&route);
                 break;
 
             case SDL_WINDOWEVENT_FOCUS_LOST:
@@ -88,11 +102,12 @@ void Partie::gestion_touches()
         }
 
         // Les touches de déplacement de la voiture
-        Test.gestionTouches( event );
-        
-        // Les touches de la caméra
+        voitureJoueur.gestionTouches( event );
 
-        // Les touches
+        // Les touches de la caméra
+        camera.gestionTouches(event, &route, &plateau);
+
+        // Les autres touches
         if( event.type == SDL_KEYDOWN && event.key.repeat == 0 )
         {
             switch( event.key.keysym.sym )
@@ -107,60 +122,6 @@ void Partie::gestion_touches()
                 case 'm' :
                     jouer = false;
 
-                // Déplacement de la caméra
-                case 'q':
-                    camera.x -= 100;
-                    break;
-
-                case 'd':
-                    camera.x += 100;
-                    break;
-
-                case 'z':
-                    camera.y -= 100;
-                    break;
-
-                case 's':
-                    camera.y += 100;
-                    break;
-
-                case 'a' :
-                    camera.w += 50;
-                    camera.h += 50;
-                    break;
-
-                case 'e':
-                    camera.w -= 50;
-                    camera.h -= 50;
-                    break;
-
-                //Afficher la route centrée à l'echelle 1
-                case 'r':
-                    camera.w = SCREEN_WIDTH;
-                    camera.h = SCREEN_HEIGHT;
-                    calculerEchelle();
-                    camera.x = (route.getPosX() * echelle) - ((SCREEN_WIDTH - route.calculerLargeurDansFenetre())/2); // Fonction
-                    camera.y = LEVEL_HEIGHT - SCREEN_HEIGHT;
-                    break;
-
-                // Afficher tout le plateau
-                case 't' :
-                    camera.w = LEVEL_WIDTH;
-                    camera.h = LEVEL_HEIGHT;
-                    calculerEchelle();
-                    camera.x = 0;
-                    camera.y = (plateau.calculerHauteurDansFenetre() - SCREEN_HEIGHT)/2;
-                    break;
-
-                //Afficher toute la hauteur de la route
-                case 'y' :
-                    camera.h = LEVEL_HEIGHT;
-                    camera.w = LEVEL_HEIGHT * ((float)SCREEN_WIDTH/(float)SCREEN_HEIGHT);
-                    calculerEchelle();
-                    camera.x = (route.getPosX() * echelle) - ((SCREEN_WIDTH - route.calculerLargeurDansFenetre())/2); // Fonction
-                    camera.y = 0;
-
-
                 default:
                     break;
             }
@@ -174,29 +135,23 @@ void Partie::deplacements()
     {
 
         //Déplacement de la route
-        route.deplacer(Test.vitesse);
+        route.deplacer(voitureJoueur.vitesse);
 
         //Déplacement des décors
-        decor_gestionnaire.gestion(Test.vitesse);
+        decor_gestionnaire.gestion(voitureJoueur.vitesse);
 
         //Déplacement des voitures
         voiture_gestionnaire.chargement_voitures_fichier(&route);
         voiture_gestionnaire.depassement(route);
-        if ( voiture_gestionnaire.gestion_voitures(Test.vitesse, Test.getObjet()) )
+        if ( voiture_gestionnaire.gestion_voitures(voitureJoueur.vitesse, voitureJoueur.getObjet()) )
         {
-            Test.eventCollision();
+            voitureJoueur.eventCollision();
         }
 
-        Test.deplacer(route.getObjet());
+        voitureJoueur.deplacer(route.getObjet());
 
         timerDeplacement.start();
     }
-}
-
-
-void Partie::calculerEchelle()
-{
-    echelle = (float)SCREEN_WIDTH / (float)camera.w;
 }
 
 void Partie::afficher()
@@ -226,10 +181,10 @@ void Partie::afficher()
 
     //Affichage voiture joueur
     //SDL_SetRenderDrawColor(pRenderer, 0, 255, 255, 255);
-    //Test.afficherRectObjet();
-    Test.afficher(carsTexture);
+    //voitureJoueur.afficherRectObjet();
+    voitureJoueur.afficher(carsTexture);
 //    SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 120);
-//    Test.afficherRectCollision();
+//    voitureJoueur.afficherRectCollision();
 
 //    Decor testDecor;
 //    testDecor.placer(200, 200);
@@ -266,9 +221,4 @@ void Partie::afficher()
     SDL_RenderPresent(pRenderer);
 
     FPS++;
-}
-
-bool Partie::continuer_partie()
-{
-    return jouer;
 }

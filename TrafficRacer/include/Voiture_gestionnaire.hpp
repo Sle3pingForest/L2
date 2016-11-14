@@ -21,11 +21,11 @@ public:
     void depassement(Route route);
 
 private:
-    static const int nb_voiture_max = 15;
+    static const int nb_voitures_max = 15;
     int nb_voitures;
-    Voiture* tabVoitures[nb_voiture_max];
+    Voiture* tabVoitures[nb_voitures_max];
     Timer timerChargementFichier;
 
 };
 
-#endif
+#endif /* Voiture_gestionnaire_hpp */

@@ -6,18 +6,19 @@
 //  Copyright © 2016 Arnaud. All rights reserved.
 //
 
-#include "SDL_Tools.hpp"
 #include "Partie.hpp"
 #include "Joueur.hpp"
 
 int main(int argc, const char * argv[])
 {
 
+
     Joueur player;
     //player.setName();
 
     InitSDLEverything();
     Partie partie;
+    partie.play();
     Timer CPU;
     CPU.start();
 
@@ -38,5 +39,6 @@ int main(int argc, const char * argv[])
 
     SDL_Quit();
 
+    partie.~Partie();
     return 0;
 }
