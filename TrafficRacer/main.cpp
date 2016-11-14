@@ -8,16 +8,20 @@
 
 #include "SDL_Tools.hpp"
 #include "Partie.hpp"
+#include "Joueur.hpp"
 
 int main(int argc, const char * argv[])
 {
+
+    Joueur player;
+    //player.setName();
 
     InitSDLEverything();
     Partie partie;
     Timer CPU;
     CPU.start();
 
-    while (partie.continuer_partie())
+    while (player.getName() !="" && partie.continuer_partie())
     {
         partie.play();
         if(CPU.getTicks() >= 1000)
@@ -31,7 +35,7 @@ int main(int argc, const char * argv[])
 
     SDL_DestroyRenderer(pRenderer);
     SDL_DestroyWindow(pWindow);
-    
+
     SDL_Quit();
 
     return 0;
