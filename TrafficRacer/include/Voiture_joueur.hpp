@@ -30,4 +30,4 @@ private:
 
 };
 
-#endif
+#endif /* Voiture_joueur_hpp */

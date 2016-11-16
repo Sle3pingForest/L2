@@ -47,6 +47,7 @@
 		<Unit filename="autres/images/x.bmp" />
 		<Unit filename="autres/niveau1" />
 		<Unit filename="autres/niveau2" />
+		<Unit filename="include/Camera.hpp" />
 		<Unit filename="include/Decor.hpp" />
 		<Unit filename="include/Decor_gestionnaire.hpp" />
 		<Unit filename="include/Joueur.hpp" />
@@ -59,6 +60,7 @@
 		<Unit filename="include/Voiture_gestionnaire.hpp" />
 		<Unit filename="include/Voiture_joueur.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Camera.cpp" />
 		<Unit filename="src/Decor.cpp" />
 		<Unit filename="src/Decor_gestionnaire.cpp" />
 		<Unit filename="src/Joueur.cpp" />

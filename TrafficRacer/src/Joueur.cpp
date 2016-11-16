@@ -1,9 +1,14 @@
 #include "Joueur.hpp"
 
+std::fstream playerfile;
+
+fstream playerFile("autres/Player", ios::in | ios::out);
+
+
 Joueur::Joueur()
 {
-    string nameDefault = "Computer";
-    playerName = nameDefault;
+    string defaultName = "Computer";
+    playerName = defaultName;
 }
 
 Joueur::Joueur(string name)
@@ -22,17 +27,11 @@ void Joueur::setName()
     string line;
     cout << "Please!!! Enter a player Name " << endl;
     cin >> newName ;
-    std::ofstream playerFile;
-    playerFile.open("autres/Player");
-    if (newName == "")
-    {
-        newName= "Computer";
-        playerFile<<newName + ": "<< getScore();
-    }
-    else
-    {
-        playerFile<<newName;
-    }
+    //std::ofstream playerFile;
+    //playerFile.open("autres/Player");
+
+    playerFile>>line;
+    playerFile<<'\n' + newName + ": 0" + '\n';
     playerFile.close();
     playerName = newName;
 }

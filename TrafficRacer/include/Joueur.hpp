@@ -1,9 +1,11 @@
-#ifndef JOUEUR_H
-#define JOUEUR_H
+#ifndef Joueur_hpp
+#define Joueur_hpp
 
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <stdio.h>
+
 using namespace std;
 
 class Joueur
@@ -19,8 +21,8 @@ class Joueur
     protected:
     private:
         string playerName;
-        int playerScore;
+        int playerScore = 0;
 };
 
 
-#endif // JOUEUR_H
+#endif /* Joueur_hpp */
