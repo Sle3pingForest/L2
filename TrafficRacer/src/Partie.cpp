@@ -34,7 +34,7 @@ Partie::Partie()
     plateau.setWidth(LEVEL_WIDTH);
     plateau.setHeight(LEVEL_HEIGHT);
 
-    camera.CameraInit(0, &route, &plateau);
+    camera.CameraInit(1, &route, &plateau);
 
     voitureJoueur.selectVoiture(0);
     voitureJoueur.setWidth(route.getLargeurVoiePlateau() - 15);
@@ -66,7 +66,7 @@ void Partie::play()
             FPS = 0;
             timerAfficherFPS.start();
         }
-        SDL_Delay(10); // A vérifier !!!
+        SDL_Delay(13); // A vérifier !!!
     }
 }
 
@@ -142,7 +142,7 @@ void Partie::deplacements()
 
         //Déplacement des voitures
         voiture_gestionnaire.chargement_voitures_fichier(&route);
-        voiture_gestionnaire.depassement(route);
+        voiture_gestionnaire.depassement(&route);
         if ( voiture_gestionnaire.gestion_voitures(voitureJoueur.vitesse, voitureJoueur.getObjet()) )
         {
             voitureJoueur.eventCollision();
@@ -216,6 +216,7 @@ void Partie::afficher()
         SDL_SetTextureAlphaMod(pauseTexture, 200);
         SDL_RenderCopy(pRenderer, pauseTexture, NULL, &pause);
     }
+    printf("%d\n", voitureJoueur.getVoie(&route));
 
     SDL_RenderPresent(pRenderer);
 

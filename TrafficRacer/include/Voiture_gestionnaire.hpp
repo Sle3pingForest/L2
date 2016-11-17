@@ -18,7 +18,7 @@ public:
     bool gestion_voitures(int vitesse, SDL_Rect* rectVoitureJoueur);
     void chargement_voitures_fichier(Route* route);
     void afficherVoitures(SDL_Texture* carsTexture);
-    void depassement(Route route);
+    void depassement(Route *route);
 
 private:
     static const int nb_voiture_max = 10;

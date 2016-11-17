@@ -2,6 +2,7 @@
 #define Voiture_hpp
 
 #include "Objet.hpp"
+#include "Route.hpp"
 
 class Voiture : public Objet
 {
@@ -15,7 +16,7 @@ public:
     void afficherRectCollision();
     void calculerRectCollision();
     int getVitesseVoiture();
-    int getVoie();
+    int getVoie(Route *route);
     void setVoie(int numero);
     void setVitesseVoiture( int newVitesse);
     SDL_Rect* getRectCollision();

@@ -37,6 +37,7 @@
 		<Linker>
 			<Add option="-lSDL2" />
 		</Linker>
+		<Unit filename="autres/Player" />
 		<Unit filename="autres/images/down.bmp" />
 		<Unit filename="autres/images/hello_world.bmp" />
 		<Unit filename="autres/images/left.bmp" />

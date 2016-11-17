@@ -90,11 +90,11 @@ void Voiture_gestionnaire::chargement_voitures_fichier(Route* route)
                     ++nb_voitures;
                     if(line[i] == '1')
                     {
-                        tabVoitures[j]->setVitesseVoiture(6);
+                        tabVoitures[j]->setVitesseVoiture(10);
                     }
                     else if (line[i] == '2')
                     {
-                        tabVoitures[j]->setVitesseVoiture(10);
+                        tabVoitures[j]->setVitesseVoiture(17);
                     }
                 }
 
@@ -118,31 +118,50 @@ void Voiture_gestionnaire::afficherVoitures(SDL_Texture* carsTexture)
     }
 }
 
-void Voiture_gestionnaire::depassement(Route route)
+void Voiture_gestionnaire::depassement(Route *route)
 {
-    if(nb_voitures > 0)
+    if(nb_voitures > 1)
     {
         for( int i = 0; i < nb_voitures_max; i++)
         {
-            if( tabVoitures[i] != NULL)
+            if( tabVoitures[i] != NULL) // Voiture non NULL
             {
                 for(int j = 0; j < nb_voitures_max; j++)
                 {
-                    if(tabVoitures[j] != NULL && tabVoitures[i]->getVitesseVoiture() > tabVoitures[j]->getVitesseVoiture())
+                    if(tabVoitures[j] != NULL
+                       && tabVoitures[i]->getVitesseVoiture() > tabVoitures[j]->getVitesseVoiture())
+                       // Voiture non NULL si la première est plus rapide que la seconde
                     {
-                        if(tabVoitures[i]->getVoie() == tabVoitures[j]->getVoie()
-                        && tabVoitures[i]->getPosX() < tabVoitures[j]->getPosX() + route.getLargeurVoiePlateau())
+                        bool collision = false;
+                        int coteGauV1 = tabVoitures[i]->getPosX();
+                        int coteDroV1 = coteGauV1 + tabVoitures[i]->getWidth();
+                        int coteGauV2 = tabVoitures[j]->getPosX();
+                        int coteDroV2 = coteGauV2 + tabVoitures[j]->getWidth();
+
+                        // Si la deuxième voiture est devant la première il y a collision
+                        if(coteGauV1 >= coteGauV2 && coteGauV1 <= coteDroV2)
                         {
-                            if (tabVoitures[i]->getPosX() >= route.getPosX() + 2 * route.getLargeurVoiePlateau())
+                            collision = true;
+
+                        }
+                        else if(coteDroV1 >= coteGauV2 && coteDroV1 <= coteDroV2)
+                        {
+                            collision = true;
+                        }
+
+                        // La voiture double par la gauche ou ralentit si on est dans la première voie
+                        if(collision )
+                        {
+                           if(tabVoitures[i]->getPosX() < route->getPosX() + route->getLargeurVoiePlateau())
                             {
-                                tabVoitures[i]->deplacer(-2,0);
+                                if(tabVoitures[i]->getVitesseVoiture() > tabVoitures[j]->getVitesseVoiture())
+                                tabVoitures[i]->setVitesseVoiture(tabVoitures[i]->getVitesseVoiture() - 1);
                             }
                             else
                             {
-                                tabVoitures[i]->deplacer(2,0);
+                                tabVoitures[i]->deplacer(-2,0);
                             }
                         }
-                        tabVoitures[i]->setVoie(tabVoitures[j]->getVoie() + 1 );
                     }
                 }
             }

@@ -11,8 +11,8 @@
 
 int main(int argc, const char * argv[])
 {
-    Joueur joueur;
-    joueur.setName();
+    //Joueur joueur;
+    //joueur.setName();
 
     Partie partie;
     partie.play();

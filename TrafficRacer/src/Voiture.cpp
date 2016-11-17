@@ -143,9 +143,9 @@ SDL_Rect* Voiture::getRectCollision()
     return &rectCollision;
 }
 
-int Voiture::getVoie()
+int Voiture::getVoie( Route *route)
 {
-    return numeroVoie;
+     (positionPlateau.x - route->getPosX())% route->getLargeurVoiePlateau();
 }
 
 void Voiture::setVoie(int numero)
