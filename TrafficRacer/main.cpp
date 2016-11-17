@@ -7,6 +7,7 @@
 //
 
 #include "Partie.hpp"
+#include "Joueur.hpp"
 
 int main(int argc, const char * argv[])
 {
