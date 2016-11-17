@@ -10,6 +10,9 @@
 
 int main(int argc, const char * argv[])
 {
+    Joueur joueur;
+    joueur.setName();
+
     Partie partie;
     partie.play();
     partie.~Partie();

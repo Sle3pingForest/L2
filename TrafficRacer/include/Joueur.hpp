@@ -1,10 +1,7 @@
 #ifndef Joueur_hpp
 #define Joueur_hpp
-
 #include <fstream>
 #include <iostream>
-#include <string>
-#include <stdio.h>
 
 using namespace std;
 

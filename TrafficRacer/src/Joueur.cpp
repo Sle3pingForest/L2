@@ -2,7 +2,7 @@
 
 std::fstream playerfile;
 
-fstream playerFile("autres/Player", ios::in | ios::out);
+fstream playerFile("autres/Player", ios::in | ios::out  | ios::app);
 
 
 Joueur::Joueur()
@@ -29,9 +29,7 @@ void Joueur::setName()
     cin >> newName ;
     //std::ofstream playerFile;
     //playerFile.open("autres/Player");
-
-    playerFile>>line;
-    playerFile<<'\n' + newName + ": 0" + '\n';
+    playerFile<<newName + ": 0" + '\n';
     playerFile.close();
     playerName = newName;
 }
