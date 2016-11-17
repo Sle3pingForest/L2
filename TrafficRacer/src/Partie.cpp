@@ -40,7 +40,7 @@ Partie::Partie()
     voitureJoueur.setWidth(route.getLargeurVoiePlateau() - 15);
     voitureJoueur.calculerHauteur();
     voitureJoueur.placer(LEVEL_WIDTH/2, LEVEL_HEIGHT - voitureJoueur.getHeight() - 50);
-    voitureJoueur.vitesse = 10;
+    voitureJoueur.vitesse = 0;
 }
 
 Partie::~Partie() // A verifier !
@@ -62,7 +62,7 @@ void Partie::play()
         afficher();
         if(timerAfficherFPS.getTicks() >= 1000)
         {
-            //printf("FPS : %d\n", FPS);
+            printf("FPS : %d\n", FPS);
             FPS = 0;
             timerAfficherFPS.start();
         }
@@ -156,7 +156,6 @@ void Partie::deplacements()
 
 void Partie::afficher()
 {
-
     //Création de la couleur de fond
     SDL_SetRenderDrawColor(pRenderer, 40, 40, 40, 255);
     SDL_RenderClear(pRenderer);

@@ -19,10 +19,10 @@ public:
     void setVoie(int numero);
     void setVitesseVoiture( int newVitesse);
     SDL_Rect* getRectCollision();
+    int vitesse;
 protected:
 private:
     SDL_Rect rectCollision;
-    int vitesse;
     int numeroVoie;
 };
 

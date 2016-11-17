@@ -17,7 +17,8 @@ Voiture_joueur::~Voiture_joueur()
 
 void Voiture_joueur::gestionTouches( SDL_Event& event )
 {
-    Y_VEL = 0.7 * vitesse;
+    X_VEL = 0.6 * vitesse;
+    Y_VEL = 1;
 
     //Touches pressées
     if( event.type == SDL_KEYDOWN && event.key.repeat == 0 )
@@ -25,13 +26,19 @@ void Voiture_joueur::gestionTouches( SDL_Event& event )
         switch( event.key.keysym.sym )
         {
             case SDLK_LEFT:
-                mVelX -= Y_VEL;
-                deplacementGauche = true;
+                mVelX -= X_VEL;
                 break;
-                
+
             case SDLK_RIGHT:
-                mVelX += Y_VEL;
-                deplacementDroit = true;
+                mVelX += X_VEL;
+                break;
+
+            case SDLK_UP:
+                mVelY += 1;
+                break;
+
+            case SDLK_DOWN:
+                mVelY -= 1;
                 break;
         }
     }
@@ -42,42 +49,21 @@ void Voiture_joueur::gestionTouches( SDL_Event& event )
         switch( event.key.keysym.sym )
         {
             case SDLK_LEFT:
-                if (deplacementGauche)
-                {
-                    mVelX += Y_VEL;
-                    deplacementGauche = false;
-                }
+                mVelX += X_VEL;
+                deplacementGauche = false;
                 break;
-                
-            case SDLK_RIGHT:
-                if (deplacementDroit)
-                {
-                    mVelX -= Y_VEL;
-                    deplacementDroit = false;
-                }
-                break;
-        }
-    }
 
-    // On limite la vitesse entre 0 et 20
-    if( event.type == SDL_KEYDOWN )
-    {
-        switch( event.key.keysym.sym )
-        {
-            case SDLK_UP:
-                vitesse += 1;
-                if( vitesse > 20)
-                {
-                    vitesse = 20;
-                }
+            case SDLK_RIGHT:
+                mVelX -= X_VEL;
+                deplacementDroit = false;
                 break;
-                
+
+            case SDLK_UP:
+                mVelY -= 1;
+                break;
+
             case SDLK_DOWN:
-                vitesse -= 3;
-                if( vitesse < 0)
-                {
-                    vitesse = 0;
-                }
+                mVelY += 1;
                 break;
         }
     }
@@ -101,25 +87,30 @@ void Voiture_joueur::deplacer(SDL_Rect* route)
         positionPlateau.x  -= mVelX;
         positionPlateau.x = route->x + route->w - positionPlateau.w;
     }
-    
+
     // Si collision on déplace pas
     if (collision)
     {
         positionPlateau.x  -= mVelX;
         collision = false;
     }
+
+    vitesse += mVelY;
+    // On limite la vitesse [0,25]
+    if (vitesse > 25)
+    {
+        vitesse = 25;
+    }
+    else if (vitesse < 1)
+    {
+        vitesse = 1;
+    }
+    printf("V:%d X:%d Y:%d\n", vitesse, mVelX, mVelY);
 }
 
 void Voiture_joueur::eventCollision()
 {
+    positionPlateau.x -= mVelX;
     mVelX = 0;
-    vitesse = 6;
-    if (deplacementGauche)
-    {
-        deplacementGauche = false;
-    }
-    if (deplacementDroit)
-    {
-        deplacementDroit = false;
-    }
+    vitesse = 0;
 }

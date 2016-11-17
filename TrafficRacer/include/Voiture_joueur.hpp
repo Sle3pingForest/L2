@@ -15,9 +15,9 @@ public:
     void gestionTouches( SDL_Event& e );
     void eventCollision();
 
-    int Y_VEL;
-    int Y_VEL_OLD;
-    int vitesse;
+    int X_VEL;
+    int X_VEL_OLD;
+    float Y_VEL;
     bool collision;
     bool deplacementGauche;
     bool deplacementDroit;
@@ -26,7 +26,9 @@ protected:
 private:
 
     //The velocity of the dot
-    int mVelX, mVelY;
+    int mVelX = 0;
+    int mVelY = 0;
+    int test = 0;
 
 };
 
