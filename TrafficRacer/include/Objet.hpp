@@ -9,7 +9,6 @@ public:
     Objet();
     Objet(int w, int h);
     Objet(int x, int y, int w, int h);
-    virtual ~Objet();
 
     void placer(int x, int y);
     void deplacer(int x, int y);

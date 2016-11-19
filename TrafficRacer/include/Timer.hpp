@@ -8,7 +8,6 @@ class Timer
 {
     public:
         Timer();
-        virtual ~Timer();
         void start();
         void stop();
         void pause();

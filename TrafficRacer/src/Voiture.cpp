@@ -30,11 +30,6 @@ Voiture::Voiture(int posX, int posY, int widht, int voitureType)
     calculerRectCollision();
 }
 
-Voiture::~Voiture()
-{
-    //dtor
-}
-
 void Voiture::selectVoiture(int nb)
 {
     switch (nb) {
@@ -141,11 +136,6 @@ SDL_Rect* Voiture::getRectCollision()
 {
     calculerRectCollision();
     return &rectCollision;
-}
-
-int Voiture::getVoie( Route *route)
-{
-     (positionPlateau.x - route->getPosX())% route->getLargeurVoiePlateau();
 }
 
 void Voiture::setVoie(int numero)

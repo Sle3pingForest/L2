@@ -9,7 +9,6 @@ class Camera
 {
 public:
     Camera();
-    virtual ~Camera();
 
     void CameraInit( int vue, Route* route, Objet* plateau);
 

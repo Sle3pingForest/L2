@@ -13,11 +13,7 @@ Route::Route()
 
     image = positionPlateau;
     image.h = image.w;
-}
-
-Route::~Route()
-{
-    //dtor
+    image.y = -image.h;
 }
 
 void Route::afficherVoies()
@@ -34,31 +30,23 @@ void Route::afficherVoies()
 
 void Route::afficherDefilement(SDL_Texture* texture)
 {
-    static const int nb_repetition_image = 4;
-    if (image.y > LEVEL_HEIGHT)
+    //Calcul du nombre de répétitions d'image nécéssaire
+    static const int nb_repetition = LEVEL_HEIGHT/image.h +1;
+    
+    if (image.y >= 0)
     {
-        image.y -= (image.h * nb_repetition_image) - (1 * nb_repetition_image);
+        image.y -= (image.h);
     }
-    int position = image.y;
-
-    SDL_Rect positionFenetre;
-    //Calcul du déplacement
-    positionFenetre.x = (image.x * echelle) - camera.x;
-    //Calcul du redimensionnement
-    positionFenetre.w = image.w * echelle;
-    positionFenetre.h = image.h * echelle;
-    // Ajouter le décalage de la rambarde
-
-    for (int i = 0 ; i < nb_repetition_image ; i++)
-    {
-        position = position + (image.h * i) - 1;
-        if (position > LEVEL_HEIGHT)
-        {
-            position -= (image.h * nb_repetition_image) - (1 * nb_repetition_image);
-        }
-        positionFenetre.y = (position * echelle) - camera.y;
+    SDL_Rect positionFenetre = calculerPosFenetre(&image);
+    SDL_RenderCopy(pRenderer, texture, NULL, &positionFenetre);
+    int tmp = image.y;
+    
+    for (int i = 0; i < nb_repetition; ++i) {
+        image.y += image.h-2;
+        positionFenetre = calculerPosFenetre(&image);
         SDL_RenderCopy(pRenderer, texture, NULL, &positionFenetre);
     }
+    image.y = tmp;
 }
 
 void Route::deplacer(int vitesse)

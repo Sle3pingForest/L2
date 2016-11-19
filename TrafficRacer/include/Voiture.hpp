@@ -9,14 +9,13 @@ class Voiture : public Objet
 public:
     Voiture();
     Voiture(int posX, int posY, int widht, int voitureType);
-    virtual ~Voiture();
+
     void avancer(int vitesseJeu);
     void selectVoiture(int nb);
     bool isDead();
     void afficherRectCollision();
     void calculerRectCollision();
     int getVitesseVoiture();
-    int getVoie(Route *route);
     void setVoie(int numero);
     void setVitesseVoiture( int newVitesse);
     SDL_Rect* getRectCollision();

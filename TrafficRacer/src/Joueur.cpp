@@ -43,8 +43,3 @@ void Joueur::setScore( int newScore)
 {
     playerScore = newScore;
 }
-
-Joueur::~Joueur()
-{
-    //dtor
-}

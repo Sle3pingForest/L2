@@ -8,18 +8,6 @@ Decor_gestionnaire::Decor_gestionnaire()
     }
 }
 
-Decor_gestionnaire::~Decor_gestionnaire()
-{
-    for (int i = 0; i < nb_decors; ++i)
-    {
-        if (tabDecors[i] != NULL)
-        {
-            delete tabDecors[i];
-            tabDecors[i] = NULL;
-        }
-    }
-}
-
 void Decor_gestionnaire::gestion(int vitesse)
 {
     for (int i = 0; i < nb_decors; ++i)

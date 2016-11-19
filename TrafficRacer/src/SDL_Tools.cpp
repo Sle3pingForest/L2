@@ -50,7 +50,7 @@ bool CreateWindow()
 
 bool CreateRenderer()
 {
-    pRenderer =  SDL_CreateRenderer( pWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    pRenderer =  SDL_CreateRenderer( pWindow, -1, SDL_RENDERER_ACCELERATED );
     if( !pRenderer )
     {
         fprintf(stderr, "Échec de la création du rendu: %s\n", SDL_GetError());
