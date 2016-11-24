@@ -6,7 +6,6 @@
 #include "Voiture.hpp"
 #include "Timer.hpp"
 #include "Route.hpp"
-#include "Voiture_joueur.hpp"
 
 using namespace std;
 
@@ -21,12 +20,15 @@ public:
     void depassement(Route *route);
 
 private:
-    static const int nb_voiture_max = 10;
-    static const int nb_voitures_max = 15;
-    int nb_voitures;
-    Voiture* tabVoitures[nb_voitures_max];
+    static const int nb_voitures_max = 10;
+    int nb_voitures_Voie[4];
+    Voiture* tabVoitures[4][nb_voitures_max];
+
+    int posVoitureTete;
+
     Timer timerChargementFichier;
-    Voiture_joueur voiture_joueur;
+
+    void changementVoieGauche(int i, int j);
 
 };
 

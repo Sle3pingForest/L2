@@ -98,6 +98,7 @@ int Voiture::getVitesseVoiture()
     return vitesse;
 }
 
+
 void Voiture::setVitesseVoiture( int newVitesse)
 {
     vitesse = newVitesse;
@@ -105,16 +106,11 @@ void Voiture::setVitesseVoiture( int newVitesse)
 
 void Voiture::avancer(int vitesseJeu)
 {
-    positionPlateau.y += vitesseJeu - vitesse;
+    positionPlateau.y += vitesseJeu - (vitesse);
 }
 
 SDL_Rect* Voiture::getRectCollision()
 {
     calculerRectCollision();
     return &rectCollision;
-}
-
-void Voiture::setVoie(int numero)
-{
-    numeroVoie = numero;
 }

@@ -16,14 +16,12 @@ public:
     void afficherRectCollision();
     void calculerRectCollision();
     int getVitesseVoiture();
-    void setVoie(int numero);
     void setVitesseVoiture( int newVitesse);
     SDL_Rect* getRectCollision();
     int vitesse;
 protected:
 private:
     SDL_Rect rectCollision;
-    int numeroVoie;
 };
 
 const SDL_Rect audi =       {0, 0, 98, 214};

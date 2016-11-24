@@ -137,8 +137,7 @@ void Partie::deplacements()
 {
     if (/*timerDeplacement.getTicks() > 200 and*/ not pause) // changer ce compteur
     {
-        distance_parcourue += voitureJoueur.vitesse/10;
-        //printf("%d\n", distance_parcourue);
+        distance_parcourue = (voitureJoueur.vitesse * timerDeplacement.getTicks())/100;
 
         int vitesse = voitureJoueur.vitesse / (SCREEN_FPS*0.0625); // Permet d'avoir un vitesse constante quelque soit les FPS
         //Déplacement de la route
@@ -157,7 +156,7 @@ void Partie::deplacements()
 
         voitureJoueur.deplacer(route.getObjet());
 
-        timerDeplacement.start();
+        //timerDeplacement.start();
     }
 }
 

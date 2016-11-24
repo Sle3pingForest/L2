@@ -103,13 +103,13 @@ void Voiture_joueur::deplacer(SDL_Rect* route)
     {
         vitesse = 100;
     }
-    else if (vitesse < 1)
+    else if (vitesse < 20)
     {
-        vitesse = 1;
+        vitesse = 20;
     }
 
     if (collision) {
-        vitesse = 10;
+        vitesse = 20;
         collision = false;
     }
     //printf("%d\n",vitesse);

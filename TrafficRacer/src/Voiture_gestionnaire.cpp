@@ -4,12 +4,16 @@ ifstream fichier("autres/niveau2", ios::in);
 
 Voiture_gestionnaire::Voiture_gestionnaire()
 {
-    for (int i = 0; i < nb_voitures_max; ++i)
+    for (int i = 0; i < 4; i++)
     {
-        tabVoitures[i] = NULL;
+        for(int j = 0; j < nb_voitures_max; j++)
+        {
+            tabVoitures[i][j] = NULL;
+            nb_voitures_Voie[i] = 0;
+        }
     }
-    nb_voitures = 0;
-    timerChargementFichier.start();
+    posVoitureTete = 10000;
+
 }
 
 // Gère les déplacements, les suppressions de voitures et renvoie true si collision
@@ -18,84 +22,85 @@ bool Voiture_gestionnaire::gestion_voitures(int vitesse, SDL_Rect* rectVoitureJo
     SDL_bool collision;
     SDL_Rect intersect;
     bool flagCollision = false;
-    for (int i = 0; i < nb_voitures_max; ++i)
+    posVoitureTete = 10000;
+    for (int i = 0; i < 4; i++)
     {
-        if (tabVoitures[i] != NULL)
+        for (int j = 0; j < nb_voitures_max; j++)
         {
-            if (tabVoitures[i]->isDead())
+            if (tabVoitures[i][j] != NULL)
             {
-                delete tabVoitures[i];
-                tabVoitures[i] = NULL;
-                 nb_voitures--;
-            }
-            else
-            {
-                tabVoitures[i]->avancer(vitesse);
-                collision = SDL_IntersectRect(rectVoitureJoueur, tabVoitures[i]->getRectCollision(), &intersect);
-                if (collision)
+                if (tabVoitures[i][j]->isDead())
                 {
-                    flagCollision = true;
-
-//                    printf("Colission Voiture %d\n", i);
-//                    SDL_Rect* test = tabVoitures[i]->getRectCollision();
-//                    printf("Voit x:%d y:%d w:%d h:%d\n", test->x, test->y, test->w, test->h);
-//                    printf("inter x:%d y:%d w:%d h:%d\n", intersect.x, intersect.y, intersect.w, intersect.h);
-
-                    if (intersect.x > rectVoitureJoueur->x) {
-                        //printf("Droite");
-                    }else{
-                        //printf("Gauche");
+                    delete tabVoitures[i][j];
+                    tabVoitures[i][j] = NULL;
+                    nb_voitures_Voie[i]--;
+                }
+                else
+                {
+                    tabVoitures[i][j]->avancer(vitesse);
+                    int posTemp = tabVoitures[i][j]->getPosY();
+                    if(tabVoitures[i][j]->getPosY() < posVoitureTete)
+                    {
+                        posVoitureTete = posTemp;
                     }
-                    if (intersect.y == rectVoitureJoueur->y) {
-                        tabVoitures[i]->vitesse ++;
+                    collision = SDL_IntersectRect(rectVoitureJoueur, tabVoitures[i][j]->getRectCollision(), &intersect);
+                    if (collision)
+                    {
+                        flagCollision = true;
+                        if (intersect.x > rectVoitureJoueur->x)
+                        {
+                            //printf("Droite");
+                        }
+                        else
+                        {
+                            //printf("Gauche");
+                        }
+                        if (intersect.y == rectVoitureJoueur->y)
+                        {
+                            tabVoitures[i][j]->vitesse ++;
+                        }
                     }
-
                 }
             }
         }
     }
+    //printf("%d\n", posVoitureTete);
     return flagCollision;
 }
 
-
-/// ATTENTION NE PAS METTRE PLUS DE 20 VOITURES DANS LE FICHIER ///
 // Créer de nouvelles voitures et les positionner par rapport aux fichiers de niveaux
 void Voiture_gestionnaire::chargement_voitures_fichier(Route* route, int distance_parcourue)
 {
-    //infile.open("autres/niveau2");
     static int nbChargements = 0;
-    if (distance_parcourue > 2000*nbChargements)
+    if (distance_parcourue > 4000*nbChargements && posVoitureTete > -500)
     {
         string line;
-        //getline(infile, line);
         fichier >> line;
-        for( int i = 0 ; i < 4 ; ++i)
+        for( int i = 0 ; i < 4 ; i++)
         {
             if(line[i] == '1' || line[i] == '2')
             {
                 //On trouve une place libre dans le tableau de pointeurs de voitures
                 int j = 0;
-                while (tabVoitures[j] != NULL)
+                while (tabVoitures[i][j] != NULL)
                 {
-                    ++j;
+                    j++;
                 }
 
                 if (j < nb_voitures_max)
                 {
                     int position_x = route->getPosX() + i * route->getLargeurVoiePlateau();
-                    tabVoitures[j] = new Voiture(position_x, -600, route->getLargeurVoiePlateau()-10, rand()%8);
-                    tabVoitures[j]->setVoie(i+1);
-                    ++nb_voitures;
+                    tabVoitures[i][j] = new Voiture(position_x, -1000, route->getLargeurVoiePlateau()-10, rand()%8);
+                    nb_voitures_Voie[i]++;
                     if(line[i] == '1')
                     {
-                        tabVoitures[j]->setVitesseVoiture(10);
+                        tabVoitures[i][j]->setVitesseVoiture(10);
                     }
                     else if (line[i] == '2')
                     {
-                        tabVoitures[j]->setVitesseVoiture(17);
+                        tabVoitures[i][j]->setVitesseVoiture(15);
                     }
                 }
-
             }
         }
         infile.close();
@@ -106,70 +111,86 @@ void Voiture_gestionnaire::chargement_voitures_fichier(Route* route, int distanc
 
 void Voiture_gestionnaire::afficherVoitures(SDL_Texture* carsTexture)
 {
-    for(int i = 0 ; i < nb_voitures_max; i++)
+    for(int i = 0 ; i < 4; i++)
     {
-        if (tabVoitures[i] != NULL)
+        for(int j = 0 ; j < nb_voitures_max; j++)
         {
-            tabVoitures[i]->afficher(carsTexture);
-            //SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 150);
-            //tabVoitures[i]->afficherRectCollision();
+            if (tabVoitures[i][j] != NULL)
+            {
+                tabVoitures[i][j]->afficher(carsTexture);
+                if(i == 2)
+                {
+                    printf("voit : %d %d\n",j ,tabVoitures[i][j]->getPosY());
+                }
+            }
         }
     }
 }
 
 void Voiture_gestionnaire::depassement(Route *route)
 {
-    if(nb_voitures > 1)
+    for( int i = 0; i < 4; i++)
     {
-        for( int i = 0; i < nb_voitures_max; i++)
+        if(nb_voitures_Voie[i] > 1)
         {
-            if( tabVoitures[i] != NULL) // Voiture non NULL
+            for( int j = 0; j < nb_voitures_max; j++)
             {
-                for(int j = 0; j < nb_voitures_max; j++)
+                if(tabVoitures[i][j] != NULL)
                 {
-                    if(tabVoitures[j] != NULL
-                       && tabVoitures[i]->getVitesseVoiture() > tabVoitures[j]->getVitesseVoiture())
-                       // Voiture non NULL si la première est plus rapide que la seconde
+                    for( int k = 0; k < nb_voitures_max; k++)
                     {
-                        bool collision = false;
-                        int coteGauV1 = tabVoitures[i]->getPosX();
-                        int coteDroV1 = coteGauV1 + tabVoitures[i]->getWidth();
-                        int coteGauV2 = tabVoitures[j]->getPosX();
-                        int coteDroV2 = coteGauV2 + tabVoitures[j]->getWidth();
-                        int coteHautV1 = tabVoitures[i]->getPosY();
-                        int coteBasV1 = coteHautV1 + tabVoitures[i]->getHeight();
-                        int coteHautV2 = tabVoitures[j]->getPosY();
-                        int coteBasV2 = coteHautV2 + tabVoitures[j]->getHeight();
-                        // Si la deuxième voiture est devant la première il y a collision
-                        if(coteGauV1 >= coteGauV2 && coteGauV1 <= coteDroV2)
+                        if(tabVoitures[i][k] != NULL
+                                && tabVoitures[i][j]->getVitesseVoiture() > tabVoitures[i][k]->getVitesseVoiture()
+                                && tabVoitures[i][j]->getPosY() - abs( tabVoitures[i][k]->getPosY()) < 300 )
+                            // Voiture non NULL si la première est plus rapide que la seconde
                         {
-                            collision = true;
-                        }
-                        else if(coteDroV1 >= coteGauV2 && coteDroV1 <= coteDroV2)
-                        {
-                            collision = true;
-                        }
-                        else if(coteGauV1 <= coteDroV2 && coteHautV1 >= coteBasV2 && coteHautV1 <= coteHautV2)
-                        {
-                            collision = true;
-                        }
-                        else if(coteGauV1 <= coteDroV2 && coteBasV1 >= coteBasV2 && coteBasV1 <= coteHautV2)
-                        {
-                            collision = true;
-                        }
-                        // La voiture double par la gauche ou ralentit si on est dans la première voie
-                        if(collision )
-                        {
-                           if(tabVoitures[i]->getPosX() < route->getPosX() + route->getLargeurVoiePlateau())
+                            bool collision = false;
+                            int coteGauV1 = tabVoitures[i][j]->getPosX();
+                            int coteDroV1 = coteGauV1 + tabVoitures[i][j]->getWidth();
+                            int coteGauV2 = tabVoitures[i][k]->getPosX();
+                            int coteDroV2 = coteGauV2 + tabVoitures[i][k]->getWidth();
+                            int coteHautV1 = tabVoitures[i][j]->getPosY();
+                            int coteBasV1 = coteHautV1 + tabVoitures[i][j]->getHeight();
+                            int coteHautV2 = tabVoitures[i][k]->getPosY();
+                            int coteBasV2 = coteHautV2 + tabVoitures[i][k]->getHeight();
+                            // Si la deuxième voiture est devant la première il y a collision
+                            if(coteGauV1 >= coteGauV2 && coteGauV1 <= coteDroV2)
                             {
-                                if(tabVoitures[i]->getVitesseVoiture() > tabVoitures[j]->getVitesseVoiture())
-                                {
-                                    tabVoitures[i]->setVitesseVoiture(tabVoitures[i]->getVitesseVoiture() - 1);
-                                }
+                                collision = true;
                             }
-                            else
+                            else if(coteDroV1 >= coteGauV2 && coteDroV1 <= coteDroV2)
                             {
-                                tabVoitures[i]->deplacer(-2,0);
+                                collision = true;
+                            }
+                            else if(coteGauV1 <= coteDroV2 && coteHautV1 >= coteBasV2 && coteHautV1 <= coteHautV2)
+                            {
+                                collision = true;
+                            }
+                            else if(coteGauV1 <= coteDroV2 && coteBasV1 >= coteBasV2 && coteBasV1 <= coteHautV2)
+                            {
+                                collision = true;
+                            }
+                            // La voiture double par la gauche ou ralentit si on est dans la première voie
+                            if(collision )
+                            {
+                                if(tabVoitures[i][j]->getPosX() < route->getPosX() + route->getLargeurVoiePlateau())
+                                {
+                                    if(tabVoitures[i][j]->getVitesseVoiture() > tabVoitures[i][k]->getVitesseVoiture())
+                                    {
+                                        tabVoitures[i][j]->setVitesseVoiture(tabVoitures[i][j]->getVitesseVoiture() - 1);//ralenti voie 0
+                                    }
+                                }
+                                else  //Dépassement à gauche
+                                {
+                                    tabVoitures[i][j]->deplacer(-2,0);
+                                    coteGauV1 = tabVoitures[i][j]->getPosX();
+                                    coteDroV1 = coteGauV1 + tabVoitures[i][j]->getWidth();
+                                    coteGauV2 = tabVoitures[i][k]->getPosX();
+                                    if(coteDroV1 < coteGauV2)
+                                    {
+                                        changementVoieGauche(i, j);//On place la voiture dans le tableau de gauche
+                                    }
+                                }
                             }
                         }
                     }
@@ -177,4 +198,15 @@ void Voiture_gestionnaire::depassement(Route *route)
             }
         }
     }
+}
+/*Attention si pas de place dans tableau*/
+void Voiture_gestionnaire::changementVoieGauche(int i, int j)
+{
+    int k = 0;
+    while (tabVoitures[i-1][k] != NULL)
+    {
+        k++;
+    }
+    tabVoitures[i-1][k] = tabVoitures[i][j];
+    tabVoitures[i][j] = NULL;
 }
