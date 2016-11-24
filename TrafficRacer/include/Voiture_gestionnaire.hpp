@@ -16,7 +16,7 @@ public:
     Voiture_gestionnaire();
 
     bool gestion_voitures(int vitesse, SDL_Rect* rectVoitureJoueur);
-    void chargement_voitures_fichier(Route* route);
+    void chargement_voitures_fichier(Route* route, int distance_parcourue);
     void afficherVoitures(SDL_Texture* carsTexture);
     void depassement(Route *route);
 

@@ -41,6 +41,8 @@ Partie::Partie()
     voitureJoueur.calculerHauteur();
     voitureJoueur.placer(LEVEL_WIDTH/2, LEVEL_HEIGHT - voitureJoueur.getHeight() - 50);
     voitureJoueur.vitesse = 10;
+
+    distance_parcourue = 0;
 }
 
 Partie::~Partie()
@@ -135,6 +137,9 @@ void Partie::deplacements()
 {
     if (/*timerDeplacement.getTicks() > 200 and*/ not pause) // changer ce compteur
     {
+        distance_parcourue += voitureJoueur.vitesse/10;
+        //printf("%d\n", distance_parcourue);
+
         int vitesse = voitureJoueur.vitesse / (SCREEN_FPS*0.0625); // Permet d'avoir un vitesse constante quelque soit les FPS
         //Déplacement de la route
         route.deplacer(vitesse);
@@ -143,7 +148,7 @@ void Partie::deplacements()
         decor_gestionnaire.gestion(vitesse);
 
         //Déplacement des voitures
-        voiture_gestionnaire.chargement_voitures_fichier(&route);
+        voiture_gestionnaire.chargement_voitures_fichier(&route, distance_parcourue);
         voiture_gestionnaire.depassement(&route);
         if ( voiture_gestionnaire.gestion_voitures(vitesse, voitureJoueur.getObjet()) )
         {
@@ -206,7 +211,6 @@ void Partie::afficher()
 //    testVoiture.selectVoiture(0);
 //    testVoiture.afficherRectObjet();
 //    testVoiture.afficher(carsTexture);
-
 
     if (pause)
     {

@@ -20,6 +20,7 @@ private:
     bool pause;
 
     int FPS;
+    int distance_parcourue;
 
     SDL_Texture* decorTexture;
     SDL_Texture* carsTexture;

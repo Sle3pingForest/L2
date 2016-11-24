@@ -40,7 +40,7 @@ bool Voiture_gestionnaire::gestion_voitures(int vitesse, SDL_Rect* rectVoitureJo
 //                    SDL_Rect* test = tabVoitures[i]->getRectCollision();
 //                    printf("Voit x:%d y:%d w:%d h:%d\n", test->x, test->y, test->w, test->h);
 //                    printf("inter x:%d y:%d w:%d h:%d\n", intersect.x, intersect.y, intersect.w, intersect.h);
-                    
+
                     if (intersect.x > rectVoitureJoueur->x) {
                         //printf("Droite");
                     }else{
@@ -49,7 +49,7 @@ bool Voiture_gestionnaire::gestion_voitures(int vitesse, SDL_Rect* rectVoitureJo
                     if (intersect.y == rectVoitureJoueur->y) {
                         tabVoitures[i]->vitesse ++;
                     }
-                    
+
                 }
             }
         }
@@ -60,11 +60,11 @@ bool Voiture_gestionnaire::gestion_voitures(int vitesse, SDL_Rect* rectVoitureJo
 
 /// ATTENTION NE PAS METTRE PLUS DE 20 VOITURES DANS LE FICHIER ///
 // Créer de nouvelles voitures et les positionner par rapport aux fichiers de niveaux
-void Voiture_gestionnaire::chargement_voitures_fichier(Route* route)
+void Voiture_gestionnaire::chargement_voitures_fichier(Route* route, int distance_parcourue)
 {
     //infile.open("autres/niveau2");
-    if (timerChargementFichier.getTicks() > 3000)
-    //if(voiture_joueur.getVitesseVoiture() < )
+    static int nbChargements = 0;
+    if (distance_parcourue > 2000*nbChargements)
     {
         string line;
         //getline(infile, line);
@@ -100,6 +100,7 @@ void Voiture_gestionnaire::chargement_voitures_fichier(Route* route)
         }
         infile.close();
         timerChargementFichier.start();
+        nbChargements++;
     }
 }
 
