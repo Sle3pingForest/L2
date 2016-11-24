@@ -5,7 +5,7 @@ SDL_Renderer *pRenderer = NULL;
 
 int SCREEN_WIDTH = 700;
 int SCREEN_HEIGHT = 700;
-int SCREEN_FPS = 50;
+int SCREEN_FPS = 60;
 
 int LEVEL_WIDTH = 2000;
 int LEVEL_HEIGHT = 1200;
@@ -40,7 +40,7 @@ Partie::Partie()
     voitureJoueur.setWidth(route.getLargeurVoiePlateau() - 15);
     voitureJoueur.calculerHauteur();
     voitureJoueur.placer(LEVEL_WIDTH/2, LEVEL_HEIGHT - voitureJoueur.getHeight() - 50);
-    voitureJoueur.vitesse = 0;
+    voitureJoueur.vitesse = 10;
 }
 
 Partie::~Partie()
@@ -55,6 +55,7 @@ void Partie::play()
 {
     while (jouer)
     {
+        Uint32 startTicks = SDL_GetTicks();
         gestion_touches();
         deplacements();
         afficher();
@@ -64,7 +65,10 @@ void Partie::play()
             FPS = 0;
             timerAfficherFPS.start();
         }
-        SDL_Delay(13); // A vérifier !!!
+        int reste = 1000/SCREEN_FPS - (SDL_GetTicks() - startTicks);
+        if (reste > 0) {
+            SDL_Delay(reste);
+        }
     }
 }
 
@@ -129,19 +133,19 @@ void Partie::gestion_touches()
 
 void Partie::deplacements()
 {
-    if (timerDeplacement.getTicks() > 10 and not pause) // changer ce compteur
+    if (/*timerDeplacement.getTicks() > 200 and*/ not pause) // changer ce compteur
     {
-
+        int vitesse = voitureJoueur.vitesse / (SCREEN_FPS*0.0625); // Permet d'avoir un vitesse constante quelque soit les FPS
         //Déplacement de la route
-        route.deplacer(voitureJoueur.vitesse);
+        route.deplacer(vitesse);
 
         //Déplacement des décors
-        decor_gestionnaire.gestion(voitureJoueur.vitesse);
+        decor_gestionnaire.gestion(vitesse);
 
         //Déplacement des voitures
         voiture_gestionnaire.chargement_voitures_fichier(&route);
         voiture_gestionnaire.depassement(&route);
-        if ( voiture_gestionnaire.gestion_voitures(voitureJoueur.vitesse, voitureJoueur.getObjet()) )
+        if ( voiture_gestionnaire.gestion_voitures(vitesse, voitureJoueur.getObjet()) )
         {
             voitureJoueur.collision = true;
         }
@@ -204,16 +208,16 @@ void Partie::afficher()
 //    testVoiture.afficher(carsTexture);
 
 
-//    if (pause)
-//    {
-//        SDL_Rect pause;
-//        pause.w = SCREEN_WIDTH*0.5;
-//        pause.h = pause.w;
-//        pause.x = (SCREEN_WIDTH - pause.w) / 2;
-//        pause.y = (SCREEN_HEIGHT - pause.h) / 2;
-//        SDL_SetTextureAlphaMod(pauseTexture, 200);
-//        SDL_RenderCopy(pRenderer, pauseTexture, NULL, &pause);
-//    }
+    if (pause)
+    {
+        SDL_Rect pause;
+        pause.w = SCREEN_WIDTH*0.5;
+        pause.h = pause.w;
+        pause.x = (SCREEN_WIDTH - pause.w) / 2;
+        pause.y = (SCREEN_HEIGHT - pause.h) / 2;
+        SDL_SetTextureAlphaMod(pauseTexture, 200);
+        SDL_RenderCopy(pRenderer, pauseTexture, NULL, &pause);
+    }
 
     SDL_RenderPresent(pRenderer);
 

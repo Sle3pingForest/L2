@@ -66,7 +66,7 @@ void Voiture_joueur::gestionTouches( SDL_Event& event )
 
 void Voiture_joueur::deplacer(SDL_Rect* route)
 {
-    X_VEL = 0.5 * vitesse;
+    X_VEL = 0.125 * vitesse;
     
     //Déplace la voiture
     if (deplacementGauche && !collision) {
@@ -98,10 +98,10 @@ void Voiture_joueur::deplacer(SDL_Rect* route)
         vitesse -= 2;
     }
     
-    // On limite la vitesse [0,25]
-    if (vitesse > 25)
+    // On limite la vitesse [0,100]
+    if (vitesse > 100)
     {
-        vitesse = 25;
+        vitesse = 100;
     }
     else if (vitesse < 1)
     {
@@ -109,7 +109,8 @@ void Voiture_joueur::deplacer(SDL_Rect* route)
     }
     
     if (collision) {
-        vitesse = 5;
+        vitesse = 10;
         collision = false;
     }
+    printf("%d\n",vitesse);
 }

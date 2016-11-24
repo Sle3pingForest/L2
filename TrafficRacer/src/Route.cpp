@@ -33,6 +33,7 @@ void Route::afficherDefilement(SDL_Texture* texture)
     //Calcul du nombre de répétitions d'image nécéssaire
     static const int nb_repetition = LEVEL_HEIGHT/image.h +1;
     
+    //On affiche une fois l'image
     if (image.y >= 0)
     {
         image.y -= (image.h);
@@ -41,6 +42,7 @@ void Route::afficherDefilement(SDL_Texture* texture)
     SDL_RenderCopy(pRenderer, texture, NULL, &positionFenetre);
     int tmp = image.y;
     
+    // Puis on la duplique plusieurs fois en dessous
     for (int i = 0; i < nb_repetition; ++i) {
         image.y += image.h-2;
         positionFenetre = calculerPosFenetre(&image);
@@ -49,9 +51,9 @@ void Route::afficherDefilement(SDL_Texture* texture)
     image.y = tmp;
 }
 
-void Route::deplacer(int vitesse)
+void Route::deplacer(int pixels)
 {
-    image.y += vitesse;
+    image.y += pixels;
 }
 
 int Route::getLargeurVoiePlateau()

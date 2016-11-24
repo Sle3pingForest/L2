@@ -4,7 +4,7 @@ Decor_gestionnaire::Decor_gestionnaire()
 {
     for (int i = 0; i < nb_decors; ++i)
     {
-        tabDecors[i] = new Decor(rand()%LEVEL_WIDTH, rand()%LEVEL_HEIGHT - LEVEL_HEIGHT, 1, rand()%9);
+        tabDecors[i] = new Decor(100*(i/2), (i%2)*100, 1, i%3);
     }
 }
 

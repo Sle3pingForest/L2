@@ -35,28 +35,21 @@ bool Voiture_gestionnaire::gestion_voitures(int vitesse, SDL_Rect* rectVoitureJo
                 if (collision)
                 {
                     flagCollision = true;
-                    SDL_Rect positionFenetre;
-                    //Calcul du déplacement
-                    positionFenetre.x = (intersect.x * echelle) - camera.x;
-                    positionFenetre.y = (intersect.y * echelle) - camera.y;
-                    //Calcul du redimensionnement
-                    positionFenetre.w = intersect.w * echelle;
-                    positionFenetre.h = intersect.h * echelle;
-                    SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 200);
-                    SDL_RenderFillRect(pRenderer, &positionFenetre);
+
 //                    printf("Colission Voiture %d\n", i);
 //                    SDL_Rect* test = tabVoitures[i]->getRectCollision();
 //                    printf("Voit x:%d y:%d w:%d h:%d\n", test->x, test->y, test->w, test->h);
 //                    printf("inter x:%d y:%d w:%d h:%d\n", intersect.x, intersect.y, intersect.w, intersect.h);
-//                    printf("inter x:%d y:%d w:%d h:%d\n", positionFenetre.x, positionFenetre.y, positionFenetre.w, positionFenetre.h);
+                    
                     if (intersect.x > rectVoitureJoueur->x) {
-                        printf("Droite");
+                        //printf("Droite");
                     }else{
-                        printf("Gauche");
+                        //printf("Gauche");
                     }
                     if (intersect.y == rectVoitureJoueur->y) {
                         tabVoitures[i]->vitesse ++;
                     }
+                    
                 }
             }
         }
