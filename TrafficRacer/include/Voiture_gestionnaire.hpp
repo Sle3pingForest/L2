@@ -14,7 +14,6 @@ using namespace std;
 class Voiture_gestionnaire {
 public:
     Voiture_gestionnaire();
-    virtual ~Voiture_gestionnaire();
 
     bool gestion_voitures(int vitesse, SDL_Rect* rectVoitureJoueur);
     void chargement_voitures_fichier(Route* route);

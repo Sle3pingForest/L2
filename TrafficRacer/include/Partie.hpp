@@ -12,7 +12,7 @@ class Partie
 {
 public:
     Partie();
-    virtual ~Partie();
+    ~Partie();
     void play();
 protected:
 private:

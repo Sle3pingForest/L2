@@ -133,8 +133,3 @@ void Objet::setHeight(int h)
 {
     positionPlateau.h = h;
 }
-
-Objet::~Objet()
-{
-    //dtor
-}

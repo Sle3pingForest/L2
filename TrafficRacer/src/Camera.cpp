@@ -5,11 +5,6 @@ Camera::Camera()
 
 }
 
-Camera::~Camera()
-{
-
-}
-
 void Camera::CameraInit( int vue, Route* route, Objet* plateau)
 {
     if( vue == 0)

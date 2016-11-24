@@ -8,7 +8,6 @@ class Route : public Objet
 public:
     Route();
     Route(int w, int h, int x, int y);
-    virtual ~Route();
 
     int getLargeurVoiePlateau();
     int getLargeurVoieFenetre();

@@ -8,11 +8,6 @@ Timer::Timer()
     pauseTicks = 0;
 }
 
-Timer::~Timer()
-{
-    //dtor
-}
-
 void Timer::start()
 {
     started = true;

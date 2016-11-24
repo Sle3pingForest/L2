@@ -16,6 +16,5 @@ int main(int argc, const char * argv[])
 
     Partie partie;
     partie.play();
-    partie.~Partie();
     return 0;
 }

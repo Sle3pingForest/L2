@@ -2,43 +2,40 @@
 
 Voiture_joueur::Voiture_joueur() : Voiture()
 {
-
+    X_VEL = 0;
+    collision = false;
+    deplacementGauche = false;
+    deplacementDroit = false;
+    accelerer = false;
+    freiner = false;
 }
 
-Voiture_joueur::Voiture_joueur(int voitureType)
+Voiture_joueur::Voiture_joueur(int voitureType) : Voiture_joueur()
 {
     selectVoiture(voitureType);
 }
 
-Voiture_joueur::~Voiture_joueur()
-{
-
-}
-
 void Voiture_joueur::gestionTouches( SDL_Event& event )
 {
-    X_VEL = 0.6 * vitesse;
-    Y_VEL = 1;
-
     //Touches pressées
     if( event.type == SDL_KEYDOWN && event.key.repeat == 0 )
     {
         switch( event.key.keysym.sym )
         {
             case SDLK_LEFT:
-                mVelX -= X_VEL;
+                deplacementGauche = true;
                 break;
 
             case SDLK_RIGHT:
-                mVelX += X_VEL;
+                deplacementDroit = true;
                 break;
 
             case SDLK_UP:
-                mVelY += 1;
+                accelerer = true;
                 break;
 
             case SDLK_DOWN:
-                mVelY -= 1;
+                freiner = true;
                 break;
         }
     }
@@ -49,21 +46,19 @@ void Voiture_joueur::gestionTouches( SDL_Event& event )
         switch( event.key.keysym.sym )
         {
             case SDLK_LEFT:
-                mVelX += X_VEL;
                 deplacementGauche = false;
                 break;
 
             case SDLK_RIGHT:
-                mVelX -= X_VEL;
                 deplacementDroit = false;
                 break;
 
             case SDLK_UP:
-                mVelY -= 1;
+                accelerer = false;
                 break;
-
+                
             case SDLK_DOWN:
-                mVelY += 1;
+                freiner = false;
                 break;
         }
     }
@@ -71,46 +66,51 @@ void Voiture_joueur::gestionTouches( SDL_Event& event )
 
 void Voiture_joueur::deplacer(SDL_Rect* route)
 {
+    X_VEL = 0.125 * vitesse;
+    
     //Déplace la voiture
-    positionPlateau.x  += mVelX;
+    if (deplacementGauche && !collision) {
+        positionPlateau.x  -= X_VEL;
+    }
+    if (deplacementDroit && !collision) {
+        positionPlateau.x  += X_VEL;
+    }
 
     //Si elle est en dehors de la route à gauche
     if( ( positionPlateau.x < route->x ) )
     {
         //On ne déplace pas et on met tout à gauche dans la route
-        positionPlateau.x  -= mVelX;
+        positionPlateau.x  -= X_VEL;
         positionPlateau.x = route->x;
     }
     else if ( (positionPlateau.x + positionPlateau.w) > (route->x + route->w) )
     {
         //On ne déplace pas et on met tout à droite dans la route
-        positionPlateau.x  -= mVelX;
+        positionPlateau.x  -= X_VEL;
         positionPlateau.x = route->x + route->w - positionPlateau.w;
     }
-
-    // Si collision on déplace pas
-    if (collision)
-    {
-        positionPlateau.x  -= mVelX;
-        collision = false;
+    
+    //Gestion de la vitesse
+    if (accelerer) {
+        ++vitesse;
     }
-
-    vitesse += mVelY;
-    // On limite la vitesse [0,25]
-    if (vitesse > 25)
+    if (freiner) {
+        vitesse -= 2;
+    }
+    
+    // On limite la vitesse [0,100]
+    if (vitesse > 100)
     {
-        vitesse = 25;
+        vitesse = 100;
     }
     else if (vitesse < 1)
     {
         vitesse = 1;
     }
-    printf("V:%d X:%d Y:%d\n", vitesse, mVelX, mVelY);
-}
-
-void Voiture_joueur::eventCollision()
-{
-    positionPlateau.x -= mVelX;
-    mVelX = 0;
-    vitesse = 0;
+    
+    if (collision) {
+        vitesse = 10;
+        collision = false;
+    }
+    printf("%d\n",vitesse);
 }

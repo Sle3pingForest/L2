@@ -12,19 +12,6 @@ Voiture_gestionnaire::Voiture_gestionnaire()
     timerChargementFichier.start();
 }
 
-Voiture_gestionnaire::~Voiture_gestionnaire()
-{
-    for (int i = 0; i < nb_voitures_max; ++i)
-    {
-        if (tabVoitures[i] != NULL)
-        {
-            delete tabVoitures[i];
-            tabVoitures[i] = NULL;
-            --nb_voitures;
-        }
-    }
-}
-
 // Gère les déplacements, les suppressions de voitures et renvoie true si collision
 bool Voiture_gestionnaire::gestion_voitures(int vitesse, SDL_Rect* rectVoitureJoueur)
 {
@@ -39,7 +26,7 @@ bool Voiture_gestionnaire::gestion_voitures(int vitesse, SDL_Rect* rectVoitureJo
             {
                 delete tabVoitures[i];
                 tabVoitures[i] = NULL;
-                 --nb_voitures;
+                 nb_voitures--;
             }
             else
             {
@@ -48,11 +35,21 @@ bool Voiture_gestionnaire::gestion_voitures(int vitesse, SDL_Rect* rectVoitureJo
                 if (collision)
                 {
                     flagCollision = true;
+
 //                    printf("Colission Voiture %d\n", i);
 //                    SDL_Rect* test = tabVoitures[i]->getRectCollision();
 //                    printf("Voit x:%d y:%d w:%d h:%d\n", test->x, test->y, test->w, test->h);
-//                    SDL_Rect test2 = intersect;
-//                    printf("inter x:%d y:%d w:%d h:%d\n", test2.x, test2.y, test2.w, test2.h);
+//                    printf("inter x:%d y:%d w:%d h:%d\n", intersect.x, intersect.y, intersect.w, intersect.h);
+                    
+                    if (intersect.x > rectVoitureJoueur->x) {
+                        //printf("Droite");
+                    }else{
+                        //printf("Gauche");
+                    }
+                    if (intersect.y == rectVoitureJoueur->y) {
+                        tabVoitures[i]->vitesse ++;
+                    }
+                    
                 }
             }
         }

@@ -10,7 +10,7 @@ class Joueur
     public:
         Joueur();
         Joueur(string nname);
-        virtual ~Joueur();
+    
         int getScore();
         void setScore(int newScore);
         string getName();
