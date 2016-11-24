@@ -67,6 +67,7 @@ void Voiture_gestionnaire::chargement_voitures_fichier(Route* route)
 {
     //infile.open("autres/niveau2");
     if (timerChargementFichier.getTicks() > 3000)
+    //if(voiture_joueur.getVitesseVoiture() < )
     {
         string line;
         //getline(infile, line);
@@ -137,25 +138,36 @@ void Voiture_gestionnaire::depassement(Route *route)
                         int coteDroV1 = coteGauV1 + tabVoitures[i]->getWidth();
                         int coteGauV2 = tabVoitures[j]->getPosX();
                         int coteDroV2 = coteGauV2 + tabVoitures[j]->getWidth();
-
+                        int coteHautV1 = tabVoitures[i]->getPosY();
+                        int coteBasV1 = coteHautV1 + tabVoitures[i]->getHeight();
+                        int coteHautV2 = tabVoitures[j]->getPosY();
+                        int coteBasV2 = coteHautV2 + tabVoitures[j]->getHeight();
                         // Si la deuxième voiture est devant la première il y a collision
                         if(coteGauV1 >= coteGauV2 && coteGauV1 <= coteDroV2)
                         {
                             collision = true;
-
                         }
                         else if(coteDroV1 >= coteGauV2 && coteDroV1 <= coteDroV2)
                         {
                             collision = true;
                         }
-
+                        else if(coteGauV1 <= coteDroV2 && coteHautV1 >= coteBasV2 && coteHautV1 <= coteHautV2)
+                        {
+                            collision = true;
+                        }
+                        else if(coteGauV1 <= coteDroV2 && coteBasV1 >= coteBasV2 && coteBasV1 <= coteHautV2)
+                        {
+                            collision = true;
+                        }
                         // La voiture double par la gauche ou ralentit si on est dans la première voie
                         if(collision )
                         {
                            if(tabVoitures[i]->getPosX() < route->getPosX() + route->getLargeurVoiePlateau())
                             {
                                 if(tabVoitures[i]->getVitesseVoiture() > tabVoitures[j]->getVitesseVoiture())
-                                tabVoitures[i]->setVitesseVoiture(tabVoitures[i]->getVitesseVoiture() - 1);
+                                {
+                                    tabVoitures[i]->setVitesseVoiture(tabVoitures[i]->getVitesseVoiture() - 1);
+                                }
                             }
                             else
                             {

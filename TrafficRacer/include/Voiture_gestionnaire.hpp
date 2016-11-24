@@ -6,6 +6,7 @@
 #include "Voiture.hpp"
 #include "Timer.hpp"
 #include "Route.hpp"
+#include "Voiture_joueur.hpp"
 
 using namespace std;
 
@@ -26,6 +27,7 @@ private:
     int nb_voitures;
     Voiture* tabVoitures[nb_voitures_max];
     Timer timerChargementFichier;
+    Voiture_joueur voiture_joueur;
 
 };
 
