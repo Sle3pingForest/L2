@@ -6,15 +6,15 @@
 //  Copyright © 2016 Arnaud. All rights reserved.
 //
 
-#include "Partie.hpp"
-#include "Joueur.hpp"
+#include "Menu.hpp"
 
 int main(int argc, const char * argv[])
 {
-    //Joueur joueur;
-    //joueur.setName();
-
-    Partie partie;
-    partie.play();
+    Menu menu;
+    if (!menu.InitSDL()) {
+        return -1;
+    }
+    menu.boucle();
     return 0;
+    
 }

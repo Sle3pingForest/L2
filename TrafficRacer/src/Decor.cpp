@@ -1,5 +1,4 @@
 #include "Decor.hpp"
-using namespace std;
 
 Decor::Decor() : Objet()
 {

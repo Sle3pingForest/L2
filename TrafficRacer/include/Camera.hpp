@@ -1,7 +1,7 @@
 #ifndef Camera_hpp
 #define Camera_hpp
 
-#include "SDL_Tools.hpp"
+#include "Constantes.hpp"
 #include "Objet.hpp"
 #include "Route.hpp"
 
@@ -19,6 +19,7 @@ public:
     void calculerEchelle();
 protected:
 private:
+    SDL_Rect camera;
 };
 
 #endif /* Camera_hpp */

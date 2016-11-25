@@ -13,21 +13,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <SDL2/SDL.h>
-
-//Variables globlales taille de la fenêtre
-extern int SCREEN_WIDTH;
-extern int SCREEN_HEIGHT;
-extern int SCREEN_FPS;
-
-extern int LEVEL_HEIGHT;
-extern int LEVEL_WIDTH;
-
-extern SDL_Rect camera;
-extern float echelle;
-
-//Variables globales pour rendu SDL
-extern SDL_Window *pWindow;
-extern SDL_Renderer *pRenderer;
+#include "Constantes.hpp"
 
 //Fonction liées à SDL
 bool InitSDLEverything();

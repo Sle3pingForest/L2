@@ -1,7 +1,7 @@
 #ifndef Objet_hpp
 #define Objet_hpp
 
-#include "SDL_Tools.hpp"
+#include "Constantes.hpp"
 
 class Objet
 {

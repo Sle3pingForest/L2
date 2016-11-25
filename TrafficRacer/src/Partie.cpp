@@ -1,22 +1,13 @@
 #include "Partie.hpp"
 
-SDL_Window *pWindow =NULL;
-SDL_Renderer *pRenderer = NULL;
-
-int SCREEN_WIDTH = 700;
-int SCREEN_HEIGHT = 700;
-int SCREEN_FPS = 60;
-
-int LEVEL_WIDTH = 2000;
-int LEVEL_HEIGHT = 1200;
+const int LEVEL_WIDTH = 2000;
+const int LEVEL_HEIGHT = 1200;
 
 SDL_Rect camera;
 float echelle;
 
 Partie::Partie()
 {
-    InitSDLEverything();
-
     jouer = true;
     pause = false;
 
@@ -43,14 +34,6 @@ Partie::Partie()
     voitureJoueur.vitesse = 10;
 
     distance_parcourue = 0;
-}
-
-Partie::~Partie()
-{
-    //dtor
-    SDL_DestroyRenderer(pRenderer);
-    SDL_DestroyWindow(pWindow);
-    SDL_Quit();
 }
 
 void Partie::play()
@@ -225,4 +208,26 @@ void Partie::afficher()
     SDL_RenderPresent(pRenderer);
 
     FPS++;
+}
+
+SDL_Texture* Partie::LoadBmpWithTransparency(const char* emplacement, Uint8 redTransparency, Uint8 greenTransparency, Uint8 blueTransparency)
+{
+    SDL_Surface *loadedImage = NULL;
+    SDL_Texture *texture = NULL;
+    
+    loadedImage = SDL_LoadBMP(emplacement);
+    
+    if(loadedImage != NULL)
+    {
+        Uint32 colorkey = SDL_MapRGB( loadedImage->format, redTransparency, greenTransparency, blueTransparency);
+        SDL_SetColorKey(loadedImage, SDL_TRUE, colorkey);
+        texture = SDL_CreateTextureFromSurface(pRenderer, loadedImage);
+        SDL_FreeSurface(loadedImage);
+        return texture;
+    }
+    else
+    {
+        fprintf(stderr, "Échec du chargement de l'image: %s\n", SDL_GetError());
+        return NULL;
+    }
 }

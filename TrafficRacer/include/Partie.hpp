@@ -1,18 +1,18 @@
 #ifndef Partie_hpp
 #define Partie_hpp
 
+#include "Constantes.hpp"
+#include "Timer.hpp"
+#include "Camera.hpp"
+#include "Route.hpp"
 #include "Decor_gestionnaire.hpp"
 #include "Voiture_gestionnaire.hpp"
 #include "Voiture_joueur.hpp"
-#include "Route.hpp"
-#include "Timer.hpp"
-#include "Camera.hpp"
 
 class Partie
 {
 public:
     Partie();
-    ~Partie();
     void play();
 protected:
 private:
@@ -41,6 +41,9 @@ private:
     void gestion_touches();
     void afficher();
     void deplacements();
+    
+    SDL_Texture* LoadBmpWithTransparency(const char* emplacement, Uint8 redTransparency, Uint8 greenTransparency, Uint8 blueTransparency);
+
 };
 
 #endif /* Partie_hpp */

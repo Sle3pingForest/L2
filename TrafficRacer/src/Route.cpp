@@ -1,7 +1,5 @@
 #include "Route.hpp"
 
-using namespace std;
-
 Route::Route()
 {
     positionPlateau.w = LEVEL_WIDTH * 0.25;
