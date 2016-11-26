@@ -2,6 +2,8 @@
 #define Joueur_hpp
 #include <fstream>
 #include <iostream>
+#include <algorithm>
+#include <list>
 
 using namespace std;
 
@@ -10,15 +12,17 @@ class Joueur
     public:
         Joueur();
         Joueur(string nname);
-    
-        int getScore();
+
+        void getScore();
         void setScore(int newScore);
         string getName();
         void setName();
+        void gestion_score(int newscore);
     protected:
     private:
         string playerName;
-        int playerScore = 0;
+        int playerScore;
+        int tab_score[5] = {};
 };
 
 
