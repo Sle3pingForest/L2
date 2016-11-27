@@ -19,7 +19,6 @@ public:
     void calculerEchelle();
 protected:
 private:
-    SDL_Rect camera;
 };
 
 #endif /* Camera_hpp */

@@ -109,6 +109,10 @@ void Voiture::avancer(int vitesseJeu)
     positionPlateau.y += vitesseJeu - (vitesse);
 }
 
+void Voiture::freiner(int intensite) {
+    vitesse -= intensite;
+}
+
 SDL_Rect* Voiture::getRectCollision()
 {
     calculerRectCollision();

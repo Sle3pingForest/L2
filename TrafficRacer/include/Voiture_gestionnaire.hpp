@@ -13,22 +13,31 @@ using namespace std;
 class Voiture_gestionnaire {
 public:
     Voiture_gestionnaire();
+    ~Voiture_gestionnaire();
 
     bool gestion_voitures(int vitesse, SDL_Rect* rectVoitureJoueur);
-    void chargement_voitures_fichier(Route* route, int distance_parcourue);
     void afficherVoitures(SDL_Texture* carsTexture);
     void depassement(Route *route);
+    void MegaFonction(int vitesse, SDL_Rect* rectVoitureJoueur);
+    void chargement(Route* route, int distance_parcourue);
 
 private:
     static const int nb_voitures_max = 10;
-    int nb_voitures_Voie[4];
     Voiture* tabVoitures[4][nb_voitures_max];
 
     int posVoitureTete;
+    
+    int niveau;
+    void chargement_voitures_fichier(Route* route, int distance_parcourue);
+    void chargement_aleatoire(Route* route, int distance_parcourue);
 
-    Timer timerChargementFichier;
 
+    std::ifstream fichier;
+    bool isDead(int i, int j);
+    void checkVoitTete(int i, int j);
+    bool depassementNEW(int i, int j);
     void changementVoieGauche(int i, int j);
+    SDL_bool collisionVoitJoueur(int i, int j, SDL_Rect* rectVoitureJoueur);
 
 };
 

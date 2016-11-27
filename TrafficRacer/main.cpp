@@ -11,10 +11,10 @@
 int main(int argc, const char * argv[])
 {
     Menu menu;
-    if (!menu.InitSDL()) {
+    if (!menu.InitSDL())
         return -1;
-    }
-    menu.boucle();
+    else
+        menu.boucle();
     return 0;
     
 }

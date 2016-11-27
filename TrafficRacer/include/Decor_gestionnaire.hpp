@@ -7,6 +7,7 @@
 class Decor_gestionnaire {
 public:
     Decor_gestionnaire();
+    ~Decor_gestionnaire();
     
     void gestion(int vitesse);
     void afficherDecors(SDL_Texture* decorTexture);

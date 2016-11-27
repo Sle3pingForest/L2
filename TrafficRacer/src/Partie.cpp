@@ -118,28 +118,24 @@ void Partie::gestion_touches()
 
 void Partie::deplacements()
 {
-    if (/*timerDeplacement.getTicks() > 200 and*/ not pause) // changer ce compteur
+    if (not pause)
     {
         distance_parcourue = (voitureJoueur.vitesse * timerDeplacement.getTicks())/100;
-
         int vitesse = voitureJoueur.vitesse / (SCREEN_FPS*0.0625); // Permet d'avoir un vitesse constante quelque soit les FPS
-        //Déplacement de la route
+        
         route.deplacer(vitesse);
 
-        //Déplacement des décors
         decor_gestionnaire.gestion(vitesse);
-
-        //Déplacement des voitures
-        voiture_gestionnaire.chargement_voitures_fichier(&route, distance_parcourue);
-        voiture_gestionnaire.depassement(&route);
-        if ( voiture_gestionnaire.gestion_voitures(vitesse, voitureJoueur.getObjet()) )
-        {
-            voitureJoueur.collision = true;
-        }
+        
+        voiture_gestionnaire.chargement(&route, distance_parcourue);
+        voiture_gestionnaire.MegaFonction(vitesse, voitureJoueur.getObjet());
+        
+//        if ( voiture_gestionnaire.gestion_voitures(vitesse, voitureJoueur.getObjet()) )
+//        {
+//            voitureJoueur.collision = true;
+//        }
 
         voitureJoueur.deplacer(route.getObjet());
-
-        //timerDeplacement.start();
     }
 }
 
@@ -194,8 +190,7 @@ void Partie::afficher()
 //    testVoiture.afficherRectObjet();
 //    testVoiture.afficher(carsTexture);
 
-    if (pause)
-    {
+    if (pause) {
         SDL_Rect pause;
         pause.w = SCREEN_WIDTH*0.5;
         pause.h = pause.w;
@@ -217,16 +212,14 @@ SDL_Texture* Partie::LoadBmpWithTransparency(const char* emplacement, Uint8 redT
     
     loadedImage = SDL_LoadBMP(emplacement);
     
-    if(loadedImage != NULL)
-    {
+    if(loadedImage != NULL) {
         Uint32 colorkey = SDL_MapRGB( loadedImage->format, redTransparency, greenTransparency, blueTransparency);
         SDL_SetColorKey(loadedImage, SDL_TRUE, colorkey);
         texture = SDL_CreateTextureFromSurface(pRenderer, loadedImage);
         SDL_FreeSurface(loadedImage);
         return texture;
     }
-    else
-    {
+    else {
         fprintf(stderr, "Échec du chargement de l'image: %s\n", SDL_GetError());
         return NULL;
     }

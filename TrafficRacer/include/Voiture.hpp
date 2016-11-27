@@ -17,6 +17,7 @@ public:
     void calculerRectCollision();
     int getVitesseVoiture();
     void setVitesseVoiture( int newVitesse);
+    void freiner(int intensite);
     SDL_Rect* getRectCollision();
     int vitesse;
 protected:

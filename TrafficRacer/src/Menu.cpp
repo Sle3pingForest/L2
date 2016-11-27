@@ -117,9 +117,13 @@ void Menu::affichage()
 void Menu::execute()
 {
     if(choix == 1) {
-        Partie partie;
-        partie.play();
+        Partie* pPartie;
+        pPartie = new Partie;
+        pPartie->play();
+        delete pPartie;
+        pPartie = NULL;
         affichage();
+        //quit = true;
     }
     else if(choix == 2)
         quit = true;
