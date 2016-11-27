@@ -16,5 +16,4 @@ int main(int argc, const char * argv[])
     else
         menu.boucle();
     return 0;
-    
 }
