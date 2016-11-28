@@ -36,19 +36,7 @@ Partie::Partie()
     distance_parcourue = 0;
 }
 
-<<<<<<< HEAD
-void Partie::play()
-=======
-Partie::~Partie()
-{
-    //dtor
-    SDL_DestroyRenderer(pRenderer);
-    SDL_DestroyWindow(pWindow);
-    SDL_Quit();
-}
-
 int Partie::play()
->>>>>>> c5892eaf1bdbc6875d694b1b708f13f732d54f52
 {
     while (jouer) {
         Uint32 startTicks = SDL_GetTicks();
@@ -66,7 +54,7 @@ int Partie::play()
         }
     }
     //player.setScore(distance_parcourue/1000);
-    return deplacements()/1000;
+    return distance_parcourue/1000;
 }
 
 void Partie::gestion_touches()
@@ -121,7 +109,7 @@ void Partie::gestion_touches()
     }
 }
 
-int Partie::deplacements()
+void Partie::deplacements()
 {
     if (not pause) {
         distance_parcourue = (voitureJoueur.vitesse * timerDeplacement.getTicks())/100;
@@ -138,7 +126,6 @@ int Partie::deplacements()
         }
         voitureJoueur.deplacer(route.getObjet());
     }
-    return distance_parcourue;
 }
 
 void Partie::afficher()

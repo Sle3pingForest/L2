@@ -5,6 +5,7 @@
 #include "Joueur.hpp"
 #include "Constantes.hpp"
 
+
 class Menu
 {
 public:
@@ -27,7 +28,7 @@ private:
     
     SDL_Texture* LoadBmpWithTransparency(const char* emplacement, Uint8 redTransparency, Uint8 greenTransparency, Uint8 blueTransparency);
     void chargementsImages();
-    void afficherChiffre(int chiffre, int HauteurPolice, int PosX, int PosY);
+    void afficherChiffre(char chiffre, int HauteurPolice, int PosX, int PosY);
     
     void afficherNombre(int nombre, int HauteurPolice, int PosX, int PosY);
 

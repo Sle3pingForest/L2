@@ -132,7 +132,6 @@ void Menu::affichage()
         SDL_RenderCopy(pRenderer, logoTexture, NULL, &logo);
     }
     SDL_RenderPresent(pRenderer);
-
 }
 
 void Menu::execute()
@@ -140,6 +139,7 @@ void Menu::execute()
     if(choix == 1) {
         Partie* pPartie;
         pPartie = new Partie;
+        //int score =
         pPartie->play();
         delete pPartie;
         pPartie = NULL;
@@ -154,18 +154,23 @@ void Menu::execute()
 
 void Menu::affichageScore()
 {
-    int PosX = 500;
-    int PosY =0;
-    int i = 0;
+    int j = 0;
     std::ifstream fichier;
     fichier.open("autres/score", ios::in);
     string line;
-    int tabBestScore[5] = {0};
+    int PosY = 0;
     while(getline(fichier, line)) {
-        int temp = stoi(line);
-        afficherNombre(temp, 44, PosX, PosY+(i*120));
-        i++;
+        cout<<"ligne :"<<line<<endl;
+        int PosX = 0;
+        while (line[j] != '\0') {
+            printf("%c", line[j]);
+            afficherChiffre(line[j], 120, PosX, PosY);
+            PosX += 100;
+            j++;
         }
+        printf("\n");
+        PosY += 130;
+    }
     fichier.close();
     SDL_RenderPresent(pRenderer);
 }
@@ -192,7 +197,8 @@ SDL_Texture* Menu::LoadBmpWithTransparency(const char* emplacement, Uint8 redTra
     }
 }
 
-void Menu::afficherChiffre(int chiffre, int HauteurPolice, int PosX, int PosY) {
+void Menu::afficherChiffre(char chiffre, int HauteurPolice, int PosX, int PosY) {
+    int intChiffre = chiffre - 48;
     SDL_Rect dest;
     dest.x = PosX;
     dest.y = PosY;
@@ -203,7 +209,7 @@ void Menu::afficherChiffre(int chiffre, int HauteurPolice, int PosX, int PosY) {
     selection.y = 0;
     selection.w = 90;
     selection.h = 144;
-    selection.x = (chiffre * 91) + chiffre;
+    selection.x = (intChiffre * 91) + intChiffre;
     
     SDL_RenderCopy(pRenderer, scoreTexture, &selection, &dest);
 }
