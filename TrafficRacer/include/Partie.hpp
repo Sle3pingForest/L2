@@ -7,13 +7,16 @@
 #include "Route.hpp"
 #include "Timer.hpp"
 #include "Camera.hpp"
+#include "Joueur.hpp"
+
 
 class Partie
 {
 public:
     Partie();
     ~Partie();
-    void play();
+    int play();
+
 protected:
 private:
     bool jouer;
@@ -27,6 +30,7 @@ private:
     SDL_Texture* routeTexture;
     SDL_Texture* pauseTexture;
 
+    Joueur player;
     Objet plateau;
     Camera camera;
     Route route;
@@ -40,7 +44,7 @@ private:
 
     void gestion_touches();
     void afficher();
-    void deplacements();
+    int deplacements();
 };
 
 #endif /* Partie_hpp */

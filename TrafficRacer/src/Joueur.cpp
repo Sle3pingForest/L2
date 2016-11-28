@@ -24,7 +24,6 @@ string Joueur::getName()
 void Joueur::setName()
 {
     string newName;
-    string line;
     cout << "Please!!! Enter a player Name " << endl;
     cin >> newName ;
     playerFile<<newName + ": 0" + '\n';
@@ -58,7 +57,7 @@ void Joueur::getScore()
             int value = atoi(score_line.c_str());
             gestion_score(value);
         }
-        playerFile.close();
+        //playerFile.close();
     }
     sort(tab_score, tab_score +5);
     for(int i = 4; i >= 0 ; --i)
@@ -69,5 +68,8 @@ void Joueur::getScore()
 
 void Joueur::setScore( int newScore)
 {
+    playerFile<<newScore +'\n';
+    cout<<"Score Finale "<< newScore<< endl;
+    playerFile.close();
     playerScore = newScore;
 }

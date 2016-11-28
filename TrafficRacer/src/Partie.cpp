@@ -53,7 +53,7 @@ Partie::~Partie()
     SDL_Quit();
 }
 
-void Partie::play()
+int Partie::play()
 {
     while (jouer)
     {
@@ -72,6 +72,8 @@ void Partie::play()
             SDL_Delay(reste);
         }
     }
+    //player.setScore(distance_parcourue/1000);
+    return deplacements()/1000;
 }
 
 void Partie::gestion_touches()
@@ -133,7 +135,7 @@ void Partie::gestion_touches()
     }
 }
 
-void Partie::deplacements()
+int Partie::deplacements()
 {
     if (/*timerDeplacement.getTicks() > 200 and*/ not pause) // changer ce compteur
     {
@@ -158,6 +160,7 @@ void Partie::deplacements()
 
         //timerDeplacement.start();
     }
+    return distance_parcourue;
 }
 
 void Partie::afficher()

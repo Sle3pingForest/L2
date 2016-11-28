@@ -11,10 +11,12 @@
 
 int main(int argc, const char * argv[])
 {
+
     Joueur joueur;
-    joueur.getScore();
+    //joueur.getScore();
 
     Partie partie;
-    partie.play();
+    cout<<"yolo--------:" << partie.play()<<endl;
+    joueur.setScore(partie.play());
     return 0;
 }
