@@ -72,7 +72,7 @@ bool Voiture_gestionnaire::gestion_voitures(int vitesse, SDL_Rect* rectVoitureJo
 void Voiture_gestionnaire::chargement_voitures_fichier(Route* route, int distance_parcourue)
 {
     static int nbChargements = 0;
-    if (distance_parcourue > 4000*nbChargements && posVoitureTete > -500)
+    if (distance_parcourue > 3000*nbChargements && posVoitureTete > -500)
     {
         string line;
         fichier >> line;
@@ -131,7 +131,7 @@ void Voiture_gestionnaire::depassement(Route *route)
 {
     for( int i = 0; i < 4; i++)
     {
-        if(nb_voitures_Voie[i] > 1)
+        if(nb_voitures_Voie[i] > 0)
         {
             for( int j = 0; j < nb_voitures_max; j++)
             {
@@ -173,11 +173,11 @@ void Voiture_gestionnaire::depassement(Route *route)
                             // La voiture double par la gauche ou ralentit si on est dans la première voie
                             if(collision )
                             {
-                                if(tabVoitures[i][j]->getPosX() < route->getPosX() + route->getLargeurVoiePlateau())
+                                if(tabVoitures[i][j]->getPosX() < route->getPosX())
                                 {
                                     if(tabVoitures[i][j]->getVitesseVoiture() > tabVoitures[i][k]->getVitesseVoiture())
                                     {
-                                        tabVoitures[i][j]->setVitesseVoiture(tabVoitures[i][j]->getVitesseVoiture() - 1);//ralenti voie 0
+                                        tabVoitures[i][j]->setVitesseVoiture(tabVoitures[i][j]->getVitesseVoiture()- 1);//ralenti voie 0
                                     }
                                 }
                                 else  //Dépassement à gauche

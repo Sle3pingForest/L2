@@ -75,7 +75,7 @@
 1475757605 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/drawing.hpp
 	"Header.hpp"
 
-1479391455 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/main.cpp
+1480316705 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/main.cpp
 	"Partie.hpp"
 	"Joueur.hpp"
 
@@ -88,22 +88,23 @@
 1475152921 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Decor.h
 	<SDL2/SDL.h>
 
-1479390432 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Joueur.cpp
+1480316705 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Joueur.cpp
 	"Joueur.hpp"
+	<string>
 
 1474871262 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Joueur.h
 
-1479393534 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Voiture.cpp
+1480316705 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Voiture.cpp
 	"Voiture.hpp"
 	"Route.hpp"
 
 1475757038 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Voiture.h
 	<SDL2/SDL.h>
 
-1479107027 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Decor.cpp
+1479995127 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Decor.cpp
 	"Decor.hpp"
 
-1479113554 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Decor.hpp
+1479995127 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Decor.hpp
 	"Objet.hpp"
 
 1479994459 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Decor.hpp
@@ -112,7 +113,7 @@
 1475755277 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Partie.h
 	"Voiture.h"
 
-1479395008 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Partie.cpp
+1480316705 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Partie.cpp
 	"Partie.hpp"
 
 1475758145 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Header.hpp
@@ -122,7 +123,7 @@
 	<string>
 	<SDL2/SDL.h>
 
-1479390516 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Partie.hpp
+1479996464 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Partie.hpp
 	"Decor_gestionnaire.hpp"
 	"Voiture_gestionnaire.hpp"
 	"Voiture_joueur.hpp"
@@ -130,19 +131,21 @@
 	"Timer.hpp"
 	"Camera.hpp"
 
-1479393603 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Voiture.hpp
+1480316705 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Voiture.hpp
 	"Objet.hpp"
 	"Route.hpp"
 
-1479113554 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Route.hpp
+1479995127 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Route.hpp
 	"Objet.hpp"
 
-1478680228 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Route.cpp
+1479995127 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Route.cpp
 	"Route.hpp"
 
-1479388346 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Joueur.hpp
+1480316705 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Joueur.hpp
 	<fstream>
 	<iostream>
+	<algorithm>
+	<list>
 
 1479994459 /home/profil/scheffle5u/Espace-Etudiant/Projet/L2/TrafficRacer/include/Route.hpp
 	"Objet.hpp"
@@ -306,7 +309,7 @@
 
 1478775035 D
 
-1479113554 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Objet.hpp
+1479995127 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Objet.hpp
 	"SDL_Tools.hpp"
 
 1478674859 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/SDL_Tools.hpp
@@ -315,41 +318,41 @@
 	<iostream>
 	<SDL2/SDL.h>
 
-1478674859 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Decor_gestionnaire.cpp
+1479995127 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Decor_gestionnaire.cpp
 	"Decor_gestionnaire.hpp"
 
-1478674859 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Decor_gestionnaire.hpp
+1479995127 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Decor_gestionnaire.hpp
 	<stdio.h>
 	"Decor.hpp"
 
-1479107027 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Objet.cpp
+1479995127 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Objet.cpp
 	"Objet.hpp"
 
-1479395008 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Voiture_gestionnaire.hpp
+1480316705 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Voiture_gestionnaire.hpp
 	<stdio.h>
 	<fstream>
 	"Voiture.hpp"
 	"Timer.hpp"
 	"Route.hpp"
 
-1479113554 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Timer.hpp
+1479995127 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Timer.hpp
 	<stdint.h>
 	<SDL2/SDL.h>
 
-1479391429 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Voiture_joueur.hpp
+1479995127 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Voiture_joueur.hpp
 	<stdio.h>
 	"Voiture.hpp"
 
-1478674859 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/SDL_Tools.cpp
+1479995127 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/SDL_Tools.cpp
 	"SDL_Tools.hpp"
 
-1476689166 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Timer.cpp
+1479995127 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Timer.cpp
 	"Timer.hpp"
 
-1479391429 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Voiture_joueur.cpp
+1480316706 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Voiture_joueur.cpp
 	"Voiture_joueur.hpp"
 
-1479396603 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Voiture_gestionnaire.cpp
+1480317003 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Voiture_gestionnaire.cpp
 	"Voiture_gestionnaire.hpp"
 
 1479108965 estionnaire.hpp"
@@ -364,11 +367,11 @@
 
 1479112247 5c1c119a82bfe1a68fa056b255fe3b2aba6ab
 
-1479113554 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Camera.hpp
+1479995127 /home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/include/Camera.hpp
 	"SDL_Tools.hpp"
 	"Objet.hpp"
 	"Route.hpp"
 
-1479113554 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Camera.cpp
+1479995127 source:/home/profil/ly25u/Bureau/Project C++/L2/TrafficRacer/src/Camera.cpp
 	"Camera.hpp"
 
