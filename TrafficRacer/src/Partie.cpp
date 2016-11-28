@@ -38,14 +38,12 @@ Partie::Partie()
 
 void Partie::play()
 {
-    while (jouer)
-    {
+    while (jouer) {
         Uint32 startTicks = SDL_GetTicks();
         gestion_touches();
         deplacements();
         afficher();
-        if(timerAfficherFPS.getTicks() >= 1000)
-        {
+        if(timerAfficherFPS.getTicks() >= 1000) {
             //printf("FPS : %d\n", FPS);
             FPS = 0;
             timerAfficherFPS.start();
@@ -60,20 +58,15 @@ void Partie::play()
 void Partie::gestion_touches()
 {
     SDL_Event event;
-    while( SDL_PollEvent( &event ) != 0 )
-    {
+    while( SDL_PollEvent( &event ) != 0 ) {
         //Fermer la fenêtre
-        if(event.type == SDL_QUIT)
-        {
+        if(event.type == SDL_QUIT) {
             jouer = false;
-
         }
 
         //Evenements de fenêtre
-        if(event.type == SDL_WINDOWEVENT)
-        {
-            switch (event.window.event)
-            {
+        if(event.type == SDL_WINDOWEVENT) {
+            switch (event.window.event) {
             case SDL_WINDOWEVENT_SIZE_CHANGED:
                 SCREEN_WIDTH = event.window.data1;
                 SCREEN_HEIGHT = event.window.data2;
@@ -95,10 +88,8 @@ void Partie::gestion_touches()
         camera.gestionTouches(event, &route, &plateau);
 
         // Les autres touches
-        if( event.type == SDL_KEYDOWN && event.key.repeat == 0 )
-        {
-            switch( event.key.keysym.sym )
-            {
+        if( event.type == SDL_KEYDOWN && event.key.repeat == 0 ) {
+            switch( event.key.keysym.sym ) {
                 case 'p':
                     if(pause)
                         pause = false;
@@ -118,23 +109,19 @@ void Partie::gestion_touches()
 
 void Partie::deplacements()
 {
-    if (not pause)
-    {
+    if (not pause) {
         distance_parcourue = (voitureJoueur.vitesse * timerDeplacement.getTicks())/100;
-        int vitesse = voitureJoueur.vitesse / (SCREEN_FPS*0.0625); // Permet d'avoir un vitesse constante quelque soit les FPS
+        int vitesse = voitureJoueur.vitesse / (SCREEN_FPS * 0.0625); // Permet d'avoir un vitesse constante quelque soit les FPS
         
         route.deplacer(vitesse);
 
         decor_gestionnaire.gestion(vitesse);
         
         voiture_gestionnaire.chargement(&route, distance_parcourue);
-        voiture_gestionnaire.MegaFonction(vitesse, voitureJoueur.getObjet());
         
-//        if ( voiture_gestionnaire.gestion_voitures(vitesse, voitureJoueur.getObjet()) )
-//        {
-//            voitureJoueur.collision = true;
-//        }
-
+        if ( voiture_gestionnaire.gestion(vitesse, voitureJoueur.getObjet())) {
+            voitureJoueur.collision = true;
+        }
         voitureJoueur.deplacer(route.getObjet());
     }
 }

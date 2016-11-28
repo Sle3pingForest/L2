@@ -77,14 +77,12 @@ void Voiture_joueur::deplacer(SDL_Rect* route)
     }
 
     //Si elle est en dehors de la route à gauche
-    if( ( positionPlateau.x < route->x ) )
-    {
+    if( ( positionPlateau.x < route->x ) ) {
         //On ne déplace pas et on met tout à gauche dans la route
         positionPlateau.x  -= X_VEL;
         positionPlateau.x = route->x;
     }
-    else if ( (positionPlateau.x + positionPlateau.w) > (route->x + route->w) )
-    {
+    else if ( (positionPlateau.x + positionPlateau.w) > (route->x + route->w) ) {
         //On ne déplace pas et on met tout à droite dans la route
         positionPlateau.x  -= X_VEL;
         positionPlateau.x = route->x + route->w - positionPlateau.w;
@@ -92,19 +90,16 @@ void Voiture_joueur::deplacer(SDL_Rect* route)
 
     //Gestion de la vitesse
     if (accelerer) {
-        ++vitesse;
+        vitesse++;
     }
     if (freiner) {
         vitesse -= 2;
     }
 
     // On limite la vitesse [0,100]
-    if (vitesse > 100)
-    {
+    if (vitesse > 100) {
         vitesse = 100;
-    }
-    else if (vitesse < 20)
-    {
+    } else if (vitesse < 20) {
         vitesse = 20;
     }
 

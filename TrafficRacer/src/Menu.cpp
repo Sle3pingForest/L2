@@ -1,7 +1,5 @@
 #include "Menu.hpp"
 
-/* Jouer High score Quitter*/
-
 SDL_Window *pWindow =NULL;
 SDL_Renderer *pRenderer = NULL;
 
@@ -22,6 +20,11 @@ Menu::~Menu()
     SDL_Quit();
 }
 
+void Menu::chargementsImages() {
+    logoTexture = LoadBmpWithTransparency("autres/images/logo.bmp", 0, 255, 255);
+    scoreTexture = LoadBmpWithTransparency("autres/images/number.bmp", 0, 255, 0);
+}
+
 bool Menu::InitSDL()
 {
     if (SDL_Init(SDL_INIT_VIDEO) != 0 ) {
@@ -38,11 +41,13 @@ bool Menu::InitSDL()
         fprintf(stderr, "Échec de la création du rendu: %s\n", SDL_GetError());
         return false;
     }
+    SDL_SetRenderDrawBlendMode(pRenderer, SDL_BLENDMODE_BLEND);
     return true;
 }
 
 void Menu::boucle()
 {
+    chargementsImages();
     affichage();
     while (!quit) {
         gestion_touches();
@@ -103,15 +108,31 @@ void Menu::affichage()
 {
     SDL_SetRenderDrawColor(pRenderer, 40, 40, 40, 255);
     SDL_RenderClear(pRenderer);
-    SDL_Rect Test = {0,0,100,100};
-    if(choix == 1)
-        SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 255);
-    else if(choix == 2)
-        SDL_SetRenderDrawColor(pRenderer, 0, 255, 0, 255);
-    else
-        SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 255);
-    SDL_RenderFillRect(pRenderer, &Test);
+    
+    SDL_Rect logo;
+    logo.w = SCREEN_WIDTH*0.8;
+    if(logo.w > 900){
+        logo.w = 900;
+    }
+    logo.h = logo.w / 4.3;
+    logo.x = (SCREEN_WIDTH - logo.w) / 2;
+    logo.y = SCREEN_HEIGHT * 0.1;
+    SDL_RenderCopy(pRenderer, logoTexture, NULL, &logo);
+    
+    if(choix == 1) {
+        logo.y += logo.h;
+        SDL_RenderCopy(pRenderer, logoTexture, NULL, &logo);
+    }
+    else if(choix == 2) {
+        logo.y += 2 * logo.h;
+        SDL_RenderCopy(pRenderer, logoTexture, NULL, &logo);
+    }
+    else {
+        logo.y += 3 * logo.h;
+        SDL_RenderCopy(pRenderer, logoTexture, NULL, &logo);
+    }
     SDL_RenderPresent(pRenderer);
+
 }
 
 void Menu::execute()
@@ -123,10 +144,81 @@ void Menu::execute()
         delete pPartie;
         pPartie = NULL;
         affichage();
-        //quit = true;
     }
-    else if(choix == 2)
-        quit = true;
+    else if(choix == 2) {
+        affichageScore();
+    }
     else
         quit = true;
+}
+
+void Menu::affichageScore()
+{
+    int PosX = 500;
+    int PosY =0;
+    int i = 0;
+    std::ifstream fichier;
+    fichier.open("autres/score", ios::in);
+    string line;
+    int tabBestScore[5] = {0};
+    while(getline(fichier, line)) {
+        int temp = stoi(line);
+        afficherNombre(temp, 44, PosX, PosY+(i*120));
+        i++;
+        }
+    fichier.close();
+    SDL_RenderPresent(pRenderer);
+}
+
+SDL_Texture* Menu::LoadBmpWithTransparency(const char* emplacement, Uint8 redTransparency, Uint8 greenTransparency, Uint8 blueTransparency)
+{
+    SDL_Surface *loadedImage = NULL;
+    SDL_Texture *texture = NULL;
+    
+    loadedImage = SDL_LoadBMP(emplacement);
+    
+    if(loadedImage != NULL) {
+        Uint32 colorkey = SDL_MapRGB( loadedImage->format, redTransparency, greenTransparency, blueTransparency);
+        SDL_SetColorKey(loadedImage, SDL_TRUE, colorkey);
+        texture = SDL_CreateTextureFromSurface(pRenderer, loadedImage);
+        if(texture == NULL) {
+            fprintf(stderr, "Échec de la création de la texture de l'image: %s\n", SDL_GetError());
+        }
+        SDL_FreeSurface(loadedImage);
+        return texture;
+    } else {
+        fprintf(stderr, "Échec du chargement de l'image: %s\n", SDL_GetError());
+        return NULL;
+    }
+}
+
+void Menu::afficherChiffre(int chiffre, int HauteurPolice, int PosX, int PosY) {
+    SDL_Rect dest;
+    dest.x = PosX;
+    dest.y = PosY;
+    dest.h = HauteurPolice;
+    dest.w = HauteurPolice / 1.6;
+    
+    SDL_Rect selection;
+    selection.y = 0;
+    selection.w = 90;
+    selection.h = 144;
+    selection.x = (chiffre * 91) + chiffre;
+    
+    SDL_RenderCopy(pRenderer, scoreTexture, &selection, &dest);
+}
+
+void Menu::afficherNombre(int nombre, int HauteurPolice, int PosX, int PosY) {
+    int unite = nombre % 10;
+    int dizaine = nombre / 10 % 10;
+    int centaine = nombre / 100 % 10;
+    int milier = nombre / 1000 % 10;
+    
+    int largeur = HauteurPolice / 1.6;
+    
+    afficherChiffre(milier,HauteurPolice,PosX,PosY);
+    afficherChiffre(centaine,HauteurPolice,PosX+largeur+5,PosY);
+    afficherChiffre(dizaine,HauteurPolice,PosX+(2*(largeur+5)),PosY);
+    afficherChiffre(unite,HauteurPolice,PosX+(3*(largeur+5)),PosY);
+    
 }

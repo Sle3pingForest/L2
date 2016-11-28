@@ -87,7 +87,8 @@ void Voiture_gestionnaire::chargement_aleatoire(Route* route, int distance_parco
     
 }
 
-void Voiture_gestionnaire::MegaFonction(int vitesse, SDL_Rect* rectVoitureJoueur)
+/* Gère les voitures et renvois true si collision */
+bool Voiture_gestionnaire::gestion(int vitesse, SDL_Rect* rectVoitureJoueur)
 {
     posVoitureTete = 10000;
     bool flagCollision = false;
@@ -98,10 +99,10 @@ void Voiture_gestionnaire::MegaFonction(int vitesse, SDL_Rect* rectVoitureJoueur
                 if(not isDead(i,j)) {
                     tabVoitures[i][j]->avancer(vitesse);
                     checkVoitTete(i, j);
-                    changeDeVoie = depassementNEW(i, j);
-//                    if(collisionVoitJoueur(i, j, rectVoitureJoueur)) {
-//                        flagCollision = true;
-//                    }
+                    changeDeVoie = depassement(i, j);
+                    if(collisionVoitJoueur(i, j, rectVoitureJoueur)) {
+                        flagCollision = true;
+                    }
                     if(changeDeVoie) {
                         changementVoieGauche(i, j); //On place la voiture dans le tableau de gauche
                     }
@@ -109,6 +110,7 @@ void Voiture_gestionnaire::MegaFonction(int vitesse, SDL_Rect* rectVoitureJoueur
             }
         }
     }
+    return flagCollision;
 }
 
 /* Détruit la voiture si elle est trop bas */
@@ -132,7 +134,7 @@ void Voiture_gestionnaire::checkVoitTete(int i, int j)
 }
 
 /* Gère le dépassement des voitures */
-bool Voiture_gestionnaire::depassementNEW(int i, int j)
+bool Voiture_gestionnaire::depassement(int i, int j)
 {
     for(int k = 0; k < nb_voitures_max; k++) {
         if(tabVoitures[i][k] != NULL && tabVoitures[i][j]->getVitesseVoiture() > tabVoitures[i][k]->getVitesseVoiture()) {
