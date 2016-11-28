@@ -13,10 +13,10 @@ int main(int argc, const char * argv[])
 {
 
     Joueur joueur;
-    //joueur.getScore();
+    cout<<joueur.getScore()<<endl;
 
     Partie partie;
-    cout<<"yolo--------:" << partie.play()<<endl;
+    partie.play();
     joueur.setScore(partie.play());
     return 0;
 }

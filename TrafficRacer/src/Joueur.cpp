@@ -47,7 +47,7 @@ void Joueur::gestion_score(int new_Score)
     }
 }
 
-void Joueur::getScore()
+int Joueur::getScore()
 {
     string score_line;
     if(playerFile)
@@ -57,13 +57,14 @@ void Joueur::getScore()
             int value = atoi(score_line.c_str());
             gestion_score(value);
         }
-        //playerFile.close();
+        playerFile.close();
     }
     sort(tab_score, tab_score +5);
-    for(int i = 4; i >= 0 ; --i)
-    {
-        cout<< tab_score[i] <<endl;
-    }
+    return tab_score[4];
+//    for(int i = 4; i >= 0 ; --i)
+//    {
+//        cout<< tab_score[i] <<endl;
+//    }
 }
 
 void Joueur::setScore( int newScore)

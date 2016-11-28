@@ -14,7 +14,7 @@ class Joueur
         Joueur();
         Joueur(string nname);
 
-        void getScore();
+        int getScore();
         void setScore(int newScore);
         string getName();
         void setName();
