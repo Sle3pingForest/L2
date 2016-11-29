@@ -2,7 +2,7 @@
 #include <string>
 //std::fstream playerfile;
 
-fstream playerFile("autres/Player", ios::in | ios::out  | ios::app);
+fstream playerFile("autres/score", ios::in | ios::out  | ios::app);
 
 
 Joueur::Joueur()
@@ -30,47 +30,12 @@ void Joueur::setName()
     playerFile.close();
     playerName = newName;
 }
-void Joueur::gestion_score(int new_Score)
-{
-    int min_score = tab_score[0];
-    int pos = 0 ;
-    for(int i = 0; i < 5; ++i)
-    {
-        if(tab_score[i] <= min_score)
-        {
-            pos = i;
-        }
-    }
-    if(tab_score[pos] <= new_Score)
-    {
-        tab_score[pos] = new_Score;
-    }
-}
 
-int Joueur::getScore()
-{
-    string score_line;
-    if(playerFile)
-    {
-        while(getline(playerFile,score_line))
-        {
-            int value = atoi(score_line.c_str());
-            gestion_score(value);
-        }
-        playerFile.close();
-    }
-    sort(tab_score, tab_score +5);
-    return tab_score[4];
-//    for(int i = 4; i >= 0 ; --i)
-//    {
-//        cout<< tab_score[i] <<endl;
-//    }
-}
 
-void Joueur::setScore( int newScore)
+void Joueur::setScore( int new_Score)
 {
-    playerFile<<newScore +'\n';
-    cout<<"Score Finale "<< newScore<< endl;
+    playerFile<<new_Score;
+    playerFile<<'\n';
+    cout<<"Score Finale: "<< new_Score<< endl;
     playerFile.close();
-    playerScore = newScore;
 }

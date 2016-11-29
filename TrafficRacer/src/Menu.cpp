@@ -141,6 +141,8 @@ void Menu::execute()
         pPartie = new Partie;
         //int score =
         pPartie->play();
+        cout<<pPartie->play()<< endl;
+        player.setScore(pPartie->play());
         delete pPartie;
         pPartie = NULL;
         affichage();

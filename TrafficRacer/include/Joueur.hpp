@@ -14,17 +14,14 @@ class Joueur
 public:
     Joueur();
     Joueur(string nname);
-    
-    int getScore();
     void setScore(int newScore);
     string getName();
     void setName();
-    void gestion_score(int newscore);
+
 protected:
 private:
     string playerName;
     int playerScore;
-    int tab_score[5] = {0};
 };
 
 #endif /* Joueur_hpp */
