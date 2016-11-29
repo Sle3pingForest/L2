@@ -64,7 +64,7 @@ void Menu::gestion_touches()
         if(event.type == SDL_QUIT) {
             quit = true;
         }
-        
+
         //Evenements de fenêtre
         if(event.type == SDL_WINDOWEVENT) {
             switch (event.window.event) {
@@ -75,7 +75,7 @@ void Menu::gestion_touches()
                     break;
             }
         }
-        
+
         if(event.type == SDL_KEYDOWN) {
             switch( event.key.keysym.sym ) {
                 case SDLK_UP:
@@ -85,7 +85,7 @@ void Menu::gestion_touches()
                         choix--;
                     affichage();
                     break;
-                    
+
                 case SDLK_DOWN:
                     if(choix == 3)
                         choix = 1;
@@ -93,10 +93,10 @@ void Menu::gestion_touches()
                         choix++;
                     affichage();
                     break;
-                    
+
                 case SDLK_RETURN:
                     execute();
-                    
+
                 default:
                     break;
             }
@@ -108,7 +108,7 @@ void Menu::affichage()
 {
     SDL_SetRenderDrawColor(pRenderer, 40, 40, 40, 255);
     SDL_RenderClear(pRenderer);
-    
+
     SDL_Rect logo;
     logo.w = SCREEN_WIDTH*0.8;
     if(logo.w > 900){
@@ -118,7 +118,7 @@ void Menu::affichage()
     logo.x = (SCREEN_WIDTH - logo.w) / 2;
     logo.y = SCREEN_HEIGHT * 0.1;
     SDL_RenderCopy(pRenderer, logoTexture, NULL, &logo);
-    
+
     if(choix == 1) {
         logo.y += logo.h;
         SDL_RenderCopy(pRenderer, logoTexture, NULL, &logo);
@@ -154,7 +154,6 @@ void Menu::execute()
 
 void Menu::affichageScore()
 {
-    int j = 0;
     std::ifstream fichier;
     fichier.open("autres/score", ios::in);
     string line;
@@ -162,11 +161,12 @@ void Menu::affichageScore()
     while(getline(fichier, line)) {
         cout<<"ligne :"<<line<<endl;
         int PosX = 0;
+        int j = 0;
         while (line[j] != '\0') {
             printf("%c", line[j]);
             afficherChiffre(line[j], 120, PosX, PosY);
             PosX += 100;
-            j++;
+            ++j;
         }
         printf("\n");
         PosY += 130;
@@ -179,9 +179,9 @@ SDL_Texture* Menu::LoadBmpWithTransparency(const char* emplacement, Uint8 redTra
 {
     SDL_Surface *loadedImage = NULL;
     SDL_Texture *texture = NULL;
-    
+
     loadedImage = SDL_LoadBMP(emplacement);
-    
+
     if(loadedImage != NULL) {
         Uint32 colorkey = SDL_MapRGB( loadedImage->format, redTransparency, greenTransparency, blueTransparency);
         SDL_SetColorKey(loadedImage, SDL_TRUE, colorkey);
@@ -204,13 +204,13 @@ void Menu::afficherChiffre(char chiffre, int HauteurPolice, int PosX, int PosY) 
     dest.y = PosY;
     dest.h = HauteurPolice;
     dest.w = HauteurPolice / 1.6;
-    
+
     SDL_Rect selection;
     selection.y = 0;
     selection.w = 90;
     selection.h = 144;
     selection.x = (intChiffre * 91) + intChiffre;
-    
+
     SDL_RenderCopy(pRenderer, scoreTexture, &selection, &dest);
 }
 
@@ -219,12 +219,12 @@ void Menu::afficherNombre(int nombre, int HauteurPolice, int PosX, int PosY) {
     int dizaine = nombre / 10 % 10;
     int centaine = nombre / 100 % 10;
     int milier = nombre / 1000 % 10;
-    
+
     int largeur = HauteurPolice / 1.6;
-    
+
     afficherChiffre(milier,HauteurPolice,PosX,PosY);
     afficherChiffre(centaine,HauteurPolice,PosX+largeur+5,PosY);
     afficherChiffre(dizaine,HauteurPolice,PosX+(2*(largeur+5)),PosY);
     afficherChiffre(unite,HauteurPolice,PosX+(3*(largeur+5)),PosY);
-    
+
 }
