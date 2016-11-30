@@ -41,3 +41,35 @@ SDL_Texture* LoadBmpWithTransparency(const char* emplacement, Uint8 redTranspare
         return NULL;
     }
 }
+
+void afficherChiffre(SDL_Texture* texture, char chiffre, int HauteurPolice, int PosX, int PosY) {
+    int intChiffre = chiffre - 48;
+    SDL_Rect dest;
+    dest.x = PosX;
+    dest.y = PosY;
+    dest.h = HauteurPolice;
+    dest.w = HauteurPolice / 1.6;
+    
+    SDL_Rect selection;
+    selection.y = 0;
+    selection.w = 90;
+    selection.h = 144;
+    selection.x = (intChiffre * 91) + intChiffre;
+    
+    SDL_RenderCopy(pRenderer, texture, &selection, &dest);
+}
+
+void afficherNombre(SDL_Texture* texture, int nombre, int HauteurPolice, int PosX, int PosY)
+{
+    int unite = nombre % 10;
+    int dizaine = nombre / 10 % 10;
+    int centaine = nombre / 100 % 10;
+    int milier = nombre / 1000 % 10;
+    
+    int largeur = HauteurPolice / 1.6;
+    
+    afficherChiffre(texture, milier,HauteurPolice,PosX,PosY);
+    afficherChiffre(texture, centaine,HauteurPolice,PosX+largeur+5,PosY);
+    afficherChiffre(texture, dizaine,HauteurPolice,PosX+(2*(largeur+5)),PosY);
+    afficherChiffre(texture, unite,HauteurPolice,PosX+(3*(largeur+5)),PosY);
+}

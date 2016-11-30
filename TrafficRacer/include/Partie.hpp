@@ -2,6 +2,7 @@
 #define Partie_hpp
 
 #include "Constantes.hpp"
+#include "SDL_Tools.hpp"
 #include "Timer.hpp"
 #include "Camera.hpp"
 #include "Route.hpp"
@@ -28,7 +29,6 @@ private:
     SDL_Texture* routeTexture;
     SDL_Texture* pauseTexture;
 
-    //Joueur player;
     Objet plateau;
     Camera camera;
     Route route;
@@ -43,8 +43,6 @@ private:
     void gestion_touches();
     void afficher();
     void deplacements();
-    
-    SDL_Texture* LoadBmpWithTransparency(const char* emplacement, Uint8 redTransparency, Uint8 greenTransparency, Uint8 blueTransparency);
 };
 
 #endif /* Partie_hpp */

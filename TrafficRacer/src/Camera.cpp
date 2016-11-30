@@ -7,16 +7,11 @@ Camera::Camera()
 
 void Camera::CameraInit( int vue, Route* route, Objet* plateau)
 {
-    if( vue == 0)
-    {
+    if( vue == 0) {
         afficherTouteRoute(route);
-    }
-    else if (vue == 1)
-    {
+    } else if (vue == 1) {
         afficherToutPlateau(route);
-    }
-    else
-    {
+    } else {
         afficherToutPlateau(route);
     }
 }
@@ -24,10 +19,8 @@ void Camera::CameraInit( int vue, Route* route, Objet* plateau)
 void Camera::gestionTouches( SDL_Event& event, Route* route, Objet* plateau )
 {
 
-    if( event.type == SDL_KEYDOWN )
-    {
-        switch( event.key.keysym.sym )
-        {
+    if( event.type == SDL_KEYDOWN ) {
+        switch( event.key.keysym.sym ) {
         // Déplacement de la caméra
         case 'q':
             camera.x -= 100;

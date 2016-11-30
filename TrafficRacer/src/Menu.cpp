@@ -1,5 +1,7 @@
 #include "Menu.hpp"
 
+using namespace std;
+
 SDL_Window *pWindow =NULL;
 SDL_Renderer *pRenderer = NULL;
 
@@ -20,15 +22,6 @@ Menu::~Menu()
     SDL_Quit();
 }
 
-void Menu::chargementsImages() {
-    logoTexture = LoadBmpWithTransparency("autres/images/logo.bmp", 0, 255, 255);
-    scoreTexture = LoadBmpWithTransparency("autres/images/number.bmp", 0, 255, 0);
-    playTexture = LoadBmpWithTransparency("autres/images/play.bmp", 0, 255, 255);
-    hscoreTexture = LoadBmpWithTransparency("autres/images/score.bmp", 0, 255, 255);
-    exitTexture = LoadBmpWithTransparency("autres/images/exit.bmp", 0, 255, 255);
-    
-}
-
 bool Menu::Init()
 {
     return InitSDL();
@@ -44,6 +37,14 @@ void Menu::boucle()
     }
 }
 
+void Menu::chargementsImages() {
+    logoTexture = LoadBmpWithTransparency("autres/images/logo.bmp", 0, 255, 255);
+    numberTexture = LoadBmpWithTransparency("autres/images/number.bmp", 0, 255, 0);
+    playTexture = LoadBmpWithTransparency("autres/images/play.bmp", 0, 255, 255);
+    hscoreTexture = LoadBmpWithTransparency("autres/images/score.bmp", 0, 255, 255);
+    exitTexture = LoadBmpWithTransparency("autres/images/exit.bmp", 0, 255, 255);
+}
+
 void Menu::gestion_touches()
 {
     SDL_Event event;
@@ -53,7 +54,7 @@ void Menu::gestion_touches()
         if(event.type == SDL_QUIT) {
             quit = true;
         }
-        
+
         //Evenements de fenêtre
         if(event.type == SDL_WINDOWEVENT) {
             switch (event.window.event) {
@@ -64,7 +65,7 @@ void Menu::gestion_touches()
                     break;
             }
         }
-        
+
         if(event.type == SDL_KEYDOWN) {
             switch( event.key.keysym.sym ) {
                 case SDLK_UP:
@@ -74,7 +75,7 @@ void Menu::gestion_touches()
                         choix--;
                     affichage();
                     break;
-                    
+
                 case SDLK_DOWN:
                     if(choix == 3)
                         choix = 1;
@@ -82,10 +83,10 @@ void Menu::gestion_touches()
                         choix++;
                     affichage();
                     break;
-                    
+
                 case SDLK_RETURN:
                     execute();
-                    
+
                 default:
                     break;
             }
@@ -97,7 +98,7 @@ void Menu::affichage()
 {
     SDL_SetRenderDrawColor(pRenderer, 60, 60, 60, 255);
     SDL_RenderClear(pRenderer);
-    
+
     SDL_Rect logo;
     logo.w = SCREEN_WIDTH * 0.8;
     if(logo.w > 900) {
@@ -111,7 +112,7 @@ void Menu::affichage()
     logo.w = logo.w * 0.5;
     logo.h = logo.w / 3.75;
     logo.x = (SCREEN_WIDTH - logo.w) / 2;
-    
+
     if(choix == 1) {
         SDL_SetTextureAlphaMod(playTexture, 255);
         SDL_SetTextureAlphaMod(hscoreTexture, 120);
@@ -142,7 +143,8 @@ void Menu::execute()
     if(choix == 1) {
         Partie* pPartie;
         pPartie = new Partie;
-        pPartie->play();
+        int score = pPartie->play();
+        setScore(score);
         delete pPartie;
         pPartie = NULL;
         affichage();
@@ -156,59 +158,31 @@ void Menu::execute()
 
 void Menu::affichageScore()
 {
-    int j = 0;
+    SDL_SetRenderDrawColor(pRenderer, 60, 60, 60, 255);
+    SDL_RenderClear(pRenderer);
     std::ifstream fichier;
     fichier.open("autres/score", ios::in);
     string line;
     int PosY = 0;
     while(getline(fichier, line)) {
-        cout<<"ligne :"<<line<<endl;
         int PosX = 0;
-        line = line.c_str();
-        while (line[j] != 'u') {
-//            char temp = line[j];
-            printf("%c", line[j]);
-//            afficherChiffre(line[j], 120, PosX, PosY);
-//            PosX += 100;
-//            j++;
-//            printf("%s", line.c_str());
-            j++;
+        int j = 0;
+        while (line[j] != '\0') {
+            afficherChiffre(numberTexture, line[j], 120, PosX, PosY);
+            PosX += 100;
+            ++j;
         }
         PosY += 130;
-        printf("\n");
     }
     fichier.close();
     SDL_RenderPresent(pRenderer);
 }
 
-void Menu::afficherChiffre(char chiffre, int HauteurPolice, int PosX, int PosY) {
-    int intChiffre = chiffre - 48;
-    SDL_Rect dest;
-    dest.x = PosX;
-    dest.y = PosY;
-    dest.h = HauteurPolice;
-    dest.w = HauteurPolice / 1.6;
-    
-    SDL_Rect selection;
-    selection.y = 0;
-    selection.w = 90;
-    selection.h = 144;
-    selection.x = (intChiffre * 91) + intChiffre;
-    
-    SDL_RenderCopy(pRenderer, scoreTexture, &selection, &dest);
-}
-
-void Menu::afficherNombre(int nombre, int HauteurPolice, int PosX, int PosY)
+void Menu::setScore(int new_Score)
 {
-    int unite = nombre % 10;
-    int dizaine = nombre / 10 % 10;
-    int centaine = nombre / 100 % 10;
-    int milier = nombre / 1000 % 10;
-    
-    int largeur = HauteurPolice / 1.6;
-    
-    afficherChiffre(milier,HauteurPolice,PosX,PosY);
-    afficherChiffre(centaine,HauteurPolice,PosX+largeur+5,PosY);
-    afficherChiffre(dizaine,HauteurPolice,PosX+(2*(largeur+5)),PosY);
-    afficherChiffre(unite,HauteurPolice,PosX+(3*(largeur+5)),PosY);    
+    fstream scoreFile("autres/score", ios::in);
+    scoreFile<<new_Score;
+    scoreFile<<'\n';
+    cout<<"Score Finale: "<< new_Score<< endl;
+    scoreFile.close();
 }
