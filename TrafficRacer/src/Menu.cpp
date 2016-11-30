@@ -23,26 +23,15 @@ Menu::~Menu()
 void Menu::chargementsImages() {
     logoTexture = LoadBmpWithTransparency("autres/images/logo.bmp", 0, 255, 255);
     scoreTexture = LoadBmpWithTransparency("autres/images/number.bmp", 0, 255, 0);
+    playTexture = LoadBmpWithTransparency("autres/images/play.bmp", 0, 255, 255);
+    hscoreTexture = LoadBmpWithTransparency("autres/images/score.bmp", 0, 255, 255);
+    exitTexture = LoadBmpWithTransparency("autres/images/exit.bmp", 0, 255, 255);
+    
 }
 
-bool Menu::InitSDL()
+bool Menu::Init()
 {
-    if (SDL_Init(SDL_INIT_VIDEO) != 0 ) {
-        fprintf(stderr,"Échec de l'initialisation de la SDL (%s)\n",SDL_GetError());
-        return false;
-    }
-    pWindow = SDL_CreateWindow("TrafficRacer", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
-    if( !pWindow ) {
-        fprintf(stderr,"Erreur de création de la fenêtre: %s\n",SDL_GetError());
-        return false;
-    }
-    pRenderer =  SDL_CreateRenderer( pWindow, -1, SDL_RENDERER_ACCELERATED );
-    if( !pRenderer ) {
-        fprintf(stderr, "Échec de la création du rendu: %s\n", SDL_GetError());
-        return false;
-    }
-    SDL_SetRenderDrawBlendMode(pRenderer, SDL_BLENDMODE_BLEND);
-    return true;
+    return InitSDL();
 }
 
 void Menu::boucle()
@@ -106,12 +95,12 @@ void Menu::gestion_touches()
 
 void Menu::affichage()
 {
-    SDL_SetRenderDrawColor(pRenderer, 40, 40, 40, 255);
+    SDL_SetRenderDrawColor(pRenderer, 60, 60, 60, 255);
     SDL_RenderClear(pRenderer);
     
     SDL_Rect logo;
-    logo.w = SCREEN_WIDTH*0.8;
-    if(logo.w > 900){
+    logo.w = SCREEN_WIDTH * 0.8;
+    if(logo.w > 900) {
         logo.w = 900;
     }
     logo.h = logo.w / 4.3;
@@ -119,18 +108,32 @@ void Menu::affichage()
     logo.y = SCREEN_HEIGHT * 0.1;
     SDL_RenderCopy(pRenderer, logoTexture, NULL, &logo);
     
+    logo.w = logo.w * 0.5;
+    logo.h = logo.w / 3.75;
+    logo.x = (SCREEN_WIDTH - logo.w) / 2;
+    
     if(choix == 1) {
-        logo.y += logo.h;
-        SDL_RenderCopy(pRenderer, logoTexture, NULL, &logo);
+        SDL_SetTextureAlphaMod(playTexture, 255);
+        SDL_SetTextureAlphaMod(hscoreTexture, 120);
+        SDL_SetTextureAlphaMod(exitTexture, 120);
     }
-    else if(choix == 2) {
-        logo.y += 2 * logo.h;
-        SDL_RenderCopy(pRenderer, logoTexture, NULL, &logo);
+    
+    else if (choix == 2) {
+        SDL_SetTextureAlphaMod(playTexture, 120);
+        SDL_SetTextureAlphaMod(hscoreTexture, 255);
+        SDL_SetTextureAlphaMod(exitTexture, 120);
+    } else {
+        SDL_SetTextureAlphaMod(playTexture, 120);
+        SDL_SetTextureAlphaMod(hscoreTexture, 120);
+        SDL_SetTextureAlphaMod(exitTexture, 255);
     }
-    else {
-        logo.y += 3 * logo.h;
-        SDL_RenderCopy(pRenderer, logoTexture, NULL, &logo);
-    }
+
+    logo.y += SCREEN_HEIGHT / 3;
+    SDL_RenderCopy(pRenderer, playTexture, NULL, &logo);
+    logo.y += SCREEN_HEIGHT / 7;
+    SDL_RenderCopy(pRenderer, hscoreTexture, NULL, &logo);
+    logo.y += SCREEN_HEIGHT / 7;
+    SDL_RenderCopy(pRenderer, exitTexture, NULL, &logo);
     SDL_RenderPresent(pRenderer);
 }
 
@@ -139,7 +142,6 @@ void Menu::execute()
     if(choix == 1) {
         Partie* pPartie;
         pPartie = new Partie;
-        //int score =
         pPartie->play();
         delete pPartie;
         pPartie = NULL;
@@ -162,39 +164,21 @@ void Menu::affichageScore()
     while(getline(fichier, line)) {
         cout<<"ligne :"<<line<<endl;
         int PosX = 0;
-        while (line[j] != '\0') {
+        line = line.c_str();
+        while (line[j] != 'u') {
+//            char temp = line[j];
             printf("%c", line[j]);
-            afficherChiffre(line[j], 120, PosX, PosY);
-            PosX += 100;
+//            afficherChiffre(line[j], 120, PosX, PosY);
+//            PosX += 100;
+//            j++;
+//            printf("%s", line.c_str());
             j++;
         }
-        printf("\n");
         PosY += 130;
+        printf("\n");
     }
     fichier.close();
     SDL_RenderPresent(pRenderer);
-}
-
-SDL_Texture* Menu::LoadBmpWithTransparency(const char* emplacement, Uint8 redTransparency, Uint8 greenTransparency, Uint8 blueTransparency)
-{
-    SDL_Surface *loadedImage = NULL;
-    SDL_Texture *texture = NULL;
-    
-    loadedImage = SDL_LoadBMP(emplacement);
-    
-    if(loadedImage != NULL) {
-        Uint32 colorkey = SDL_MapRGB( loadedImage->format, redTransparency, greenTransparency, blueTransparency);
-        SDL_SetColorKey(loadedImage, SDL_TRUE, colorkey);
-        texture = SDL_CreateTextureFromSurface(pRenderer, loadedImage);
-        if(texture == NULL) {
-            fprintf(stderr, "Échec de la création de la texture de l'image: %s\n", SDL_GetError());
-        }
-        SDL_FreeSurface(loadedImage);
-        return texture;
-    } else {
-        fprintf(stderr, "Échec du chargement de l'image: %s\n", SDL_GetError());
-        return NULL;
-    }
 }
 
 void Menu::afficherChiffre(char chiffre, int HauteurPolice, int PosX, int PosY) {
@@ -214,7 +198,8 @@ void Menu::afficherChiffre(char chiffre, int HauteurPolice, int PosX, int PosY) 
     SDL_RenderCopy(pRenderer, scoreTexture, &selection, &dest);
 }
 
-void Menu::afficherNombre(int nombre, int HauteurPolice, int PosX, int PosY) {
+void Menu::afficherNombre(int nombre, int HauteurPolice, int PosX, int PosY)
+{
     int unite = nombre % 10;
     int dizaine = nombre / 10 % 10;
     int centaine = nombre / 100 % 10;
@@ -225,6 +210,5 @@ void Menu::afficherNombre(int nombre, int HauteurPolice, int PosX, int PosY) {
     afficherChiffre(milier,HauteurPolice,PosX,PosY);
     afficherChiffre(centaine,HauteurPolice,PosX+largeur+5,PosY);
     afficherChiffre(dizaine,HauteurPolice,PosX+(2*(largeur+5)),PosY);
-    afficherChiffre(unite,HauteurPolice,PosX+(3*(largeur+5)),PosY);
-    
+    afficherChiffre(unite,HauteurPolice,PosX+(3*(largeur+5)),PosY);    
 }

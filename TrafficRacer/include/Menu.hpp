@@ -4,6 +4,7 @@
 #include "Partie.hpp"
 #include "Joueur.hpp"
 #include "Constantes.hpp"
+#include "SDL_Tools.hpp"
 
 
 class Menu
@@ -11,7 +12,7 @@ class Menu
 public:
     Menu();
     ~Menu();
-    bool InitSDL();
+    bool Init();
     void boucle();
 protected:
 private:
@@ -19,14 +20,19 @@ private:
     int choix;
     
     SDL_Texture* logoTexture;
+    SDL_Texture* UITexture;
     SDL_Texture* scoreTexture;
+    SDL_Texture* playTexture;
+    SDL_Texture* hscoreTexture;
+    SDL_Texture* exitTexture;
+    
     
     void gestion_touches();
     void affichage();
     void execute();
     void affichageScore();
     
-    SDL_Texture* LoadBmpWithTransparency(const char* emplacement, Uint8 redTransparency, Uint8 greenTransparency, Uint8 blueTransparency);
+
     void chargementsImages();
     void afficherChiffre(char chiffre, int HauteurPolice, int PosX, int PosY);
     

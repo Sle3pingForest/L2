@@ -11,7 +11,7 @@
 int main(int argc, const char * argv[])
 {
     Menu menu;
-    if (!menu.InitSDL())
+    if (!menu.Init())
         return -1;
     else
         menu.boucle();

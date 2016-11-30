@@ -77,7 +77,7 @@ void Partie::gestion_touches()
 
             case SDL_WINDOWEVENT_FOCUS_LOST:
                 if(not pause)
-                    //pause = true;
+                    pause = true;
                 break;
             }
 
@@ -134,7 +134,6 @@ void Partie::afficher()
     SDL_SetRenderDrawColor(pRenderer, 40, 40, 40, 255);
     SDL_RenderClear(pRenderer);
 
-
     //Affichage le plateau
     SDL_SetRenderDrawColor(pRenderer, 88, 41, 0, 255);
     plateau.afficherRectObjet();
@@ -144,40 +143,12 @@ void Partie::afficher()
 
     //Affichage de la route
     route.afficherDefilement(routeTexture);
-    //SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 150);
-    //route.afficherRectObjet();
-    //SDL_SetRenderDrawColor(pRenderer, 0, 255, 0, 255);
-    //route.afficherVoies();
 
     //Affichage des voitures
     voiture_gestionnaire.afficherVoitures(carsTexture);
 
     //Affichage voiture joueur
-    //SDL_SetRenderDrawColor(pRenderer, 0, 255, 255, 255);
-    //voitureJoueur.afficherRectObjet();
     voitureJoueur.afficher(carsTexture);
-//    SDL_SetRenderDrawColor(pRenderer, 0, 0, 255, 120);
-//    voitureJoueur.afficherRectCollision();
-
-//    Decor testDecor;
-//    testDecor.placer(200, 200);
-//    testDecor.selectDecor(1, 3);
-//    testDecor.afficher(decorTexture);
-//
-//    Objet testObjet;
-//    testObjet.placer(1000, 500);
-//    testObjet.setWidth(route.getWidth()/4);
-//    testObjet.setHeight(250);
-//    testObjet.afficherRectObjet();
-//
-//    Voiture testVoiture;
-//    testVoiture.selectVoiture(0);
-//    testVoiture.placer(200, 200);
-//    testVoiture.setWidth(200);
-//    testVoiture.setHeight(200);
-//    testVoiture.selectVoiture(0);
-//    testVoiture.afficherRectObjet();
-//    testVoiture.afficher(carsTexture);
 
     if (pause) {
         SDL_Rect pause;
