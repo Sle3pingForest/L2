@@ -53,7 +53,6 @@ int Partie::play()
             SDL_Delay(reste);
         }
     }
-    //player.setScore(distance_parcourue/1000);
     return distance_parcourue/1000;
 }
 
@@ -114,13 +113,13 @@ void Partie::deplacements()
     if (not pause) {
         distance_parcourue = (voitureJoueur.vitesse * timerDeplacement.getTicks())/100;
         int vitesse = voitureJoueur.vitesse / (SCREEN_FPS * 0.0625); // Permet d'avoir un vitesse constante quelque soit les FPS
-        
+
         route.deplacer(vitesse);
 
         decor_gestionnaire.gestion(vitesse);
-        
+
         voiture_gestionnaire.chargement(&route, distance_parcourue);
-        
+
         if ( voiture_gestionnaire.gestion(vitesse, voitureJoueur.getObjet())) {
             voitureJoueur.collision = true;
         }
