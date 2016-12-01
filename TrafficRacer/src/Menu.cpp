@@ -1,5 +1,6 @@
 #include "Menu.hpp"
 
+#include <string>
 using namespace std;
 
 SDL_Window *pWindow =NULL;
@@ -108,7 +109,7 @@ void Menu::affichage()
     logo.x = (SCREEN_WIDTH - logo.w) / 2;
     logo.y = SCREEN_HEIGHT * 0.1;
     SDL_RenderCopy(pRenderer, logoTexture, NULL, &logo);
-    
+
     logo.w = logo.w * 0.5;
     logo.h = logo.w / 3.75;
     logo.x = (SCREEN_WIDTH - logo.w) / 2;
@@ -118,7 +119,7 @@ void Menu::affichage()
         SDL_SetTextureAlphaMod(hscoreTexture, 120);
         SDL_SetTextureAlphaMod(exitTexture, 120);
     }
-    
+
     else if (choix == 2) {
         SDL_SetTextureAlphaMod(playTexture, 120);
         SDL_SetTextureAlphaMod(hscoreTexture, 255);
@@ -156,31 +157,76 @@ void Menu::execute()
         quit = true;
 }
 
+
+void Menu::ordonnerScore_Top5(int New_Score)
+{
+    int pos = 0;
+    int min_valeur = top5[0];
+
+    for(int i = 0; i < 5; ++i)
+    {
+        if( top5[i]<= min_valeur)
+        {
+            min_valeur = top5[i];
+            pos = i;
+        }
+    }
+    if( top5[pos] < New_Score )
+    {
+        top5[pos] = New_Score;
+    }
+}
+
+void Menu::read_score_file()
+{
+    std::ifstream fichier;
+    fichier.open("autres/score", ios::in);
+    string line;
+    while(getline(fichier, line))
+    {
+        int number = atoi(line.c_str());
+        ordonnerScore_Top5(number);
+    }
+    fichier.close();
+}
+
+//on a besoin cette fonction car le compilateur ne connaitre pas la vrai funtion to_string de STD
+string Menu:: to_string(int number)
+{
+    stringstream ss;
+    ss << number;
+    string str;
+    ss >> str;
+
+    return str;
+}
+
 void Menu::affichageScore()
 {
     SDL_SetRenderDrawColor(pRenderer, 60, 60, 60, 255);
     SDL_RenderClear(pRenderer);
-    std::ifstream fichier;
-    fichier.open("autres/score", ios::in);
-    string line;
+    read_score_file();
+    sort(top5, top5 + 5);
     int PosY = 0;
-    while(getline(fichier, line)) {
+    for(int i = 0; i < 5 ; ++i)
+    {
         int PosX = 0;
+        string number_string = to_string(top5[4-i]);
         int j = 0;
-        while (line[j] != '\0') {
-            afficherChiffre(numberTexture, line[j], 120, PosX, PosY);
+        while(number_string[j] != '\0')
+        {
+            afficherChiffre(numberTexture, number_string[j], 120, PosX, PosY);
             PosX += 100;
             ++j;
         }
         PosY += 130;
     }
-    fichier.close();
     SDL_RenderPresent(pRenderer);
 }
 
 void Menu::setScore(int new_Score)
 {
-    fstream scoreFile("autres/score", ios::in);
+    fstream scoreFile("autres/score", ios::in | ios:: app);
     scoreFile<<new_Score;
     scoreFile<<'\n';
     cout<<"Score Finale: "<< new_Score<< endl;
