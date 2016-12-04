@@ -16,8 +16,9 @@ public:
     ~Voiture_gestionnaire();
 
     void afficherVoitures(SDL_Texture* carsTexture);
-    void chargement(Route* route, int distance_parcourue);
+    void chargement(Route* route);
     bool gestion(int vitesse, SDL_Rect* rectVoitureJoueur);
+    void klaxon(Route* route, SDL_Rect* rectVoitureJoueur);
 
 private:
     static const int nb_voitures_max = 10;
@@ -26,11 +27,12 @@ private:
     int niveau;
     std::ifstream fichier;
 
-    void chargement_voitures_fichier(Route* route, int distance_parcourue);
-    void chargement_aleatoire(Route* route, int distance_parcourue);
+    void chargement_voitures_fichier(Route* route);
+    void chargement_aleatoire(Route* route);
     bool isDead(int i, int j);
     void checkVoitTete(int i, int j);
     bool depassement(int i, int j);
+    bool peutDepasser(int i, int j);
     void changementVoieGauche(int i, int j);
     SDL_bool collisionVoitJoueur(int i, int j, SDL_Rect* rectVoitureJoueur);
 };

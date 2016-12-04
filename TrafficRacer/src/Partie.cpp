@@ -16,7 +16,6 @@ Partie::Partie()
     routeTexture = LoadBmpWithTransparency("autres/images/road.bmp", 0, 255, 255);
     pauseTexture = LoadBmpWithTransparency("autres/images/pause.bmp", 0, 255, 255);
 
-    timerFPS.start();
     timerAfficherFPS.start();
     timerDeplacement.start();
 
@@ -31,7 +30,7 @@ Partie::Partie()
     voitureJoueur.setWidth(route.getLargeurVoiePlateau() - 15);
     voitureJoueur.calculerHauteur();
     voitureJoueur.placer(LEVEL_WIDTH/2, LEVEL_HEIGHT - voitureJoueur.getHeight() - 50);
-    voitureJoueur.vitesse = 10;
+    voitureJoueur.setVitesseVoiture(10);
 
     distance_parcourue = 0;
 }
@@ -76,7 +75,7 @@ void Partie::gestion_touches()
 
             case SDL_WINDOWEVENT_FOCUS_LOST:
                 if(not pause)
-                    pause = true;
+                    //pause = true;
                 break;
             }
 
@@ -100,7 +99,11 @@ void Partie::gestion_touches()
 
                 case 'm' :
                     jouer = false;
-
+                    
+                case SDLK_SPACE:
+                    voiture_gestionnaire.klaxon(&route, voitureJoueur.getObjet());
+                    break;
+                    
                 default:
                     break;
             }
@@ -111,14 +114,14 @@ void Partie::gestion_touches()
 void Partie::deplacements()
 {
     if (not pause) {
-        distance_parcourue = (voitureJoueur.vitesse * timerDeplacement.getTicks())/100;
-        int vitesse = voitureJoueur.vitesse / (SCREEN_FPS * 0.0625); // Permet d'avoir un vitesse constante quelque soit les FPS
+        distance_parcourue = (voitureJoueur.getVitesseVoiture() * timerDeplacement.getTicks())/100;
+        int vitesse = voitureJoueur.getVitesseVoiture() / (SCREEN_FPS * 0.0625); // Permet d'avoir un vitesse constante quelque soit les FPS
 
         route.deplacer(vitesse);
 
         decor_gestionnaire.gestion(vitesse);
 
-        voiture_gestionnaire.chargement(&route, distance_parcourue);
+        voiture_gestionnaire.chargement(&route);
 
         if ( voiture_gestionnaire.gestion(vitesse, voitureJoueur.getObjet())) {
             voitureJoueur.collision = true;

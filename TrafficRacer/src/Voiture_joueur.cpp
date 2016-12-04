@@ -107,5 +107,4 @@ void Voiture_joueur::deplacer(SDL_Rect* route)
         vitesse = 20;
         collision = false;
     }
-    //printf("%d\n",vitesse);
 }

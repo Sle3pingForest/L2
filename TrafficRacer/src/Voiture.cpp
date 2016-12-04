@@ -17,6 +17,7 @@ Voiture::Voiture()
     rectCollision.y = 0;
     rectCollision.w = 0;
     rectCollision.h = 0;
+    changementVoie = false;
 }
 
 Voiture::Voiture(int posX, int posY, int widht, int voitureType)
@@ -28,6 +29,7 @@ Voiture::Voiture(int posX, int posY, int widht, int voitureType)
     positionPlateau.w = widht;
     calculerHauteur();
     calculerRectCollision();
+    changementVoie = false;
 }
 
 void Voiture::selectVoiture(int nb)
@@ -109,6 +111,10 @@ void Voiture::avancer(int vitesseJeu)
     positionPlateau.y += vitesseJeu - (vitesse);
 }
 
+void Voiture::accelerer(int intensite) {
+    vitesse += intensite;
+}
+
 void Voiture::freiner(int intensite) {
     vitesse -= intensite;
 }
@@ -117,4 +123,12 @@ SDL_Rect* Voiture::getRectCollision()
 {
     calculerRectCollision();
     return &rectCollision;
+}
+
+void Voiture::setChangementVoie(bool changement) {
+    changementVoie = changement;
+}
+
+bool Voiture::getChangementVoie() {
+    return changementVoie;
 }

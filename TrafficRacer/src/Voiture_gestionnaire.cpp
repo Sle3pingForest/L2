@@ -32,20 +32,20 @@ void Voiture_gestionnaire::afficherVoitures(SDL_Texture* carsTexture)
     }
 }
 
-void Voiture_gestionnaire::chargement(Route* route, int distance_parcourue)
+void Voiture_gestionnaire::chargement(Route* route)
 {
     if(niveau < 3) {
-        chargement_voitures_fichier(route, distance_parcourue);
+        chargement_voitures_fichier(route);
     } else {
-        //chargement_aleatoire(route, distance_parcourue);
+        chargement_aleatoire(route);
     }
 }
 
 /* Créé de nouvelles voitures et les positionne par rapport aux fichiers de niveaux */
-void Voiture_gestionnaire::chargement_voitures_fichier(Route* route, int distance_parcourue)
+void Voiture_gestionnaire::chargement_voitures_fichier(Route* route)
 {
     static int nbChargements = 0;
-    if (distance_parcourue > 3000*nbChargements && posVoitureTete > -500)
+    if (posVoitureTete > -300)
     {
         if(!fichier.is_open()) {
             if(niveau == 1) {
@@ -82,9 +82,20 @@ void Voiture_gestionnaire::chargement_voitures_fichier(Route* route, int distanc
     }
 }
 
-void Voiture_gestionnaire::chargement_aleatoire(Route* route, int distance_parcourue)
+void Voiture_gestionnaire::chargement_aleatoire(Route* route)
 {
-    
+    if(posVoitureTete > -500) {
+        int voie = rand()%4;
+        int i = 0;
+        while (tabVoitures[voie][i] != NULL) {
+            i++; //On trouve une place libre dans le tableau de pointeurs de voitures
+        }
+        if(i < nb_voitures_max) {
+            int position_x = route->getPosX() + voie * route->getLargeurVoiePlateau();
+            tabVoitures[voie][i] = new Voiture(position_x, -1000, route->getLargeurVoiePlateau()-10, rand()%8);
+            tabVoitures[voie][i]->setVitesseVoiture(rand()%9 + 10);
+        }
+    }
 }
 
 /* Gère les voitures et renvois true si collision */
@@ -142,12 +153,17 @@ bool Voiture_gestionnaire::depassement(int i, int j)
             if(posYVoit1 > posYVoit2 && abs(posYVoit1 - posYVoit2) < 500) {
                 if(i == 0) {
                     tabVoitures[i][j]->freiner(1);
-                }else{
-                    tabVoitures[i][j]->deplacer(-4,0); //Dépassement à gauche
-                    int coteDroVoit1 = tabVoitures[i][j]->getPosX() + tabVoitures[i][j]->getWidth();
-                    int coteGauVoit2 = tabVoitures[i][k]->getPosX();
-                    if(coteDroVoit1 < (coteGauVoit2 + 5)) {
-                        return true;
+                } else {
+                    if(tabVoitures[i][j]->getChangementVoie() || peutDepasser(i, j) ) {
+                        tabVoitures[i][j]->setChangementVoie(true);
+                        tabVoitures[i][j]->deplacer(-4,0); //Dépassement à gauche
+                        int coteDroVoit1 = tabVoitures[i][j]->getPosX() + tabVoitures[i][j]->getWidth();
+                        int coteGauVoit2 = tabVoitures[i][k]->getPosX();
+                        if(coteDroVoit1 < (coteGauVoit2 + 5)) {
+                            return true;
+                        }
+                    } else {
+                        tabVoitures[i][j]->freiner(1);
                     }
                 }
             }
@@ -156,9 +172,26 @@ bool Voiture_gestionnaire::depassement(int i, int j)
     return false;
 }
 
+bool Voiture_gestionnaire::peutDepasser(int i, int j) {
+    int posYvoit = tabVoitures[i][j]->getPosY();
+    int heightVoit = tabVoitures[i][j]->getHeight();
+    int posYhaut = posYvoit - 2 * heightVoit; //On recherche si il y a assez de place dans la voie de gauche
+    int posYbas = posYvoit + heightVoit;
+    for(int k = 0; k < nb_voitures_max; k++) {
+        if (tabVoitures[i-1][k] != NULL) {
+            int posYvoitTemp = tabVoitures[i-1][k]->getPosY();
+            if(posYvoitTemp > posYhaut && posYvoitTemp < posYbas) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 /* Place une voitre tab[i] dans tab[i-1] */
 void Voiture_gestionnaire::changementVoieGauche(int i, int j)
 {
+    tabVoitures[i][j]->setChangementVoie(false);
     int k = 0;
     while (tabVoitures[i-1][k] != NULL) { // Cherhce une place dans le tableau
         k++;
@@ -172,5 +205,34 @@ SDL_bool Voiture_gestionnaire::collisionVoitJoueur(int i, int j, SDL_Rect* rectV
 {
     SDL_bool collision;
     SDL_Rect intersect;
-    return collision = SDL_IntersectRect(rectVoitureJoueur, tabVoitures[i][j]->getRectCollision(), &intersect);
+    collision = SDL_IntersectRect(rectVoitureJoueur, tabVoitures[i][j]->getRectCollision(), &intersect);
+    if (collision && tabVoitures[i][j]->getPosY() > rectVoitureJoueur->y ) {
+        tabVoitures[i][j]->setVitesseVoiture(2);
+    }
+    return collision;
+}
+
+/* Accélère la voiture devant la voiture joueur */
+void Voiture_gestionnaire::klaxon(Route* route, SDL_Rect* rectVoitureJoueur) {
+    int posXtemp = route->getPosX() + route->getLargeurVoiePlateau();
+    int posXvoit = rectVoitureJoueur->x + (rectVoitureJoueur->w/2);
+    int voie = 0;
+    while(posXvoit > posXtemp) {
+        posXtemp += route->getLargeurVoiePlateau();
+        voie++;
+    }
+    int positionMin = -10000;
+    int j = -1;
+    for(int i = 0; i < nb_voitures_max; i++) { // On cherche la voiture juste devant
+        if(tabVoitures[voie][i] != NULL) {
+            int posYtemp = tabVoitures[voie][i]->getPosY();
+            if(posYtemp > positionMin && posYtemp < rectVoitureJoueur->y) {
+                positionMin = tabVoitures[voie][i]->getPosY();
+                j = i;
+            }
+        }
+    }
+    if(j>=0 && tabVoitures[voie][j]->getVitesseVoiture() < 19) {
+        tabVoitures[voie][j]->accelerer(2);
+    }
 }

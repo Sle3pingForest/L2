@@ -36,7 +36,6 @@ private:
     Voiture_gestionnaire voiture_gestionnaire;
     Voiture_joueur voitureJoueur;
 
-    Timer timerFPS;
     Timer timerAfficherFPS;
     Timer timerDeplacement;
 
