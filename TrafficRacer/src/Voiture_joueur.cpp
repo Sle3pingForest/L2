@@ -10,8 +10,14 @@ Voiture_joueur::Voiture_joueur() : Voiture()
     freiner = false;
 }
 
-Voiture_joueur::Voiture_joueur(int voitureType) : Voiture_joueur()
+Voiture_joueur::Voiture_joueur(int voitureType) : Voiture()
 {
+    X_VEL = 0;
+    collision = false;
+    deplacementGauche = false;
+    deplacementDroit = false;
+    accelerer = false;
+    freiner = false;
     selectVoiture(voitureType);
 }
 

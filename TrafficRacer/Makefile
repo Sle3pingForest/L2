@@ -1,14 +1,15 @@
 #Test si linux ou mac
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
-	CXXFLAGS = -lSDL2
+	LDFLAGS = -lSDL2
 endif
 ifeq ($(UNAME_S),Darwin)
-	CXXFLAGS = -F/Library/Frameworks -framework SDL2
+	LDFLAGS = -F/Library/Frameworks -framework SDL2
 endif
 
 CXX = g++
-LDFLAGS = -I $(INCLDIR)
+CXXFLAGS = -Wall
+LDFLAGS += -I $(INCLDIR)
 SRC = src/
 INCLDIR = include/
 OUTPUT = TrafficRacer
@@ -17,10 +18,10 @@ OUTPUT = TrafficRacer
 OBJECTS := $(patsubst %.cpp,%.o,$(wildcard $(SRC)*.cpp))
 
 all : $(OBJECTS)
-	$(CXX) main.cpp $(OBJECTS) -o $(OUTPUT) $(LDFLAGS) $(CXXFLAGS)
+	$(CXX) $(CXXFLAGS) main.cpp $(OBJECTS) -o $(OUTPUT) $(LDFLAGS)
 
 $(SRC)%.o: $(SRC)%.cpp
-	$(CXX) -c $< -o $@ $(LDFLAGS) $(CXXFLAGS)
+	$(CXX) $(CXXFLAGS) -c $< -o $@ $(LDFLAGS)
 
 clean :
 	rm -f $(SRC)*.o
