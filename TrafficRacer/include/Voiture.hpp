@@ -22,12 +22,16 @@ public:
     SDL_Rect* getRectCollision();
     void setChangementVoie(bool changement);
     bool getChangementVoie();
-
+    void setPosFinDepassement(int posFin);
+    int getPosFinDepassement();
+    
 protected:
     int vitesse;
 private:
     SDL_Rect rectCollision;
     bool changementVoie;
+    int posFinDepassement;
+
 };
 
 const SDL_Rect audi =       {0, 0, 98, 214};

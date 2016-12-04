@@ -132,3 +132,11 @@ void Voiture::setChangementVoie(bool changement) {
 bool Voiture::getChangementVoie() {
     return changementVoie;
 }
+
+void Voiture::setPosFinDepassement(int posFin) {
+    posFinDepassement = posFin;
+}
+
+int Voiture::getPosFinDepassement() {
+    return posFinDepassement;
+}

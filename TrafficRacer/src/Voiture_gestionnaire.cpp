@@ -103,18 +103,22 @@ bool Voiture_gestionnaire::gestion(int vitesse, SDL_Rect* rectVoitureJoueur)
 {
     posVoitureTete = 10000;
     bool flagCollision = false;
-    bool changeDeVoie = false;
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < nb_voitures_max; j++) {
             if (tabVoitures[i][j] != NULL) {
                 if(not isDead(i,j)) {
+                    bool changerTableau = false;
                     tabVoitures[i][j]->avancer(vitesse);
                     checkVoitTete(i, j);
-                    changeDeVoie = depassement(i, j);
+                    if(tabVoitures[i][j]->getChangementVoie()) { // Si on dépasse
+                        changerTableau = depassement(i, j);
+                    } else {
+                        testDepassement(i, j);
+                    }
                     if(collisionVoitJoueur(i, j, rectVoitureJoueur)) {
                         flagCollision = true;
                     }
-                    if(changeDeVoie) {
+                    if(changerTableau) {
                         changementVoieGauche(i, j); //On place la voiture dans le tableau de gauche
                     }
                 }
@@ -143,8 +147,17 @@ void Voiture_gestionnaire::checkVoitTete(int i, int j)
     }
 }
 
+bool Voiture_gestionnaire::depassement(int i, int j) {
+    tabVoitures[i][j]->deplacer(-4,0); //Dépassement à gauche
+    if(tabVoitures[i][j]->getPosFinDepassement() >= tabVoitures[i][j]->getPosX()) {
+        tabVoitures[i][j]->setChangementVoie(false);
+        return true;
+    }
+    return false;
+}
+
 /* Gère le dépassement des voitures */
-bool Voiture_gestionnaire::depassement(int i, int j)
+void Voiture_gestionnaire::testDepassement(int i, int j)
 {
     for(int k = 0; k < nb_voitures_max; k++) {
         if(tabVoitures[i][k] != NULL && tabVoitures[i][j]->getVitesseVoiture() > tabVoitures[i][k]->getVitesseVoiture()) {
@@ -154,14 +167,10 @@ bool Voiture_gestionnaire::depassement(int i, int j)
                 if(i == 0) {
                     tabVoitures[i][j]->freiner(1);
                 } else {
-                    if(tabVoitures[i][j]->getChangementVoie() || peutDepasser(i, j) ) {
+                    if(peutDepasser(i, j) ) {
                         tabVoitures[i][j]->setChangementVoie(true);
-                        tabVoitures[i][j]->deplacer(-4,0); //Dépassement à gauche
-                        int coteDroVoit1 = tabVoitures[i][j]->getPosX() + tabVoitures[i][j]->getWidth();
-                        int coteGauVoit2 = tabVoitures[i][k]->getPosX();
-                        if(coteDroVoit1 < (coteGauVoit2 + 5)) {
-                            return true;
-                        }
+                        int posXFinDepassement = tabVoitures[i][j]->getPosX() - 125; //To Do : 125 = largeur d'une voie
+                        tabVoitures[i][j]->setPosFinDepassement(posXFinDepassement);
                     } else {
                         tabVoitures[i][j]->freiner(1);
                     }
@@ -169,7 +178,6 @@ bool Voiture_gestionnaire::depassement(int i, int j)
             }
         }
     }
-    return false;
 }
 
 bool Voiture_gestionnaire::peutDepasser(int i, int j) {

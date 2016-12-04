@@ -132,9 +132,9 @@ void Menu::affichage()
 
     logo.y += SCREEN_HEIGHT / 3;
     SDL_RenderCopy(pRenderer, playTexture, NULL, &logo);
-    logo.y += SCREEN_HEIGHT / 7;
+    logo.y += logo.h * 1.25;
     SDL_RenderCopy(pRenderer, hscoreTexture, NULL, &logo);
-    logo.y += SCREEN_HEIGHT / 7;
+    logo.y += logo.h * 1.25;
     SDL_RenderCopy(pRenderer, exitTexture, NULL, &logo);
     SDL_RenderPresent(pRenderer);
 }
@@ -158,7 +158,7 @@ void Menu::execute()
 }
 
 
-void Menu::ordonnerScore_Top5(int New_Score)
+void Menu::ordonnerScore_Top5(int New_Score, int top5[5])
 {
     int pos = 0;
     int min_valeur = top5[0];
@@ -177,7 +177,7 @@ void Menu::ordonnerScore_Top5(int New_Score)
     }
 }
 
-void Menu::read_score_file()
+void Menu::read_score_file(int top5[5])
 {
     std::ifstream fichier;
     fichier.open("autres/score", ios::in);
@@ -185,7 +185,7 @@ void Menu::read_score_file()
     while(getline(fichier, line))
     {
         int number = atoi(line.c_str());
-        ordonnerScore_Top5(number);
+        ordonnerScore_Top5(number, top5);
     }
     fichier.close();
 }
@@ -205,7 +205,8 @@ void Menu::affichageScore()
 {
     SDL_SetRenderDrawColor(pRenderer, 60, 60, 60, 255);
     SDL_RenderClear(pRenderer);
-    read_score_file();
+    int top5[5] = {0};
+    read_score_file(top5);
     sort(top5, top5 + 5);
     int PosY = 0;
     for(int i = 0; i < 5 ; ++i)

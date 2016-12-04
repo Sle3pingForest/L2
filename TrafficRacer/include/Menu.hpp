@@ -21,7 +21,6 @@ protected:
 private:
     bool quit;
     int choix;
-    int top5[5] = {0};
 
     SDL_Texture* logoTexture;
     SDL_Texture* numberTexture;
@@ -30,8 +29,8 @@ private:
     SDL_Texture* exitTexture;
 
     string to_string( int number);
-    void read_score_file();
-    void ordonnerScore_Top5( int New_score);
+    void read_score_file(int top5[5]);
+    void ordonnerScore_Top5(int New_Score, int top5[5]);
     void gestion_touches();
     void affichage();
     void execute();

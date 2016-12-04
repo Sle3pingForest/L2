@@ -32,6 +32,8 @@ private:
     bool isDead(int i, int j);
     void checkVoitTete(int i, int j);
     bool depassement(int i, int j);
+    void testDepassement(int i, int j);
+
     bool peutDepasser(int i, int j);
     void changementVoieGauche(int i, int j);
     SDL_bool collisionVoitJoueur(int i, int j, SDL_Rect* rectVoitureJoueur);
