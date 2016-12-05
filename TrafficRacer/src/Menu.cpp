@@ -227,7 +227,7 @@ void Menu::affichageScore()
 
 void Menu::setScore(int new_Score)
 {
-    fstream scoreFile("autres/score", ios::in | ios:: app);
+    ofstream scoreFile("autres/score", ios::in | ios:: app);
     scoreFile<<new_Score;
     scoreFile<<'\n';
     cout<<"Score Finale: "<< new_Score<< endl;

@@ -97,7 +97,7 @@ void Partie::gestion_touches()
                         pause = true;
                     break;
 
-                case 'm' :
+                case SDLK_ESCAPE :
                     jouer = false;
                     
                 case SDLK_SPACE:
